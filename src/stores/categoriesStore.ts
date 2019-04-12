@@ -6,6 +6,9 @@ import { observable, action, computed } from "mobx";
 export interface ICategoriesStore {
 	categoriesData: any[];
 	loadCategories: () => Promise<any[]>;
+
+	createDialogIsOpen: boolean;
+	toggleCreateDialog: (value: boolean) => void;
 }
 
 class CategoriesStore {
@@ -13,6 +16,9 @@ class CategoriesStore {
 
 	@observable
 	categories: any[] = [];
+
+	@observable
+	createDialogIsOpen = false;
 
 	constructor() {
 		this.db = new FirebaseDB(app.firestore());
@@ -34,7 +40,12 @@ class CategoriesStore {
 		return this.categories.map(c => ({
 			id: c.id,
 			...c.data()
-		}))
+		}));
+	}
+
+	@action
+	toggleCreateDialog = (value: boolean = !this.createDialogIsOpen) => {
+		this.createDialogIsOpen = value;
 	}
 }
 

@@ -1,18 +1,18 @@
-import firebase from 'firebase/app';
-import React from 'react';
-import { inject, observer } from 'mobx-react';
+import React from "react";
+import { inject, observer } from "mobx-react";
+import { Grid } from "@material-ui/core";
+import { CategoriesWidget } from "../components/widgets/Categories/CategoriesWidget";
 
-@inject('firebaseStore')
+@inject("firebaseStore")
 @observer
 export class Home extends React.Component {
-
 	render() {
-		const { currentUser } = firebase.auth();
-
-		return currentUser && (
-			<h1>
-				Welcome {currentUser.displayName}
-			</h1>
-		)
+		return (
+			<Grid container spacing={32}>
+				<Grid item>
+					<CategoriesWidget />
+				</Grid>
+			</Grid>
+		);
 	}
 }
