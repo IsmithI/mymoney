@@ -10,10 +10,11 @@ import {
 	ListItem,
 	ListItemText
 } from "@material-ui/core";
-import { ICategoriesStore } from "../stores/categoriesStore";
+import { IEntityStore } from "../stores/entityStore";
+import { ICategory } from "../interfaces/ICategory";
 
 export interface ICategoriesProps {
-	categoriesStore?: ICategoriesStore;
+	categoriesStore?: IEntityStore<ICategory>;
 }
 
 @inject("categoriesStore")
@@ -25,7 +26,7 @@ export class Categories extends React.Component<ICategoriesProps> {
 
 	componentDidMount = () => {
 		if (this.props.categoriesStore) {
-			this.props.categoriesStore.loadCategories().then(() => {
+			this.props.categoriesStore.load().then(() => {
 				this.setState({ loaded: true });
 			});
 		}
@@ -35,7 +36,7 @@ export class Categories extends React.Component<ICategoriesProps> {
 		const { categoriesStore } = this.props;
 		const { loaded } = this.state;
 
-		console.log(categoriesStore && categoriesStore.categoriesData);
+		console.log(categoriesStore && categoriesStore.entitiesData);
 
 		return loaded && categoriesStore ? (
 			<Grid container direction="column" spacing={8}>
@@ -44,7 +45,7 @@ export class Categories extends React.Component<ICategoriesProps> {
 				</Grid>
 				<Grid item>
 					<List>
-						{categoriesStore.categoriesData.map(c => (
+						{categoriesStore.entitiesData.map(c => (
 							<ListItem key={c.id}>
 								<ListItemText primary={c.name} />
 							</ListItem>

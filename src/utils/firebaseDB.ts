@@ -1,14 +1,24 @@
+import { IHasId } from "./../interfaces/IHasId";
+import firebase from "firebase/app";
+import "firebase/firestore";
 
-
-export class FirebaseDB {
-
+export class FirebaseDB<T extends IHasId> {
 	db: firebase.firestore.Firestore;
 
-	constructor(firestore: firebase.firestore.Firestore) {
-		this.db = firestore;
+	constructor() {
+		this.db = firebase.app().firestore();
 	}
 
 	get = (collection: string) => this.db.collection(collection).get();
 
-
+	set = (collection: string) => (data: T) =>
+		this.db
+			.collection(collection)
+			.doc(data.id)
+			.set({
+				...data,
+				id: undefined,
+			});
 }
+
+export const db = new FirebaseDB();

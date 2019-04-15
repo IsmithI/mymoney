@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { stores } from "./providers";
-import { Provider as StoresProvider } from "mobx-react";
+import { StoresProvider } from "./providers";
 import { AppRouter } from "./components/AppRouter";
 import { MuiThemeProvider } from "@material-ui/core";
 import { theme } from "./theme";
@@ -10,7 +9,7 @@ import './App.css';
 class App extends Component {
 	render() {
 		return (
-			<StoresProvider {...stores}>
+			<StoresProvider>
 				<MuiThemeProvider theme={theme}>
 					<AppContainer>
 						<AppRouter />

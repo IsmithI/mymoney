@@ -11,23 +11,16 @@ const secondary: PaletteOptions['secondary'] = {
 
 export const theme = createMuiTheme({
   palette: {
-    text: {
-      primary: '#fff'
-    },
     primary,
     secondary,
     background: {
-      default: '#74C1CC',
-      paper: '#f2b68c'
+      paper: '#fff'
     }
   },
   shape: {
     borderRadius: 24
   },
   typography: {
-    allVariants: {
-      color: '#fff'
-    },
     title: {
       fontWeight: 'bold'
     }

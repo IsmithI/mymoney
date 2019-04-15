@@ -1,13 +1,13 @@
 import * as React from "react";
 import { inject, observer } from "mobx-react";
 import Card, { CardProps } from "@material-ui/core/Card";
-import { ICategoriesStore } from "../../../stores/categoriesStore";
 import { CardHeader, CardContent, Grid, Icon, Typography, Grow, Avatar, IconButton } from "@material-ui/core";
 import { FaIcon } from "../../FaIcon";
-import { pink } from "@material-ui/core/colors";
+import { IEntityStore } from "../../../stores/entityStore";
+import { ICategory } from "../../../interfaces/ICategory";
 
 export interface ICategoriesWidgetProps extends CardProps {
-	categoriesStore?: ICategoriesStore;
+	categoriesStore?: IEntityStore<ICategory>;
 }
 
 @inject("categoriesStore")
@@ -21,30 +21,30 @@ export class CategoriesWidget extends React.Component<ICategoriesWidgetProps> {
 		if (this.props.categoriesStore) {
 			const { categoriesStore } = this.props;
 
-			categoriesStore.loadCategories().then(() => this.setState({ loaded: true }));
+			categoriesStore.load().then(() => this.setState({ loaded: true }));
 		}
 	}
 
 	render() {
 		if (!this.props.categoriesStore) return null;
 
-		const { categoriesData } = this.props.categoriesStore;
+		const { entitiesData } = this.props.categoriesStore;
 
 		return (
-			<Grow in={categoriesData.length > 0}>
+			<Grow in={entitiesData.length > 0}>
 				<Card>
-          <CardHeader 
-            title="Top categories" 
-            action={(
-              <IconButton>
-                <Icon>settings</Icon>
-              </IconButton>
-            )}
-            titleTypographyProps={{ variant: "title" }}
-          />
+					<CardHeader
+						title="Top categories"
+						action={
+							<IconButton>
+								<Icon>settings</Icon>
+							</IconButton>
+						}
+						titleTypographyProps={{ variant: "title" }}
+					/>
 					<CardContent>
 						<Grid container>
-							{categoriesData.map(c => (
+							{entitiesData.map(c => (
 								<Grid item key={c.id}>
 									<Avatar>
 										<Typography>
