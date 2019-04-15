@@ -46,11 +46,9 @@ export class CategoriesWidget extends React.Component<ICategoriesWidgetProps> {
 						<Grid container>
 							{entitiesData.map(c => (
 								<Grid item key={c.id}>
-									<Avatar>
-										<Typography>
-											<FaIcon icon={c.icon} />
-										</Typography>
-									</Avatar>
+									<Typography>
+										<FaIcon icon={c.icon} />
+									</Typography>
 								</Grid>
 							))}
 						</Grid>
