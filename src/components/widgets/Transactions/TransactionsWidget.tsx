@@ -1,76 +1,91 @@
 import { observer, inject } from "mobx-react";
 import React from "react";
 import {
-	CardContent,
-	Card,
-	CardHeader,
-	Collapse,
-	Grid,
-	List,
-	ListItem,
-	ListItemText,
-	CardActions,
-	IconButton,
-	Icon
+  CardContent,
+  Card,
+  CardHeader,
+  Collapse,
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  CardActions,
+  IconButton,
+  Icon,
+  Grow
 } from "@material-ui/core";
 import { AddTransactionDialog } from "./AddTransactionDialog";
 import { IEntityStore } from "../../../stores/entityStore";
 import { ITransaction } from "../../../interfaces/ITransaction";
+import { extractDate } from "../../../utils/date";
+import { TransactionListItem } from "./TransactionListItem";
+import { Load } from "@ismithi/react-utils";
+import { ITransactionsStore } from "../../../stores/transactionsStore";
 
-export interface ITransactionsWidgetProps {
-	transactionsStore?: IEntityStore<ITransaction>;
+interface ITransactionsWidgetProps {
+  transactionsStore: ITransactionsStore;
 }
 
 @inject("transactionsStore")
 @observer
-export class TransactionsWidget extends React.Component<ITransactionsWidgetProps> {
-	state = {
-		loaded: false,
-		showAddDialog: false
-	};
+export class TransactionsWidget extends React.Component {
+  state = {
+    showAddDialog: false
+  };
 
-	componentDidMount = () => {
-		if (this.props.transactionsStore) {
-			this.props.transactionsStore.load().then(() => this.setState({ loaded: true }));
-		}
-	};
+  get injected() {
+    return this.props as ITransactionsWidgetProps;
+  }
 
-	toggleAddDialog = (value: boolean = !this.state.showAddDialog) => {
-		this.setState({ showAddDialog: value });
-	};
+  toggleAddDialog = (value: boolean = !this.state.showAddDialog) => {
+    this.setState({ showAddDialog: value });
+  };
 
-	render() {
-		if (!this.props.transactionsStore) return null;
+  render() {
+    const {
+      transactionsStore: { lastTransactions, hasEntities, load }
+    } = this.injected;
 
-		const {
-			transactionsStore: { entitiesData, hasEntities }
-		} = this.props;
+    return (
+      <Grow in>
+        <Card>
+          <CardHeader
+            title="Recent transactions"
+            titleTypographyProps={{ variant: "title" }}
+          />
+          <Load instantly on={load}>
+            {({ loaded }) => (
+              <Collapse in={loaded && hasEntities}>
+                <List disablePadding>
+                  {lastTransactions.map(t => (
+                    <ListItem key={t.id}>
+                      <TransactionListItem
+                        {...{ ...t, date: t.date || new Date() }}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+              </Collapse>
+            )}
+          </Load>
 
-		return (
-			<Card>
-				<CardHeader title="Recent transactions" titleTypographyProps={{ variant: "title" }} />
-				<Collapse in={this.state.loaded && hasEntities}>
-					<CardContent>
-						<List>
-							{entitiesData.map(t => (
-								<ListItem key={t.id}>
-									<ListItemText primary={t.category} secondary={t.date} />
-								</ListItem>
-							))}
-						</List>
-					</CardContent>
-				</Collapse>
-				<CardActions>
-					<IconButton onClick={() => this.toggleAddDialog(true)}>
-						<Icon>add_circle</Icon>
-					</IconButton>
-				</CardActions>
-				<AddTransactionDialog
-					open={this.state.showAddDialog}
-					onCancel={() => this.toggleAddDialog(false)}
-					onSubmit={() => {}}
-				/>
-			</Card>
-		);
-	}
+          <CardActions>
+            <IconButton onClick={() => this.toggleAddDialog(true)}>
+              <Icon>add_circle</Icon>
+            </IconButton>
+          </CardActions>
+          <AddTransactionDialog
+            open={this.state.showAddDialog}
+            onCancel={() => this.toggleAddDialog(false)}
+            onSubmit={this.createTransaction}
+          />
+        </Card>
+      </Grow>
+    );
+  }
+
+  createTransaction = (data: ITransaction) => {
+    const { transactionsStore } = this.injected;
+    transactionsStore.add(data).then(transactionsStore.load);
+  };
 }
