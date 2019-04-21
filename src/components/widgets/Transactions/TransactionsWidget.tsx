@@ -17,6 +17,7 @@ import { AddTransactionDialog } from "./AddTransactionDialog";
 import { IEntityStore } from "../../../stores/entityStore";
 import { ITransaction } from "../../../interfaces/ITransaction";
 import { Load } from "@ismithi/react-utils";
+import { Toggler } from "../../Toggler";
 
 interface Props {
   transactionsStore?: IEntityStore<ITransaction>;
@@ -64,16 +65,22 @@ export class TransactionsWidget extends React.Component<Props> {
           )}
         </Load>
 
-        <CardActions>
-          <IconButton onClick={() => this.toggleAddDialog(true)}>
-            <Icon>add_circle</Icon>
-          </IconButton>
-        </CardActions>
-        <AddTransactionDialog
-          open={this.state.showAddDialog}
-          onCancel={() => this.toggleAddDialog(false)}
-          onSubmit={() => {}}
-        />
+        <Toggler>
+          {({ isOpen, toggle }) => (
+            <>
+              <CardActions>
+                <IconButton onClick={toggle}>
+                  <Icon>add_circle</Icon>
+                </IconButton>
+              </CardActions>
+              <AddTransactionDialog
+                isOpen={isOpen}
+                onClose={toggle}
+                onSubmit={() => {}}
+              />
+            </>
+          )}
+        </Toggler>
       </Card>
     );
   }
