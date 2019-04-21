@@ -3,22 +3,25 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 
 export class FirebaseDB<T extends IHasId> {
-	db: firebase.firestore.Firestore;
+  db: firebase.firestore.Firestore;
 
-	constructor() {
-		this.db = firebase.app().firestore();
-	}
+  constructor() {
+    this.db = firebase.app().firestore();
+  }
 
-	get = (collection: string) => this.db.collection(collection).get();
+  get = (collection: string) => this.db.collection(collection).get();
 
-	set = (collection: string) => (data: T) =>
-		this.db
-			.collection(collection)
-			.doc(data.id)
-			.set({
-				...data,
-				id: undefined,
-			});
+  set = (collection: string) => (data: T) =>
+    this.db
+      .collection(collection)
+      .doc(data.id)
+      .set({
+        ...data,
+        id: undefined
+      });
+
+  add = (collection: string) => (data: T) =>
+    this.db.collection(collection).add(data);
 }
 
 export const db = new FirebaseDB();

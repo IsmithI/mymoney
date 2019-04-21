@@ -28,17 +28,9 @@ interface Props {
 @inject("transactionsStore")
 @observer
 export class TransactionsWidget extends React.Component<Props> {
-  state = {
-    showAddDialog: false
-  };
-
-  toggleAddDialog = (value: boolean = !this.state.showAddDialog) => {
-    this.setState({ showAddDialog: value });
-  };
-
   render() {
     const {
-      transactionsStore: { entitiesData, hasEntities, load }
+      transactionsStore: { entitiesData, hasEntities, load, add }
     } = this.props;
 
     return (
@@ -68,7 +60,7 @@ export class TransactionsWidget extends React.Component<Props> {
                 <AddTransactionDialog
                   isOpen={isOpen}
                   onClose={toggle}
-                  onSubmit={() => {}}
+                  onSubmit={add}
                 />
               </>
             )}
