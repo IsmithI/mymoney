@@ -1,11 +1,10 @@
-import { firebaseStore } from './firebaseStore';
-import { EntityStore } from "./entityStore";
-
+import { firebaseStore } from "./firebaseStore";
 import { ICategory } from "../interfaces/ICategory";
-import { ITransaction } from "../interfaces/ITransaction";
+import { EntityStore } from "./entityStore";
+import { transactionsStore } from "./transactionsStore";
 
 export const stores = {
   firebaseStore,
   categoriesStore: new EntityStore<ICategory>("categories"),
-  transactionsStore: new EntityStore<ITransaction>("transactions"),
+  transactionsStore
 };
