@@ -7,7 +7,7 @@ export const Home = () => (
     <Grid item>
       <CategoriesWidget />
     </Grid>
-    <Grid item>
+    <Grid item xs={6}>
       <TransactionsWidget />
     </Grid>
   </Grid>

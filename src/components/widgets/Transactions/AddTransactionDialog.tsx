@@ -14,8 +14,7 @@ import { inject, observer } from "mobx-react";
 import { IEntityStore } from "../../../stores/entityStore";
 import { Load } from "@ismithi/react-utils";
 
-const emptyTransaction: ITransaction = {
-  id: "",
+const emptyTransaction: Partial<ITransaction> = {
   amount: 0,
   category: "",
   date: new Date()
@@ -25,14 +24,14 @@ export interface Props {
   transactionsStore?: IEntityStore<ITransaction>;
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: ITransaction) => void;
+  onSubmit: (data: Partial<ITransaction>) => void;
 }
 
 /**
  * TODO add method `add` to Entities store
  */
 export const AddTransactionDialog = ({ onSubmit, isOpen, onClose }: Props) => {
-  const [data, setData] = useState<ITransaction>(emptyTransaction);
+  const [data, setData] = useState<Partial<ITransaction>>(emptyTransaction);
   const updateField = (field: string) => (e: React.ChangeEvent<any>) => {
     setData({ ...data, [field]: e.target.value });
   };
@@ -55,21 +54,13 @@ export const AddTransactionDialog = ({ onSubmit, isOpen, onClose }: Props) => {
 };
 
 interface DialogContentProps {
-  data: ITransaction;
+  data: Partial<ITransaction>;
   updateField: (key: string) => (e: React.ChangeEvent<any>) => void;
 }
 
 const DialogContent = ({ data, updateField }: DialogContentProps) => (
   <MuiDialogContent>
     <Grid container direction="column" alignItems="stretch" spacing={16}>
-      <Grid item>
-        <TextField
-          fullWidth
-          label="Id"
-          value={data.id}
-          onChange={updateField("id")}
-        />
-      </Grid>
       <Grid item>
         <CategoriesSelect
           value={data.category}
