@@ -27,7 +27,7 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
   save = (data: T) => db.set(this.entity)(data);
 
   @action
-  add = (data: T) => db.add(this.entity)(data);
+  add = (data: Partial<T>) => db.add(this.entity)(data);
 
   @action
   saveEntities = (snapshot: firebase.firestore.QuerySnapshot) => {

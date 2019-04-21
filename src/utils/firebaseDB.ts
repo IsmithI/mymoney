@@ -20,7 +20,7 @@ export class FirebaseDB<T extends IHasId> {
         id: undefined
       });
 
-  add = (collection: string) => (data: T) =>
+  add = (collection: string) => (data: Partial<T>) =>
     this.db.collection(collection).add(data);
 }
 
