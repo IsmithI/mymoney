@@ -8,10 +8,10 @@ interface CategoriesListProps {
 }
 
 export const CategoriesList = ({ categories }: CategoriesListProps) => (
-  <Grid container>
+  <Grid container spacing={8} justify="space-around">
     {categories.map(c => (
       <Grid item key={c.id}>
-        <Typography>
+        <Typography variant="title">
           <FaIcon icon={c.icon} />
         </Typography>
       </Grid>

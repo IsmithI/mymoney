@@ -4,13 +4,13 @@ import React from "react";
 import { ICategory } from "../../../interfaces/ICategory";
 import { IEntityStore } from "../../../stores/entityStore";
 
-interface ICategoriesList {
+interface Props {
   categoriesStore?: IEntityStore<ICategory>;
   value: any;
   onChange: (e: React.ChangeEvent) => void;
 }
-export const CategoriesList = inject("categoriesStore")(
-  observer(({ categoriesStore, onChange, value }: ICategoriesList) => (
+export const CategoriesSelect = inject("categoriesStore")(
+  observer(({ categoriesStore, onChange, value }: Props) => (
     <FormControl fullWidth>
       <InputLabel htmlFor="category">Choose category</InputLabel>
       <Select

@@ -6,7 +6,7 @@ import * as React from "react";
 import { ICategory } from "../../../interfaces/ICategory";
 import { IEntityStore } from "../../../stores/entityStore";
 import { Route, Switch } from "../../switch";
-import { CategoriesList } from "./CategoriesListProps";
+import { CategoriesList } from "./CategoriesList";
 import { Header } from "./Header";
 
 interface Props extends CardProps {
@@ -17,8 +17,8 @@ export const CategoriesWidget = inject("categoriesStore")(
   observer(({ categoriesStore: { entitiesData, load } }: Props) => (
     <Grow in={entitiesData.length > 0}>
       <Card>
+        <Header />
         <CardContent>
-          <Header />
           <Load instantly on={load}>
             {({ state }) => (
               <Switch value={state}>
