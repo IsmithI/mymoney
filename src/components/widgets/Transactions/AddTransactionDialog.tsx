@@ -1,99 +1,90 @@
-import React from "react";
-
-import { ITransaction } from "../../../interfaces/ITransaction";
-import { useState } from "react";
 import {
-	Dialog,
-	DialogTitle,
-	DialogContent,
-	Grid,
-	TextField,
-	Select,
-	MenuItem,
-	FormControl,
-	InputLabel,
-	DialogActions,
-	IconButton,
-	Icon,
-	Button
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent as MuiDialogContent,
+  DialogTitle,
+  Grid,
+  TextField
 } from "@material-ui/core";
+import React, { useState } from "react";
+import { ITransaction } from "../../../interfaces/ITransaction";
+import { CategoriesSelect } from "./CategoriesSelect";
 import { inject, observer } from "mobx-react";
 import { IEntityStore } from "../../../stores/entityStore";
-import { ICategory } from "../../../interfaces/ICategory";
+import { Load } from "@ismithi/react-utils";
 
 const emptyTransaction: ITransaction = {
-	id: "",
-	amount: 0,
-	category: "",
-	date: new Date()
+  id: "",
+  amount: 0,
+  category: "",
+  date: new Date()
 };
 
-export interface IAddTransactionDialogProps {
-	open: boolean;
-	onSubmit: (data: ITransaction) => void;
-	onCancel: () => void;
+export interface Props {
+  transactionsStore?: IEntityStore<ITransaction>;
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (data: ITransaction) => void;
 }
 
-export const AddTransactionDialog = ({ open, onCancel }: IAddTransactionDialogProps) => {
-	const [data, setData] = useState<ITransaction>(emptyTransaction);
-	const updateField = (field: string) => (e: React.ChangeEvent<any>) => {
-		setData({ ...data, [field]: e.target.value });
-	};
+/**
+ * TODO add method `add` to Entities store
+ */
+export const AddTransactionDialog = ({ onSubmit, isOpen, onClose }: Props) => {
+  const [data, setData] = useState<ITransaction>(emptyTransaction);
+  const updateField = (field: string) => (e: React.ChangeEvent<any>) => {
+    setData({ ...data, [field]: e.target.value });
+  };
 
-	return (
-		<Dialog open={open} onClose={onCancel}>
-			<DialogTitle>Add transaction</DialogTitle>
-			<DialogContent>
-				<Grid container direction="column" alignItems="stretch" spacing={16}>
-					<Grid item>
-						<TextField fullWidth label="Id" value={data.id} onChange={updateField("id")} />
-					</Grid>
-					<Grid item>
-						<CategoriesList value={data.category} onChange={updateField("category")} />
-					</Grid>
-					<Grid item>
-						<TextField fullWidth label="amount" type="number" value={data.amount} onChange={updateField("amount")} />
-					</Grid>
-				</Grid>
-			</DialogContent>
-			<DialogActions>
-				<Button color='primary' variant='contained'>
-					Add
-				</Button>
-			</DialogActions>
-		</Dialog>
-	);
+  return (
+    <Dialog open={isOpen} onClose={onClose}>
+      <DialogTitle>Add transaction</DialogTitle>
+      <DialogContent data={data} updateField={updateField} />
+      <DialogActions>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => onSubmit(data)}
+        >
+          Add
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 };
 
-interface ICategoriesList {
-	categoriesStore?: IEntityStore<ICategory>;
-	value: any;
-	onChange: (e: React.ChangeEvent) => void;
+interface DialogContentProps {
+  data: ITransaction;
+  updateField: (key: string) => (e: React.ChangeEvent<any>) => void;
 }
 
-const CategoriesList = inject("categoriesStore")(
-	observer(({ categoriesStore, onChange, value }: ICategoriesList) => (
-		<FormControl fullWidth>
-			<InputLabel htmlFor="category">Choose category</InputLabel>
-			<Select
-				style={{ minWidth: 100 }}
-				value={value}
-				onChange={onChange}
-				inputProps={{
-					name: "name",
-					id: "category"
-				}}
-			>
-				<MenuItem value="">
-					<em>None</em>
-				</MenuItem>
-				{categoriesStore &&
-					categoriesStore.entitiesData.map(c => (
-						<MenuItem key={c.id} value={c.id}>
-							{c.name}
-						</MenuItem>
-					))}
-			</Select>
-		</FormControl>
-	))
+const DialogContent = ({ data, updateField }: DialogContentProps) => (
+  <MuiDialogContent>
+    <Grid container direction="column" alignItems="stretch" spacing={16}>
+      <Grid item>
+        <TextField
+          fullWidth
+          label="Id"
+          value={data.id}
+          onChange={updateField("id")}
+        />
+      </Grid>
+      <Grid item>
+        <CategoriesSelect
+          value={data.category}
+          onChange={updateField("category")}
+        />
+      </Grid>
+      <Grid item>
+        <TextField
+          fullWidth
+          label="amount"
+          type="number"
+          value={data.amount}
+          onChange={updateField("amount")}
+        />
+      </Grid>
+    </Grid>
+  </MuiDialogContent>
 );

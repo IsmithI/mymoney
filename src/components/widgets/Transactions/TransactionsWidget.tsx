@@ -1,76 +1,72 @@
 import { observer, inject } from "mobx-react";
 import React from "react";
 import {
-	CardContent,
-	Card,
-	CardHeader,
-	Collapse,
-	Grid,
-	List,
-	ListItem,
-	ListItemText,
-	CardActions,
-	IconButton,
-	Icon
+  CardContent,
+  Card,
+  CardHeader,
+  Collapse,
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  CardActions,
+  IconButton,
+  Icon,
+  Grow
 } from "@material-ui/core";
 import { AddTransactionDialog } from "./AddTransactionDialog";
 import { IEntityStore } from "../../../stores/entityStore";
 import { ITransaction } from "../../../interfaces/ITransaction";
+import { Load } from "@ismithi/react-utils";
+import { Toggler } from "../../Toggler";
+import { TransactionsList } from "./TransactionsList";
 
-export interface ITransactionsWidgetProps {
-	transactionsStore?: IEntityStore<ITransaction>;
+interface Props {
+  transactionsStore?: IEntityStore<ITransaction>;
 }
 
 @inject("transactionsStore")
 @observer
-export class TransactionsWidget extends React.Component<ITransactionsWidgetProps> {
-	state = {
-		loaded: false,
-		showAddDialog: false
-	};
+export class TransactionsWidget extends React.Component<Props> {
+  render() {
+    const {
+      transactionsStore: { entitiesData, hasEntities, load, add }
+    } = this.props;
 
-	componentDidMount = () => {
-		if (this.props.transactionsStore) {
-			this.props.transactionsStore.load().then(() => this.setState({ loaded: true }));
-		}
-	};
+    return (
+      <Grow in>
+        <Card>
+          <CardHeader
+            title="Recent transactions"
+            titleTypographyProps={{ variant: "title" }}
+          />
 
-	toggleAddDialog = (value: boolean = !this.state.showAddDialog) => {
-		this.setState({ showAddDialog: value });
-	};
+          <Load instantly on={load}>
+            {({ loaded }) => (
+              <Collapse in={loaded && hasEntities}>
+                <TransactionsList transactions={entitiesData} />
+              </Collapse>
+            )}
+          </Load>
 
-	render() {
-		if (!this.props.transactionsStore) return null;
-
-		const {
-			transactionsStore: { entitiesData, hasEntities }
-		} = this.props;
-
-		return (
-			<Card>
-				<CardHeader title="Recent transactions" titleTypographyProps={{ variant: "title" }} />
-				<Collapse in={this.state.loaded && hasEntities}>
-					<CardContent>
-						<List>
-							{entitiesData.map(t => (
-								<ListItem key={t.id}>
-									<ListItemText primary={t.category} secondary={t.date} />
-								</ListItem>
-							))}
-						</List>
-					</CardContent>
-				</Collapse>
-				<CardActions>
-					<IconButton onClick={() => this.toggleAddDialog(true)}>
-						<Icon>add_circle</Icon>
-					</IconButton>
-				</CardActions>
-				<AddTransactionDialog
-					open={this.state.showAddDialog}
-					onCancel={() => this.toggleAddDialog(false)}
-					onSubmit={() => {}}
-				/>
-			</Card>
-		);
-	}
+          <Toggler>
+            {({ isOpen, toggle }) => (
+              <>
+                <CardActions>
+                  <IconButton onClick={toggle}>
+                    <Icon>add_circle</Icon>
+                  </IconButton>
+                </CardActions>
+                <AddTransactionDialog
+                  isOpen={isOpen}
+                  onClose={toggle}
+                  onSubmit={add}
+                />
+              </>
+            )}
+          </Toggler>
+        </Card>
+      </Grow>
+    );
+  }
 }
