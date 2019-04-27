@@ -6,9 +6,10 @@ import { CategoriesWidget } from "../components/widgets/Categories/CategoriesWid
 import { TodoList } from "../components/widgets/TodoList/TodoList";
 import { TransactionsWidget } from "../components/widgets/Transactions";
 import { WeatherWidget } from "../components/widgets/Weather";
+import { DigitalClock } from "../components/widgets/DigitalClock";
 
 export const Home = () => {
-	const isMobile = useMediaQuery("(max-width:720px)");
+	const isMobile = useMediaQuery("(max-width:600px)");
 
 	const props: GridProps = isMobile
 		? {
@@ -19,22 +20,24 @@ export const Home = () => {
 
 	return (
 		<>
-			<Grid container {...props} spacing={32}>
-				<Grid item sm={8}>
+			<Grid container spacing={32}>
+				<Grid item xs={12} sm={8} lg={4}>
 					<TodoList />
 				</Grid>
-				<Grid item sm={4}>
-					<Grid container spacing={16}>
+				<Grid item xs={12} sm={4}>
+					<Grid container spacing={16} justify='center'>
 						<Grid item xs>
 							<WeatherWidget />
+						</Grid>
+						<Grid item>
+							<DigitalClock />
 						</Grid>
 						<Grid item xs>
 							<CategoriesWidget />
 						</Grid>
 					</Grid>
 				</Grid>
-				<Grid item sm={4} />
-				<Grid item sm={8} lg={4}>
+				<Grid item xs={12} sm={8} lg={4}>
 					<TransactionsWidget />
 				</Grid>
 			</Grid>
