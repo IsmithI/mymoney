@@ -1,11 +1,15 @@
 import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent as MuiDialogContent,
-  DialogTitle,
-  Grid,
-  TextField
+	Dialog,
+	DialogTitle,
+	DialogContent,
+	Grid,
+	TextField,
+	Select,
+	MenuItem,
+	FormControl,
+	InputLabel,
+	DialogActions,
+	Button
 } from "@material-ui/core";
 import React, { useState } from "react";
 import { ITransaction } from "../../../interfaces/ITransaction";
@@ -13,69 +17,92 @@ import { CategoriesSelect } from "./CategoriesSelect";
 import { inject, observer } from "mobx-react";
 import { IEntityStore } from "../../../stores/entityStore";
 import { Load } from "@ismithi/react-utils";
+import { ICategory } from "../../../interfaces";
 
-const emptyTransaction: Partial<ITransaction> = {
-  amount: 0,
-  category: "",
-  date: new Date()
+const emptyTransaction: ITransaction = {
+	id: "",
+	amount: 0,
+	category: "",
+	date: new Date()
 };
 
-export interface Props {
-  transactionsStore?: IEntityStore<ITransaction>;
-  isOpen: boolean;
-  onClose: () => void;
-  onSubmit: (data: Partial<ITransaction>) => void;
+export interface IAddTransactionDialogProps {
+	open: boolean;
+	onSubmit: (data: ITransaction) => void;
+	onCancel: () => void;
 }
 
-/**
- * TODO add method `add` to Entities store
- */
-export const AddTransactionDialog = ({ onSubmit, isOpen, onClose }: Props) => {
-  const [data, setData] = useState<Partial<ITransaction>>(emptyTransaction);
-  const updateField = (field: string) => (e: React.ChangeEvent<any>) => {
-    setData({ ...data, [field]: e.target.value });
-  };
+export const AddTransactionDialog = ({ open, onCancel, onSubmit }: IAddTransactionDialogProps) => {
+	const [data, setData] = useState<ITransaction>(emptyTransaction);
+	const updateField = (field: string) => (e: React.ChangeEvent<any>) => {
+		setData({ ...data, [field]: e.target.value });
+	};
 
-  return (
-    <Dialog open={isOpen} onClose={onClose}>
-      <DialogTitle>Add transaction</DialogTitle>
-      <DialogContent data={data} updateField={updateField} />
-      <DialogActions>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={() => onSubmit(data)}
-        >
-          Add
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
+	return (
+		<Dialog open={open} onClose={onCancel}>
+			<DialogTitle>Add transaction</DialogTitle>
+			<DialogContent>
+				<Grid container direction='column' alignItems='stretch' spacing={16}>
+					<Grid item>
+						<TextField
+							fullWidth
+							label='comment'
+							value={data.comment || ""}
+							onChange={updateField("comment")}
+						/>
+					</Grid>
+					<Grid item>
+						<CategoriesList value={data.category} onChange={updateField("category")} />
+					</Grid>
+					<Grid item>
+						<TextField
+							fullWidth
+							label='amount'
+							type='number'
+							value={data.amount}
+							onChange={updateField("amount")}
+						/>
+					</Grid>
+				</Grid>
+			</DialogContent>
+			<DialogActions>
+				<Button color='primary' variant='contained' onClick={() => onSubmit(data)}>
+					Add
+				</Button>
+			</DialogActions>
+		</Dialog>
+	);
 };
 
-interface DialogContentProps {
-  data: Partial<ITransaction>;
-  updateField: (key: string) => (e: React.ChangeEvent<any>) => void;
+interface ICategoriesList {
+	categoriesStore?: IEntityStore<ICategory>;
+	value: any;
+	onChange: (e: React.ChangeEvent) => void;
 }
 
-const DialogContent = ({ data, updateField }: DialogContentProps) => (
-  <MuiDialogContent>
-    <Grid container direction="column" alignItems="stretch" spacing={16}>
-      <Grid item>
-        <CategoriesSelect
-          value={data.category}
-          onChange={updateField("category")}
-        />
-      </Grid>
-      <Grid item>
-        <TextField
-          fullWidth
-          label="amount"
-          type="number"
-          value={data.amount}
-          onChange={updateField("amount")}
-        />
-      </Grid>
-    </Grid>
-  </MuiDialogContent>
+const CategoriesList = inject("categoriesStore")(
+	observer(({ categoriesStore, onChange, value }: ICategoriesList) => (
+		<FormControl fullWidth>
+			<InputLabel htmlFor='category'>Choose category</InputLabel>
+			<Select
+				style={{ minWidth: 100 }}
+				value={value}
+				onChange={onChange}
+				inputProps={{
+					name: "name",
+					id: "category"
+				}}
+			>
+				<MenuItem value=''>
+					<em>None</em>
+				</MenuItem>
+				{categoriesStore &&
+					categoriesStore.entitiesData.map(c => (
+						<MenuItem key={c.id} value={c.id}>
+							{c.name}
+						</MenuItem>
+					))}
+			</Select>
+		</FormControl>
+	))
 );

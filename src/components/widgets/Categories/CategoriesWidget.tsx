@@ -1,38 +1,66 @@
-import { ELoadState, Load } from "@ismithi/react-utils";
-import { CardContent, CircularProgress, Grow } from "@material-ui/core";
-import Card, { CardProps } from "@material-ui/core/Card";
-import { inject, observer } from "mobx-react";
-import * as React from "react";
-import { ICategory } from "../../../interfaces/ICategory";
+import {
+	CardHeader,
+	CardContent,
+	Grid,
+	Icon,
+	Typography,
+	Grow,
+	IconButton,
+	Card
+} from "@material-ui/core";
+import { FaIcon } from "../../FaIcon";
 import { IEntityStore } from "../../../stores/entityStore";
-import { Route, Switch } from "../../switch";
-import { CategoriesList } from "./CategoriesList";
-import { Header } from "./Header";
+import { ICategory } from "../../../interfaces/ICategory";
+import { Load } from "@ismithi/react-utils";
+import { inject, observer } from "mobx-react";
+import React from "react";
+import { CardProps } from "@material-ui/core/Card";
 
-interface Props extends CardProps {
-  categoriesStore?: IEntityStore<ICategory>;
+interface Props {
+	categoriesStore: IEntityStore<ICategory>;
 }
 
-export const CategoriesWidget = inject("categoriesStore")(
-  observer(({ categoriesStore: { entitiesData, load } }: Props) => (
-    <Grow in={entitiesData.length > 0}>
-      <Card>
-        <Header />
-        <CardContent>
-          <Load instantly on={load}>
-            {({ state }) => (
-              <Switch value={state}>
-                <Route on={ELoadState.SUCCESS}>
-                  <CategoriesList categories={entitiesData} />
-                </Route>
-                <Route on={ELoadState.PENDING}>
-                  <CircularProgress />
-                </Route>
-              </Switch>
-            )}
-          </Load>
-        </CardContent>
-      </Card>
-    </Grow>
-  ))
-);
+@inject("categoriesStore")
+@observer
+export class CategoriesWidget extends React.Component<CardProps> {
+	get injected() {
+		return this.props as Props;
+	}
+
+	render() {
+		const { categoriesStore } = this.injected;
+		const { entitiesData, load } = categoriesStore;
+
+		return (
+			<Grow in={entitiesData.length > 0}>
+				<Card>
+					<CardHeader
+						title='Top categories'
+						action={
+							<IconButton>
+								<Icon>settings</Icon>
+							</IconButton>
+						}
+						titleTypographyProps={{ variant: "title" }}
+					/>
+					<CardContent>
+						<Load instantly on={load}>
+							{({ loaded }) => (
+								<Grid container justify='space-around' spacing={8}>
+									{loaded &&
+										entitiesData.map(c => (
+											<Grid item key={c.id}>
+												<Typography variant='title'>
+													<FaIcon icon={c.icon} />
+												</Typography>
+											</Grid>
+										))}
+								</Grid>
+							)}
+						</Load>
+					</CardContent>
+				</Card>
+			</Grow>
+		);
+	}
+}
