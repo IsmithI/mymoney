@@ -43,7 +43,7 @@ export class TransactionsWidget extends React.Component {
 
   render() {
     const {
-      transactionsStore: { lastTransactions, hasEntities, load }
+      transactionsStore: { entitiesData, hasEntities, load }
     } = this.injected;
 
     return (
@@ -57,7 +57,7 @@ export class TransactionsWidget extends React.Component {
             {({ loaded }) => (
               <Collapse in={loaded && hasEntities}>
                 <List disablePadding>
-                  {lastTransactions.map(t => (
+                  {entitiesData.map(t => (
                     <ListItem key={t.id}>
                       <TransactionListItem
                         {...{ ...t, date: t.date || new Date() }}

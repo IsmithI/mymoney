@@ -22,12 +22,12 @@ export const TransactionListItem = ({ amount, date, category }: Props) => (
           <Typography variant="subtitle1">{category}</Typography>
         </Grid>
         <Grid item>
-          <Typography variant="subtitle2">{extractDate(date)}</Typography>
+          <Typography variant="subtitle2">{extractDate(date, true)}</Typography>
         </Grid>
       </Grid>
     </Grid>
     <Grid item>
-      <Typography variant="title">{amount}</Typography>
+      <Typography variant="title">{amount} &#8372;</Typography>
     </Grid>
   </Grid>
 );

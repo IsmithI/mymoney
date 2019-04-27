@@ -17,6 +17,17 @@ class TransactionsStore extends EntityStore<ITransaction> {
       .sort((a, b) => (a.date && b.date ? (a.date > b.date ? 1 : 0) : 0))
       .slice(0, 4);
   }
+
+  @computed
+  public get entitiesData() {
+    return this.entities.map(e => {
+      return {
+        id: e.id,
+        ...(e.data() as ITransaction),
+        date: new Date(e.data().date.seconds * 1000)
+      } as ITransaction;
+    });
+  }
 }
 
 export const transactionsStore = new TransactionsStore();

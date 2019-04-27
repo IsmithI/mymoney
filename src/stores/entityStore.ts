@@ -14,7 +14,7 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
   private entity: string;
 
   @observable
-  entities: firebase.firestore.QueryDocumentSnapshot[] = [];
+  public entities: firebase.firestore.QueryDocumentSnapshot[] = [];
 
   constructor(entity: string) {
     this.entity = entity;
@@ -27,7 +27,15 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
   save = (data: T) => db.set(this.entity)(data);
 
   @action
-  add = (data: T) => db.add(this.entity)(data);
+  add = (data: T) =>
+    db
+      .add(this.entity)(data)
+      .then(d => d.get().then(this.addEntity));
+
+  @action
+  addEntity = (e: firebase.firestore.QueryDocumentSnapshot) => {
+    this.entities.push(e);
+  };
 
   @action
   saveEntities = (snapshot: firebase.firestore.QuerySnapshot) => {
@@ -36,11 +44,13 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
   };
 
   @computed
-  get entitiesData() {
-    return this.entities.map(e => ({
-      id: e.id,
-      ...(e.data() as T)
-    }));
+  public get entitiesData() {
+    return this.entities.map(e => {
+      return {
+        id: e.id,
+        ...(e.data() as T)
+      };
+    });
   }
 
   @computed

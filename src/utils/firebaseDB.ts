@@ -11,6 +11,9 @@ export class FirebaseDB<T extends IHasId> {
 
   get = (collection: string) => this.db.collection(collection).get();
 
+  getById = (collection: string) => (id: string) =>
+    this.db.collection(collection).get({});
+
   set = (collection: string) => (data: T) =>
     this.db
       .collection(collection)

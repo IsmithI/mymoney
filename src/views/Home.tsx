@@ -1,22 +1,32 @@
-import React from "react";
-import { inject, observer } from "mobx-react";
 import { Grid } from "@material-ui/core";
+import { GridProps } from "@material-ui/core/Grid";
+import { unstable_useMediaQuery as useMediaQuery } from "@material-ui/core/useMediaQuery";
+import * as React from "react";
 import { CategoriesWidget } from "../components/widgets/Categories/CategoriesWidget";
+import { TodoList } from "../components/widgets/TodoList/TodoList";
 import { TransactionsWidget } from "../components/widgets/Transactions";
 
-@inject("firebaseStore")
-@observer
-export class Home extends React.Component {
-	render() {
-		return (
-			<Grid container spacing={32}>
-				<Grid item>
-					<CategoriesWidget />
-				</Grid>
-				<Grid item>
-					<TransactionsWidget />
-				</Grid>
-			</Grid>
-		);
-	}
-}
+export const Home = () => {
+  const isMobile = useMediaQuery("(max-width:960px)");
+
+  const props: GridProps = isMobile
+    ? {
+        direction: "column",
+        alignItems: "stretch"
+      }
+    : {};
+
+  return (
+    <Grid container {...props} spacing={32}>
+      <Grid item>
+        <CategoriesWidget />
+      </Grid>
+      <Grid item sm={8} lg={4}>
+        <TransactionsWidget />
+      </Grid>
+      <Grid item sm={8}>
+        <TodoList />
+      </Grid>
+    </Grid>
+  );
+};
