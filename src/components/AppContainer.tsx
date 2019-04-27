@@ -9,8 +9,8 @@ export interface IAppContainerProps extends WithStyles<typeof styles> {
 const styles = (theme: Theme) =>
 	createStyles({
 		root: {
-      background: theme.palette.background.default,
-      padding: '1em',
+			background: theme.palette.background.default,
+			padding: "1em",
 			minHeight: "100vh",
 			overflowX: "hidden"
 		}
@@ -19,7 +19,9 @@ const styles = (theme: Theme) =>
 export const AppContainer = withStyles(styles)(({ classes, children }: IAppContainerProps) => (
 	<div className={classes.root}>
 		<Grid container justify='center' spacing={16}>
-			<Grid item xs={12} sm={10} md={8}>{children}</Grid>
+			<Grid item xs={12} sm={10} lg={8}>
+				{children}
+			</Grid>
 		</Grid>
 	</div>
 ));
