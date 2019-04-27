@@ -12,14 +12,15 @@ const styles = (theme: Theme) =>
 			background: theme.palette.background.default,
 			padding: "1em",
 			minHeight: "100vh",
-			overflowX: "hidden"
+			overflowX: "hidden",
+			boxSizing: "border-box"
 		}
 	});
 
 export const AppContainer = withStyles(styles)(({ classes, children }: Props) => (
 	<div className={classes.root}>
 		<Grid container justify='center' spacing={16}>
-			<Grid item xs={12} sm={10} lg={8}>
+			<Grid item xs={12} md={10}>
 				{children}
 			</Grid>
 		</Grid>

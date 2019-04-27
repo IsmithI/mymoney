@@ -3,7 +3,6 @@ import {
 	Card,
 	CardHeader,
 	Checkbox,
-	CircularProgress,
 	Grid,
 	Icon,
 	IconButton,
@@ -16,6 +15,7 @@ import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { ITodoStore } from "../../../stores/todoStore";
 import { extractDate } from "../../../utils/date";
+import { CollapseLoader } from "../../CollapseLoader/CollapseLoader";
 import { AddTodoItem } from "./AddTodoItem";
 
 interface Props {
@@ -45,10 +45,9 @@ export const TodoList = inject("todoStore")(
 								}
 							/>
 							<Load instantly on={todoStore.load}>
-								{({ loaded, pending }) => (
+								{({ pending }) => (
 									<>
-										{pending && <CircularProgress />}
-										{loaded && (
+										<CollapseLoader loading={pending}>
 											<List disablePadding>
 												<AddTodoItem
 													isOpen={isOpen}
@@ -60,7 +59,10 @@ export const TodoList = inject("todoStore")(
 													<ListItem key={e.id}>
 														<Grid container wrap='nowrap' spacing={8}>
 															<Grid item>
-																<Checkbox checked={e.completed} />
+																<Checkbox
+																	checked={e.completed}
+																	onChange={event => todoStore.toggleTodo(e)(event.target.checked)}
+																/>
 															</Grid>
 															<Grid item>
 																<Typography>{e.title}</Typography>
@@ -70,7 +72,7 @@ export const TodoList = inject("todoStore")(
 													</ListItem>
 												))}
 											</List>
-										)}
+										</CollapseLoader>
 									</>
 								)}
 							</Load>
