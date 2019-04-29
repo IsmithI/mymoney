@@ -14,12 +14,12 @@ export interface IWeatherProps extends CardProps {
 @observer
 export class WeatherWidget extends React.Component<IWeatherProps> {
 	componentDidMount() {
-		this.props.weatherStore.loadWeatherData();
+		this.props.weatherStore.requestCurrentWeather();
 	}
 
 	render() {
 		const {
-			weatherStore: { error, loading, data }
+			weatherStore: { error, loading, weatherData }
 		} = this.props;
 
 		return loading ? (
@@ -27,7 +27,7 @@ export class WeatherWidget extends React.Component<IWeatherProps> {
 		) : error ? (
 			<ErrorContainer message={error} />
 		) : (
-			<WeatherDetails data={data} />
+			<WeatherDetails data={weatherData} />
 		);
 	}
 }

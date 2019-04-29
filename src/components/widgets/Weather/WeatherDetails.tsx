@@ -1,16 +1,19 @@
+import { Card, CardContent, Grid, Typography } from "@material-ui/core";
 import React from "react";
-import { Typography, Grid, CardContent, Card } from "@material-ui/core";
-import { FaIcon } from "../../FaIcon";
+import { RouteChildrenProps, withRouter } from "react-router";
+import { IWeatherData } from "../../../stores/weatherStore";
+import { WeatherIcon } from "../../WeatherIcon";
 
-export const WeatherDetails = ({ data }: any) => {
-	const temperature = Math.round(10 * (data.main.temp - 273)) / 10;
-	const condition = data.weather[0].description;
-	const icon = data.weather[0].main;
-	const isDay = new Date().getTime() > data.sys.sunrise && new Date().getTime() < data.sys.sunset;
+interface Props extends RouteChildrenProps {
+	data: IWeatherData;
+}
+
+export const WeatherDetails = withRouter(({ data, history }: Props) => {
+	const { icon, isDay, condition, temperature } = data;
 
 	return (
 		<Card>
-			<CardContent>
+			<CardContent onClick={() => history.push("weather")}>
 				<Grid container spacing={16} wrap='nowrap'>
 					<Grid item>
 						<Typography variant='h3'>
@@ -25,23 +28,4 @@ export const WeatherDetails = ({ data }: any) => {
 			</CardContent>
 		</Card>
 	);
-};
-
-interface IWeatherIcon {
-	value: string;
-	isDay?: boolean;
-}
-
-const WeatherIcon = ({ value, isDay = true }: IWeatherIcon) => {
-	let icon = "";
-	switch (value.toLowerCase()) {
-		case "rain":
-			icon = "cloud-rain";
-			break;
-		case "clear":
-			icon = isDay ? "sun" : "moon";
-			break;
-	}
-
-	return <FaIcon icon={icon} />;
-};
+});

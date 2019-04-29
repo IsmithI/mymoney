@@ -14,15 +14,18 @@ const styles = (theme: Theme) =>
 			minHeight: "100vh",
 			overflowX: "hidden",
 			boxSizing: "border-box"
+		},
+		container: {
+			margin: "0 auto",
+			[theme.breakpoints.up("md")]: {
+				width: "80%",
+				minHeight: "100%"
+			}
 		}
 	});
 
 export const AppContainer = withStyles(styles)(({ classes, children }: Props) => (
 	<div className={classes.root}>
-		<Grid container justify='center' spacing={16}>
-			<Grid item xs={12} md={10}>
-				{children}
-			</Grid>
-		</Grid>
+		<div className={classes.container}>{children}</div>
 	</div>
 ));
