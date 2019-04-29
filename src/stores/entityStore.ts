@@ -3,7 +3,7 @@ import { db } from "../utils/firebaseDB";
 import { action, observable, computed } from "mobx";
 
 export interface IEntityStore<T extends IHasId> {
-	load: () => Promise<firebase.firestore.QuerySnapshot>;
+	load: () => Promise<firebase.firestore.QueryDocumentSnapshot[]>;
 	save: (data: T) => Promise<any>;
 	add: (data: T) => Promise<any>;
 	entitiesData: T[];
@@ -21,7 +21,10 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
 	}
 
 	@action
-	load = () => db.get(this.entity).then(this.saveEntities);
+	load = () =>
+		this.entities.length > 0
+			? new Promise(r => r()).then(() => this.entities)
+			: db.get(this.entity).then(this.saveEntities);
 
 	@action
 	save = (data: T) => db.set(this.entity)(data);
@@ -40,7 +43,7 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
 	@action
 	saveEntities = (snapshot: firebase.firestore.QuerySnapshot) => {
 		this.entities = snapshot.docs;
-		return snapshot;
+		return this.entities;
 	};
 
 	@computed

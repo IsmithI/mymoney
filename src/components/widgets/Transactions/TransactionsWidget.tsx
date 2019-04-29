@@ -42,11 +42,12 @@ export class TransactionsWidget extends React.Component {
 		} = this.injected;
 
 		return (
-			<Grow in>
-				<Card>
-					<CardHeader title='Recent transactions' titleTypographyProps={{ variant: "title" }} />
-					<Load instantly on={load}>
-						{({ loaded }) => (
+			<Load instantly on={load}>
+				{({ loaded }) => (
+					<Grow in={loaded}>
+						<Card>
+							<CardHeader title='Recent transactions' titleTypographyProps={{ variant: "title" }} />
+
 							<Collapse in={loaded && hasEntities}>
 								<List disablePadding>
 									{entitiesData.map(t => (
@@ -56,21 +57,21 @@ export class TransactionsWidget extends React.Component {
 									))}
 								</List>
 							</Collapse>
-						)}
-					</Load>
 
-					<CardActions>
-						<IconButton onClick={() => this.toggleAddDialog(true)}>
-							<Icon>add_circle</Icon>
-						</IconButton>
-					</CardActions>
-					<AddTransactionDialog
-						open={this.state.showAddDialog}
-						onCancel={() => this.toggleAddDialog(false)}
-						onSubmit={this.createTransaction}
-					/>
-				</Card>
-			</Grow>
+							<CardActions>
+								<IconButton onClick={() => this.toggleAddDialog(true)}>
+									<Icon>add_circle</Icon>
+								</IconButton>
+							</CardActions>
+							<AddTransactionDialog
+								open={this.state.showAddDialog}
+								onCancel={() => this.toggleAddDialog(false)}
+								onSubmit={this.createTransaction}
+							/>
+						</Card>
+					</Grow>
+				)}
+			</Load>
 		);
 	}
 

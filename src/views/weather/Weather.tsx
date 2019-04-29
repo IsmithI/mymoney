@@ -22,9 +22,8 @@ export class Weather extends React.Component<Props> {
 			weatherStore: { weatherData, forecastData }
 		} = this.props;
 
-		console.log(forecastData);
 		return (
-			<Grow in={!!weatherData}>
+			<Grow in={!!weatherData && !!forecastData}>
 				<div className='weather__container'>
 					{weatherData && forecastData && (
 						<>
