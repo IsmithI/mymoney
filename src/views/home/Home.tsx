@@ -4,6 +4,7 @@ import { TransactionsWidget } from "../../components/widgets";
 import { TodoList } from "../../components/widgets/TodoList/TodoList";
 import { WeatherWidget } from "../../components/widgets/Weather";
 import { DigitalClock } from "../../components/widgets/DigitalClock";
+import { Toolbar } from "../../components/Toolbar";
 
 export const Home = () => {
 	return (
@@ -26,6 +27,7 @@ export const Home = () => {
 					<TransactionsWidget />
 				</Grid>
 			</Grid>
+			<Toolbar />
 		</>
 	);
 };
