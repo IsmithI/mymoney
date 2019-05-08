@@ -7,6 +7,7 @@ interface IWeatherIcon {
 export const WeatherIcon = ({ value, isDay = true }: IWeatherIcon) => {
 	let icon = "";
 	switch (value.toLowerCase()) {
+		case "drizzle":
 		case "rain":
 			icon = "cloud-rain";
 			break;

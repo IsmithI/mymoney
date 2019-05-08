@@ -17,7 +17,7 @@ export const Home = () => {
 						<Grid item sm={12} lg={6}>
 							<WeatherWidget />
 						</Grid>
-						<Grid item lg={6}>
+						<Grid item xs lg={6}>
 							<DigitalClock />
 						</Grid>
 					</Grid>

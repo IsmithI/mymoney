@@ -22,8 +22,8 @@ export const WeatherDetails = withRouter(({ data, history }: Props) => {
 							</Typography>
 						</Grid>
 						<Grid item>
-							<Typography variant='title'>{condition}</Typography>
-							<Typography variant='subtitle1'>{temperature}&deg;C</Typography>
+							<Typography variant='subtitle1'>{condition}</Typography>
+							<Typography variant='title'>{temperature}&deg;C</Typography>
 						</Grid>
 					</Grid>
 				</CardContent>
