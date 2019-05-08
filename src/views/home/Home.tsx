@@ -1,8 +1,6 @@
 import { Grid } from "@material-ui/core";
-import { GridProps } from "@material-ui/core/Grid";
-import { unstable_useMediaQuery as useMediaQuery } from "@material-ui/core/useMediaQuery";
 import * as React from "react";
-import { CategoriesWidget, TransactionsWidget } from "../../components/widgets";
+import { TransactionsWidget } from "../../components/widgets";
 import { TodoList } from "../../components/widgets/TodoList/TodoList";
 import { WeatherWidget } from "../../components/widgets/Weather";
 import { DigitalClock } from "../../components/widgets/DigitalClock";
@@ -19,11 +17,8 @@ export const Home = () => {
 						<Grid item sm={12} lg={6}>
 							<WeatherWidget />
 						</Grid>
-						<Grid item sm={12} lg={6}>
+						<Grid item lg={6}>
 							<DigitalClock />
-						</Grid>
-						<Grid item xs>
-							<CategoriesWidget />
 						</Grid>
 					</Grid>
 				</Grid>

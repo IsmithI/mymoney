@@ -135,6 +135,7 @@ class WeatherStore implements IWeatherStore {
 			this.forecast.list
 				.filter((item, i) => i % 8 === 0)
 				.map(item => ({
+					date: new Date(item.dt * 1000),
 					data: item.weather[0],
 					temp: Math.round(10 * (item.main.temp - 273)) / 10
 				}))

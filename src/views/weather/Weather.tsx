@@ -4,6 +4,7 @@ import { IWeatherStore } from "../../stores/weatherStore";
 import { Typography, Grow, Grid, Card, CardContent } from "@material-ui/core";
 import "./Weather.scss";
 import { WeatherIcon } from "../../components/WeatherIcon";
+import { getDayOfWeek } from "../../utils/date";
 
 interface Props {
 	weatherStore?: IWeatherStore;
@@ -47,12 +48,16 @@ export class Weather extends React.Component<Props> {
 											<Grid item key={i}>
 												<div className='weather__day'>
 													<div>
+														<Typography align='center' variant='subheading'>
+															{getDayOfWeek(item.date.getDay())}
+														</Typography>
+														<br />
 														<Typography variant='h4' align='center'>
 															<WeatherIcon value={item.data.main.toLowerCase()} />
 														</Typography>
 														<Typography align='center'>{item.data.description}</Typography>
 													</div>
-													<div>
+													<div className='weather__day_title'>
 														<Typography variant='title' align='center'>
 															{item.temp} &deg; C
 														</Typography>

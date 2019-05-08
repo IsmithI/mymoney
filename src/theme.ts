@@ -25,9 +25,13 @@ export const theme = createMuiTheme({
 		borderRadius: 24
 	},
 	typography: {
-		fontFamily: "Lato, Roboto, sans-serif",
+		fontFamily: "Roboto, sans-serif",
 		title: {
-			fontWeight: "bold"
+			fontWeight: "bold",
+			fontFamily: "Montserrat, sans-serif"
+		},
+		h4: {
+			fontFamily: "Montserrat, sans-serif"
 		}
 	}
 });

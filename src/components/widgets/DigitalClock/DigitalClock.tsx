@@ -33,17 +33,12 @@ export const DigitalClock = withStyles(styles)(({ classes, ...props }: Props) =>
 	return (
 		<Grow in>
 			<Paper className={classes.content} {...props}>
-				<Grid container direction='column' alignItems='center'>
-					<Grid item>
-						<Typography variant='h4'>
-							{time.getHours()}:{startsWithZero(time.getMinutes())}:
-							{startsWithZero(time.getSeconds())}
-						</Typography>
-						<Typography variant='subtitle1'>
-							{time.getDate()} {getDayOfWeek(time.getDay())}
-						</Typography>
-					</Grid>
-				</Grid>
+				<Typography variant='h4'>
+					{time.getHours()}:{startsWithZero(time.getMinutes())}:{startsWithZero(time.getSeconds())}
+				</Typography>
+				<Typography variant='subtitle1'>
+					{time.getDate()} {getDayOfWeek(time.getDay())}
+				</Typography>
 			</Paper>
 		</Grow>
 	);
