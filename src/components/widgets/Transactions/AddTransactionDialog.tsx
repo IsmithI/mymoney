@@ -13,10 +13,8 @@ import {
 } from "@material-ui/core";
 import React, { useState } from "react";
 import { ITransaction } from "../../../interfaces/ITransaction";
-import { CategoriesSelect } from "./CategoriesSelect";
 import { inject, observer } from "mobx-react";
 import { IEntityStore } from "../../../stores/entityStore";
-import { Load } from "@ismithi/react-utils";
 import { ICategory } from "../../../interfaces";
 
 const emptyTransaction: ITransaction = {

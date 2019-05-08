@@ -16,8 +16,8 @@ import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { ITodoStore } from "../../../stores/todoStore";
 import { extractDate } from "../../../utils/date";
-import { CollapseLoader } from "../../CollapseLoader/CollapseLoader";
 import { AddTodoItem } from "./AddTodoItem";
+import { useToggler } from "@ismithi/react-utils";
 
 interface Props {
 	todoStore?: ITodoStore;
@@ -31,50 +31,46 @@ const ListItem = withStyles({
 
 export const TodoList = inject("todoStore")(
 	observer(({ todoStore }: Props) => {
+		const { isOpen, close, open } = useToggler();
+
 		return (
 			<Load instantly on={todoStore.load}>
 				{({ loaded }) => (
 					<Grow in={loaded}>
 						<Card>
-							<Toggler>
-								{({ isOpen, setIsOpen }) => (
-									<>
-										<CardHeader
-											title='Todos'
-											titleTypographyProps={{ variant: "title" }}
-											action={
-												<IconButton onClick={() => setIsOpen(true)}>
-													<Icon>add_circle</Icon>
-												</IconButton>
-											}
-										/>
-										<List disablePadding>
-											<AddTodoItem
-												isOpen={isOpen}
-												onCancel={() => setIsOpen(false)}
-												onSubmit={todo => todoStore.add(todo).then(() => setIsOpen(false))}
-											/>
+							<CardHeader
+								title='Todos'
+								titleTypographyProps={{ variant: "title" }}
+								action={
+									<IconButton onClick={open}>
+										<Icon>add_circle</Icon>
+									</IconButton>
+								}
+							/>
+							<List disablePadding>
+								<AddTodoItem
+									isOpen={isOpen}
+									onCancel={close}
+									onSubmit={todo => todoStore.add(todo).then(close)}
+								/>
 
-											{todoStore.todos.map(e => (
-												<ListItem key={e.id}>
-													<Grid container wrap='nowrap' spacing={8}>
-														<Grid item>
-															<Checkbox
-																checked={e.completed}
-																onChange={event => todoStore.toggleTodo(e)(event.target.checked)}
-															/>
-														</Grid>
-														<Grid item>
-															<Typography>{e.title}</Typography>
-															<Typography>{extractDate(e.created, true)}</Typography>
-														</Grid>
-													</Grid>
-												</ListItem>
-											))}
-										</List>
-									</>
-								)}
-							</Toggler>
+								{todoStore.todos.map(e => (
+									<ListItem key={e.id}>
+										<Grid container wrap='nowrap' spacing={8}>
+											<Grid item>
+												<Checkbox
+													checked={e.completed}
+													onChange={event => todoStore.toggleTodo(e)(event.target.checked)}
+												/>
+											</Grid>
+											<Grid item>
+												<Typography>{e.title}</Typography>
+												<Typography>{extractDate(e.created, true)}</Typography>
+											</Grid>
+										</Grid>
+									</ListItem>
+								))}
+							</List>
 						</Card>
 					</Grow>
 				)}
