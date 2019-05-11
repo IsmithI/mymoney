@@ -9,6 +9,7 @@ export interface IDialogProps<R> extends IDialog<R> {
   title?: string | ReactNode;
   fields?: IField[];
   footer?: ReactNode;
+  fullScreen?: boolean;
 }
 
 interface IDialogState<R> {
@@ -29,10 +30,10 @@ export class Dialog<R> extends React.Component<IDialogProps<R>, IDialogState<R>>
   }
 
   public render(): React.ReactNode {
-    const { isOpen, onCancel, title, fields, footer } = this.props;
+    const { isOpen, onCancel, title, fields, footer, fullScreen } = this.props;
 
     return (
-      <MuiDialog open={isOpen} onClose={onCancel}>
+      <MuiDialog open={isOpen} onClose={onCancel} fullScreen={fullScreen}>
         <form ref={this.form} onSubmit={this.handleFormSubmit}>
           <DialogTitle>
             {title}

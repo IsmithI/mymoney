@@ -1,5 +1,5 @@
 import { Load } from "@ismithi/react-utils";
-import { Card, CardActions, CardHeader, Grow, Icon, IconButton } from "@material-ui/core";
+import { Card, CardHeader, Grow, Icon, IconButton } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
 import React from "react";
 import { ITransaction } from "../../../interfaces";
@@ -44,13 +44,16 @@ export class TransactionsWidget extends React.Component {
         {({ loaded }) => (
           <Grow in={loaded && hasEntities}>
             <Card>
-              <CardHeader title="Recent transactions" titleTypographyProps={{ variant: "title" }}/>
-              <TransactionsList transactions={entitiesData}/>
-              <CardActions>
-                <IconButton onClick={this.openDialog}>
-                  <Icon>add_circle</Icon>
-                </IconButton>
-              </CardActions>
+              <CardHeader
+                title="Recent transactions"
+                titleTypographyProps={{ variant: "title" }}
+                action={
+                  <IconButton onClick={this.openDialog}>
+                    <Icon>add_circle</Icon>
+                  </IconButton>
+                }
+              />
+              <TransactionsList items={entitiesData}/>
               <AddTransactionDialog
                 isOpen={this.state.showAddDialog}
                 onCancel={this.closeDialog}
