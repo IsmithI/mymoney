@@ -1,12 +1,11 @@
-import { ReactNode } from "react";
 import React from "react";
 
-interface Props {
+interface IProps {
   value: any;
   children: any;
 }
 
-export const Switch = ({ children, value }: Props) =>
+export const Switch = ({ children, value }: IProps) =>
   React.Children.toArray(children).find(
-    child => !child.props.on || child.props.on === value
+    (child) => !child.props.on || child.props.on === value,
   );

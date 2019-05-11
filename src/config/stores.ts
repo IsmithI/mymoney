@@ -1,3 +1,3 @@
 export const config = {
-	cache: true
+  cache: true,
 };

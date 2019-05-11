@@ -1,1 +1,1 @@
-export * from './TransactionsWidget';
+export * from "./TransactionsWidget";

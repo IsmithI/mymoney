@@ -1,22 +1,22 @@
 .weather__container {
-	margin-top: 15%;
-	padding: 0 0.5em;
+  margin-top: 15%;
+  padding: 0 0.5em;
 }
 
 .weather__heading {
-	color: #fff;
-	font-size: 3rem;
+  color: #fff;
+  font-size: 3rem;
 }
 
 .weather__day {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-	flex-wrap: nowrap;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
 }
 
 .weather__day_title {
-	margin-top: 0.6em;
+  margin-top: 0.6em;
 }

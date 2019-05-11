@@ -1,82 +1,76 @@
 import { Load } from "@ismithi/react-utils";
-import {
-	Card,
-	CardActions,
-	CardHeader,
-	Collapse,
-	Grow,
-	Icon,
-	IconButton,
-	List,
-	ListItem
-} from "@material-ui/core";
+import { Card, CardHeader, Grow, Icon, IconButton } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
 import React from "react";
-import { ITransaction } from "../../../interfaces/ITransaction";
+import { ITransaction } from "../../../interfaces";
 import { ITransactionsStore } from "../../../stores/transactionsStore";
-import { TransactionListItem } from "./TransactionListItem";
 import { AddTransactionDialog } from "./AddTransactionDialog";
+import { TransactionsList } from "./TransactionsList";
 
 interface ITransactionsWidgetProps {
-	transactionsStore: ITransactionsStore;
+  transactionsStore: ITransactionsStore;
 }
 
 @inject("transactionsStore")
 @observer
 export class TransactionsWidget extends React.Component {
-	state = {
-		showAddDialog: false
-	};
+  public state = {
+    showAddDialog: false,
+  };
 
-	get injected() {
-		return this.props as ITransactionsWidgetProps;
-	}
+  get injected() {
+    return this.props as ITransactionsWidgetProps;
+  }
 
-	toggleAddDialog = (value: boolean = !this.state.showAddDialog) => {
-		this.setState({ showAddDialog: value });
-	};
+  public toggleAddDialog = (value: boolean = !this.state.showAddDialog) => {
+    this.setState({ showAddDialog: value });
+  }
 
-	render() {
-		const {
-			transactionsStore: { entitiesData, hasEntities, load }
-		} = this.injected;
+  public closeDialog = () => {
+    this.toggleAddDialog(false);
+  }
 
-		return (
-			<Load instantly on={load}>
-				{({ loaded }) => (
-					<Grow in={loaded}>
-						<Card>
-							<CardHeader title='Recent transactions' titleTypographyProps={{ variant: "title" }} />
+  public openDialog = () => {
+    this.toggleAddDialog(true);
+  }
 
-							<Collapse in={loaded && hasEntities}>
-								<List disablePadding>
-									{entitiesData.map(t => (
-										<ListItem key={t.id}>
-											<TransactionListItem {...{ ...t, date: t.date || new Date() }} />
-										</ListItem>
-									))}
-								</List>
-							</Collapse>
+  public render() {
+    const {
+      transactionsStore: { entitiesData, hasEntities, load },
+    } = this.injected;
 
-							<CardActions>
-								<IconButton onClick={() => this.toggleAddDialog(true)}>
-									<Icon>add_circle</Icon>
-								</IconButton>
-							</CardActions>
-							<AddTransactionDialog
-								open={this.state.showAddDialog}
-								onCancel={() => this.toggleAddDialog(false)}
-								onSubmit={this.createTransaction}
-							/>
-						</Card>
-					</Grow>
-				)}
-			</Load>
-		);
-	}
+    return (
+      <Load instantly={true} on={load}>
+        {({ loaded }) => (
+          <Grow in={loaded && hasEntities}>
+            <Card>
+              <CardHeader
+                title="Recent transactions"
+                titleTypographyProps={{ variant: "title" }}
+                action={
+                  <IconButton onClick={this.openDialog}>
+                    <Icon>add_circle</Icon>
+                  </IconButton>
+                }
+              />
+              <TransactionsList items={entitiesData}/>
+              <AddTransactionDialog
+                isOpen={this.state.showAddDialog}
+                onCancel={this.closeDialog}
+                onSubmit={this.createTransaction}
+              />
+            </Card>
+          </Grow>
+        )}
+      </Load>
+    );
+  }
 
-	createTransaction = (data: ITransaction) => {
-		const { transactionsStore } = this.injected;
-		transactionsStore.add(data).then(transactionsStore.load);
-	};
+  public createTransaction = (data: ITransaction) => {
+    const { transactionsStore } = this.injected;
+    return transactionsStore.add({
+      ...data,
+      date: new Date(),
+    }).then(transactionsStore.load).then(() => this.toggleAddDialog(false));
+  }
 }
