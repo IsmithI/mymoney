@@ -1,21 +1,11 @@
 import { Load } from "@ismithi/react-utils";
-import {
-	Card,
-	CardActions,
-	CardHeader,
-	Collapse,
-	Grow,
-	Icon,
-	IconButton,
-	List,
-	ListItem
-} from "@material-ui/core";
+import { Card, CardActions, CardHeader, Grow, Icon, IconButton } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
 import React from "react";
-import { ITransaction } from "../../../interfaces/ITransaction";
+import { ITransaction } from "../../../interfaces";
 import { ITransactionsStore } from "../../../stores/transactionsStore";
-import { TransactionListItem } from "./TransactionListItem";
 import { AddTransactionDialog } from "./AddTransactionDialog";
+import { TransactionsList } from "./TransactionsList";
 
 interface ITransactionsWidgetProps {
 	transactionsStore: ITransactionsStore;
@@ -44,27 +34,17 @@ export class TransactionsWidget extends React.Component {
 		return (
 			<Load instantly on={load}>
 				{({ loaded }) => (
-					<Grow in={loaded}>
+					<Grow in={loaded && hasEntities}>
 						<Card>
-							<CardHeader title='Recent transactions' titleTypographyProps={{ variant: "title" }} />
-
-							<Collapse in={loaded && hasEntities}>
-								<List disablePadding>
-									{entitiesData.map(t => (
-										<ListItem key={t.id}>
-											<TransactionListItem {...{ ...t, date: t.date || new Date() }} />
-										</ListItem>
-									))}
-								</List>
-							</Collapse>
-
+							<CardHeader title='Recent transactions' titleTypographyProps={{ variant: "title" }}/>
+							<TransactionsList transactions={entitiesData}/>
 							<CardActions>
 								<IconButton onClick={() => this.toggleAddDialog(true)}>
 									<Icon>add_circle</Icon>
 								</IconButton>
 							</CardActions>
 							<AddTransactionDialog
-								open={this.state.showAddDialog}
+								isOpen={this.state.showAddDialog}
 								onCancel={() => this.toggleAddDialog(false)}
 								onSubmit={this.createTransaction}
 							/>
@@ -77,6 +57,9 @@ export class TransactionsWidget extends React.Component {
 
 	createTransaction = (data: ITransaction) => {
 		const { transactionsStore } = this.injected;
-		transactionsStore.add(data).then(transactionsStore.load);
+		return transactionsStore.add({
+			...data,
+			date: new Date()
+		}).then(transactionsStore.load).then(() => this.toggleAddDialog(false));
 	};
 }

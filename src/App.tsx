@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { StoresProvider } from "./providers";
 import { AppRouter, AppContainer } from "./components";
 import { MuiThemeProvider } from "@material-ui/core";
