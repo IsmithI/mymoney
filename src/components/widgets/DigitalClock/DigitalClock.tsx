@@ -1,28 +1,21 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import {
-	Typography,
-	createStyles,
-	withStyles,
-	WithStyles,
-	Paper,
-	Grow
-} from "@material-ui/core";
+import { createStyles, Grow, Paper, Typography, withStyles, WithStyles } from "@material-ui/core";
 import { PaperProps } from "@material-ui/core/Paper";
-import { startsWithZero } from "../../../utils/number";
+import * as React from "react";
+import { useEffect, useState } from "react";
 import { getDayOfWeek } from "../../../utils/date";
+import { startsWithZero } from "../../../utils/number";
 
 const styles = createStyles({
 	content: {
-		padding: "0.8em"
-	}
+		padding: "0.8em",
+	},
 });
 
-interface Props extends PaperProps, WithStyles<typeof styles> {
+interface IProps extends PaperProps, WithStyles<typeof styles> {
 	classes: any;
 }
 
-export const DigitalClock = withStyles(styles)(({ classes, ...props }: Props) => {
+export const DigitalClock = withStyles(styles)(({ classes, ...props }: IProps) => {
 	const [time, updateTime] = useState(new Date());
 	useEffect(() => {
 		const id = setInterval(() => updateTime(new Date()), 1000);
@@ -30,12 +23,12 @@ export const DigitalClock = withStyles(styles)(({ classes, ...props }: Props) =>
 	});
 
 	return (
-		<Grow in>
+		<Grow in={true}>
 			<Paper className={classes.content} {...props}>
-				<Typography variant='h4'>
+				<Typography variant="h4">
 					{time.getHours()}:{startsWithZero(time.getMinutes())}:{startsWithZero(time.getSeconds())}
 				</Typography>
-				<Typography variant='subtitle1'>
+				<Typography variant="subtitle1">
 					{time.getDate()} {getDayOfWeek(time.getDay())}
 				</Typography>
 			</Paper>

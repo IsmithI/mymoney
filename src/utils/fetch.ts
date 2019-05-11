@@ -1,4 +1,4 @@
-interface TypedResponse<T = any> extends Response {
+interface ITypedResponse<T = any> extends Response {
 	/**
 	 * this will override `json` method from `Body` that is extended by `Response`
 	 * interface Body {
@@ -8,20 +8,20 @@ interface TypedResponse<T = any> extends Response {
 	json<P = T>(): Promise<P>;
 }
 
-interface Payload<T> {
+interface IPayload<T> {
 	status: number;
 	payload: T;
 }
 
-declare function fetch<T>(...args: any): Promise<TypedResponse<T>>;
+declare function fetch<T>(...args: any): Promise<ITypedResponse<T>>;
 
-export const get = <T>(url: string) => fetch<Payload<T>>(url).then(checkJSON);
+export const get = <T>(url: string) => fetch<IPayload<T>>(url).then(checkJSON);
 
 export const put = (url: string, data: any) =>
 	fetch(url, {
 		method: "put",
-		body: JSON.stringify(data)
-	}).then(res => res.json());
+		body: JSON.stringify(data),
+	}).then((res) => res.json());
 
 const checkJSON = (res: Response) => {
 	try {

@@ -1,9 +1,8 @@
-import { ReactNode } from "react";
-import React from "react";
+import React, { ReactNode } from "react";
 
-interface Props {
-  children: ReactNode;
-  on?: any;
+interface IProps {
+	children: ReactNode;
+	on?: any;
 }
 
-export const Route = ({ children }: Props) => <>{children}</>;
+export const Route = ({ children }: IProps) => <>{children}</>;

@@ -10,40 +10,44 @@ import {
 	List,
 	ListItem as MuiListItem,
 	Typography,
-	withStyles
+	withStyles,
 } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
 import * as React from "react";
+import { ITodo } from "../../../interfaces/ITodo";
 import { ITodoStore } from "../../../stores/todoStore";
 import { extractDate } from "../../../utils/date";
 import { AddTodoItem } from "./AddTodoItem";
-import { ITodo } from "../../../interfaces/ITodo";
 
-interface Props {
+interface IProps {
 	todoStore?: ITodoStore;
 }
 
 const ListItem = withStyles({
 	root: {
-		padding: "0.3em"
-	}
+		padding: "0.3em",
+	},
 })(MuiListItem);
 
 export const TodoList = inject("todoStore")(
-	observer(({ todoStore }: Props) => {
+	observer(({ todoStore }: IProps) => {
 
-		const handleItemSave = (item: ITodo, close: () => void) => {
+		const handleItemSave = (close: () => void) => (item: ITodo) => {
 			return todoStore.add({ ...item, created: new Date(), completed: !!item.completed }).then(close);
 		};
+		const handleTodoToggle = (item: ITodo) => (e: React.ChangeEvent<HTMLInputElement>) => {
+			return todoStore.toggleTodo(item)(e.target.checked);
+		};
+
 		return (
 			<Toggler>
 				{({ isOpen, close, open }) => (
-					<Load instantly on={todoStore.load}>
+					<Load instantly={true} on={todoStore.load}>
 						{({ loaded }) => (
 							<Grow in={loaded}>
 								<Card>
 									<CardHeader
-										title='Todos'
+										title="Todos"
 										titleTypographyProps={{ variant: "title" }}
 										action={
 											<IconButton onClick={open}>
@@ -51,22 +55,22 @@ export const TodoList = inject("todoStore")(
 											</IconButton>
 										}
 									/>
-									<List disablePadding>
+									<List disablePadding={true}>
 										<AddTodoItem
 											isOpen={isOpen}
 											onCancel={close}
-											onSubmit={(item: ITodo) => handleItemSave(item, close)}
+											onSubmit={handleItemSave(close)}
 										/>
-										{todoStore.todos.map(e => (
+										{todoStore.todos.map((e) => (
 											<ListItem key={e.id}>
-												<Grid container wrap='nowrap' spacing={8}>
-													<Grid item>
+												<Grid container={true} wrap="nowrap" spacing={8}>
+													<Grid item={true}>
 														<Checkbox
 															checked={e.completed}
-															onChange={event => todoStore.toggleTodo(e)(event.target.checked)}
+															onChange={handleTodoToggle(e)}
 														/>
 													</Grid>
-													<Grid item>
+													<Grid item={true}>
 														<Typography>{e.title}</Typography>
 														<Typography>{extractDate(e.created, true)}</Typography>
 													</Grid>
@@ -81,5 +85,5 @@ export const TodoList = inject("todoStore")(
 				)}
 			</Toggler>
 		);
-	})
+	}),
 );

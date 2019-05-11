@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { IField } from "../../interfaces/IField";
 import { Checkbox, FormControl, FormControlLabel, FormGroup, Grid, Input, InputLabel } from "@material-ui/core";
+import * as React from "react";
+import { IField } from "../../interfaces/IField";
 import { Route, Switch } from "../switch";
 
 export interface IFieldsList<R> {
@@ -14,34 +14,38 @@ export function FieldsList<R>({ fields, record, onChange }: IFieldsList<R>) {
 		onChange(key)(e.target.value);
 	};
 
+	const handleCheckboxChange = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+		onChange(key)(e.target.checked);
+	};
+
 	return (
-		<Grid container spacing={8}>
-			{fields.map(field => (
-				<Grid item xs={6} key={field.key}>
+		<Grid container={true} spacing={8}>
+			{fields.map((field) => (
+				<Grid item={true} xs={6} key={field.key}>
 					{field.render ? field.render({ fields, record, onChange }) : (
 						<FormControl>
 							<Switch value={field.type}>
-								<Route on='text'>
+								<Route on="text">
 									<InputLabel htmlFor={field.key}>{field.title}</InputLabel>
 									<Input
 										id={field.key}
-										type='text'
+										type="text"
 										value={record && record.hasOwnProperty(field.key) ? record[field.key] : ""}
 										onChange={handleInputChange(field.key)}
 										aria-describedby={field.key}
 									/>
 								</Route>
-								<Route on={'number'}>
+								<Route on={"number"}>
 									<InputLabel htmlFor={field.key}>{field.title}</InputLabel>
 									<Input
 										id={field.key}
-										type='number'
+										type="number"
 										value={record && record.hasOwnProperty(field.key) ? record[field.key] : ""}
 										onChange={handleInputChange(field.key)}
 										aria-describedby={field.key}
 									/>
 								</Route>
-								<Route on='boolean'>
+								<Route on="boolean">
 									<FormGroup>
 										{field.title ?
 											<FormControlLabel
@@ -50,7 +54,7 @@ export function FieldsList<R>({ fields, record, onChange }: IFieldsList<R>) {
 													<Checkbox
 														value={field.key}
 														checked={record ? !!record[field.key] : false}
-														onChange={e => onChange(field.key)(e.target.checked)}
+														onChange={handleCheckboxChange(field.key)}
 													/>
 												}
 											/>
@@ -58,7 +62,7 @@ export function FieldsList<R>({ fields, record, onChange }: IFieldsList<R>) {
 											<Checkbox
 												value={field.key}
 												checked={record ? !!record[field.key] : false}
-												onChange={e => onChange(field.key)(e.target.checked)}
+												onChange={handleCheckboxChange(field.key)}
 											/>}
 									</FormGroup>
 								</Route>
@@ -68,5 +72,5 @@ export function FieldsList<R>({ fields, record, onChange }: IFieldsList<R>) {
 				</Grid>
 			))}
 		</Grid>
-	)
+	);
 }

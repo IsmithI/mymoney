@@ -1,3 +1,3 @@
 export interface IHasId {
-  id: string;
+	id: string;
 }

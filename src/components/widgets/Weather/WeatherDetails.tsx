@@ -1,29 +1,30 @@
-import { Card, CardContent, Grid, Typography, Grow } from "@material-ui/core";
+import { Card, CardContent, Grid, Grow, Typography } from "@material-ui/core";
 import React from "react";
 import { RouteChildrenProps, withRouter } from "react-router";
 import { IWeatherData } from "../../../stores/weatherStore";
 import { WeatherIcon } from "../../WeatherIcon";
 
-interface Props extends RouteChildrenProps {
+interface IProps extends RouteChildrenProps {
 	data: IWeatherData;
 }
 
-export const WeatherDetails = withRouter(({ data, history }: Props) => {
+export const WeatherDetails = withRouter(({ data, history }: IProps) => {
 	const { icon, isDay, condition, temperature } = data;
+	const nextPage = () => history.push("weather");
 
 	return (
-		<Grow in>
+		<Grow in={true}>
 			<Card>
-				<CardContent onClick={() => history.push("weather")}>
-					<Grid container spacing={16} wrap='nowrap'>
-						<Grid item>
-							<Typography variant='h3'>
-								<WeatherIcon value={icon} isDay={isDay} />
+				<CardContent onClick={nextPage}>
+					<Grid container={true} spacing={16} wrap="nowrap">
+						<Grid item={true}>
+							<Typography variant="h3">
+								<WeatherIcon value={icon} isDay={isDay}/>
 							</Typography>
 						</Grid>
-						<Grid item>
-							<Typography variant='subtitle1'>{condition}</Typography>
-							<Typography variant='title'>{temperature}&deg;C</Typography>
+						<Grid item={true}>
+							<Typography variant="subtitle1">{condition}</Typography>
+							<Typography variant="title">{temperature}&deg;C</Typography>
 						</Grid>
 					</Grid>
 				</CardContent>

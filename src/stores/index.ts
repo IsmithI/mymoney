@@ -11,5 +11,5 @@ export const stores = {
 	categoriesStore: new EntityStore<ICategory>("categories"),
 	transactionsStore,
 	todoStore,
-	weatherStore
+	weatherStore,
 };

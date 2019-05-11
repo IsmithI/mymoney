@@ -1,8 +1,8 @@
-import { IDialog } from "../../interfaces/IDialog";
+import { Button, Dialog as MuiDialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
 import * as React from "react";
 import { createRef, ReactNode, RefObject } from "react";
+import { IDialog } from "../../interfaces/IDialog";
 import { IField } from "../../interfaces/IField";
-import { Button, Dialog as MuiDialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import { FieldsList } from "./FieldsList";
 
 export interface IDialogProps<R> extends IDialog<R> {
@@ -11,24 +11,24 @@ export interface IDialogProps<R> extends IDialog<R> {
 	footer?: ReactNode;
 }
 
-interface DialogState<R> {
+interface IDialogState<R> {
 	record: R;
 }
 
-export class Dialog<R> extends React.Component<IDialogProps<R>, DialogState<R>> {
+export class Dialog<R> extends React.Component<IDialogProps<R>, IDialogState<R>> {
 
-	state = {
-		record: null
+	public state = {
+		record: null,
 	};
 
-	form: RefObject<HTMLFormElement>;
+	public form: RefObject<HTMLFormElement>;
 
 	constructor(props: IDialogProps<R>) {
 		super(props);
 		this.form = createRef();
 	}
 
-	render(): React.ReactNode {
+	public render(): React.ReactNode {
 		const { isOpen, onCancel, title, fields, footer } = this.props;
 
 		return (
@@ -49,21 +49,21 @@ export class Dialog<R> extends React.Component<IDialogProps<R>, DialogState<R>> 
 					</DialogActions>
 				</form>
 			</MuiDialog>
-		)
+		);
 	}
 
-	handleFormSubmit = (e: React.FormEvent) => {
+	public handleFormSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		this.handleSubmit();
 		return false;
-	};
+	}
 
-	handleSubmit = () => {
-		this.props.onSubmit(this.state.record)
-	};
+	public handleSubmit = () => {
+		this.props.onSubmit(this.state.record);
+	}
 
-	updateRecord = (key: string) => (value: any) => {
-		this.setState({ record: { ...this.state.record, [key]: value } })
+	public updateRecord = (key: string) => (value: any) => {
+		this.setState({ record: { ...this.state.record, [key]: value } });
 	}
 }
 
@@ -75,9 +75,8 @@ interface IFooter {
 function DefaultFooter({ onClose, onSubmit }: IFooter) {
 	return (
 		<>
-			<Button color='primary' onClick={onClose}>close</Button>
-			<Button color='primary' onClick={onSubmit} variant='contained'>OK</Button>
+			<Button color="primary" onClick={onClose}>close</Button>
+			<Button color="primary" onClick={onSubmit} variant="contained">OK</Button>
 		</>
-	)
+	);
 }
-

@@ -14,38 +14,46 @@ interface ITransactionsWidgetProps {
 @inject("transactionsStore")
 @observer
 export class TransactionsWidget extends React.Component {
-	state = {
-		showAddDialog: false
+	public state = {
+		showAddDialog: false,
 	};
 
 	get injected() {
 		return this.props as ITransactionsWidgetProps;
 	}
 
-	toggleAddDialog = (value: boolean = !this.state.showAddDialog) => {
+	public toggleAddDialog = (value: boolean = !this.state.showAddDialog) => {
 		this.setState({ showAddDialog: value });
-	};
+	}
 
-	render() {
+	public closeDialog = () => {
+		this.toggleAddDialog(false);
+	}
+
+	public openDialog = () => {
+		this.toggleAddDialog(true);
+	}
+
+	public render() {
 		const {
-			transactionsStore: { entitiesData, hasEntities, load }
+			transactionsStore: { entitiesData, hasEntities, load },
 		} = this.injected;
 
 		return (
-			<Load instantly on={load}>
+			<Load instantly={true} on={load}>
 				{({ loaded }) => (
 					<Grow in={loaded && hasEntities}>
 						<Card>
-							<CardHeader title='Recent transactions' titleTypographyProps={{ variant: "title" }}/>
+							<CardHeader title="Recent transactions" titleTypographyProps={{ variant: "title" }}/>
 							<TransactionsList transactions={entitiesData}/>
 							<CardActions>
-								<IconButton onClick={() => this.toggleAddDialog(true)}>
+								<IconButton onClick={this.openDialog}>
 									<Icon>add_circle</Icon>
 								</IconButton>
 							</CardActions>
 							<AddTransactionDialog
 								isOpen={this.state.showAddDialog}
-								onCancel={() => this.toggleAddDialog(false)}
+								onCancel={this.closeDialog}
 								onSubmit={this.createTransaction}
 							/>
 						</Card>
@@ -55,11 +63,11 @@ export class TransactionsWidget extends React.Component {
 		);
 	}
 
-	createTransaction = (data: ITransaction) => {
+	public createTransaction = (data: ITransaction) => {
 		const { transactionsStore } = this.injected;
 		return transactionsStore.add({
 			...data,
-			date: new Date()
+			date: new Date(),
 		}).then(transactionsStore.load).then(() => this.toggleAddDialog(false));
-	};
+	}
 }

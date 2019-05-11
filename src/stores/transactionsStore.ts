@@ -1,6 +1,6 @@
+import { computed } from "mobx";
 import { ITransaction } from "./../interfaces/ITransaction";
 import { EntityStore } from "./entityStore";
-import { computed } from "mobx";
 
 export interface ITransactionsStore extends TransactionsStore {
 	lastTransactions: ITransaction[];
@@ -20,11 +20,11 @@ class TransactionsStore extends EntityStore<ITransaction> {
 
 	@computed
 	public get entitiesData() {
-		return this.entities.map(e => {
+		return this.entities.map((e) => {
 			return {
 				id: e.id,
 				...(e.data() as ITransaction),
-				date: new Date(e.data().date.seconds * 1000)
+				date: new Date(e.data().date.seconds * 1000),
 			} as ITransaction;
 		});
 	}

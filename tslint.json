@@ -1,0 +1,22 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended", "tslint-react"
+  ],
+  "jsRules": {},
+  "rules": {
+    "jsx-wrap-multiline": true,
+    "jsx-no-multiline-js": false,
+    "indent": [
+      true,
+      "tabs"
+    ],
+    "arrow-parens": false,
+    "object-literal-sort-keys": false,
+    "eofline": false
+  },
+  "rulesDirectory": [],
+  "linterOptions": {
+    "exclude": ["src/serviceWorker.ts", "src/**/*.d.ts"]
+  }
+}

@@ -23,7 +23,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "tslint 'src/**/*.{js,jsx,ts,tsx}' --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,6 +36,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@types/react-router-dom": "^4.3.2"
+    "@types/react-router-dom": "^4.3.2",
+    "tslint": "^5.16.0",
+    "tslint-react": "^4.0.0"
   }
 }

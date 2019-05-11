@@ -4,13 +4,13 @@ import { PaletteOptions } from "@material-ui/core/styles/createPalette";
 const primary: PaletteOptions["primary"] = {
 	main: "#37474f",
 	light: "#62727b",
-	dark: "#102027"
+	dark: "#102027",
 };
 
 const secondary: PaletteOptions["secondary"] = {
 	main: "#ffab00",
 	light: "#ffdd4b",
-	dark: "#c67c00"
+	dark: "#c67c00",
 };
 
 export const theme = createMuiTheme({
@@ -18,20 +18,20 @@ export const theme = createMuiTheme({
 		primary,
 		secondary,
 		background: {
-			default: primary.light
-		}
+			default: primary.light,
+		},
 	},
 	shape: {
-		borderRadius: 24
+		borderRadius: 24,
 	},
 	typography: {
 		fontFamily: "Roboto, sans-serif",
 		title: {
 			fontWeight: "bold",
-			fontFamily: "Montserrat, sans-serif"
+			fontFamily: "Montserrat, sans-serif",
 		},
 		h4: {
-			fontFamily: "Montserrat, sans-serif"
-		}
-	}
+			fontFamily: "Montserrat, sans-serif",
+		},
+	},
 });

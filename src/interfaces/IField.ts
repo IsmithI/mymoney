@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { IFieldsList } from "../components/Dialog/FieldsList";
 
-type FieldType = 'text' | 'number' | 'date' | 'boolean' | 'entity';
+type FieldType = "text" | "number" | "date" | "boolean" | "entity";
 
 export interface IField {
 	title: string;
