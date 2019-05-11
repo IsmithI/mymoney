@@ -8,16 +8,16 @@ import { DigitalClock } from "../../components/widgets/DigitalClock";
 export const Home = () => {
 	return (
 		<>
-			<Grid container spacing={16}>
+			<Grid container spacing={32}>
 				<Grid item xs={12} sm={8} lg={4}>
 					<TodoList />
 				</Grid>
 				<Grid item xs={12} sm={4}>
-					<Grid container spacing={16} justify='center'>
+					<Grid container spacing={32} justify='center'>
 						<Grid item sm={12} lg={6}>
 							<WeatherWidget />
 						</Grid>
-						<Grid item xs lg={6}>
+						<Grid item xs={8} sm lg={6}>
 							<DigitalClock />
 						</Grid>
 					</Grid>
