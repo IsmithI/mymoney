@@ -111,14 +111,15 @@ class WeatherStore implements IWeatherStore {
 
 	@computed
 	get weatherData() {
+		const now = Math.round((new Date().getTime()) / 1000);
 		return (
 			this.data && {
 				temperature: Math.round(10 * (this.data.main.temp - 273)) / 10,
 				condition: this.data.weather[0].description,
 				icon: this.data.weather[0].main,
 				isDay:
-					new Date().getTime() > this.data.sys.sunrise &&
-					new Date().getTime() < this.data.sys.sunset
+					now > this.data.sys.sunrise &&
+					now < this.data.sys.sunset
 			}
 		);
 	}

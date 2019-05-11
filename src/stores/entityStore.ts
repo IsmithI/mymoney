@@ -11,7 +11,7 @@ export interface IEntityStore<T extends IHasId> {
 }
 
 export class EntityStore<T extends IHasId> implements IEntityStore<T> {
-	private entity: string;
+	private readonly entity: string;
 
 	@observable
 	public entities: firebase.firestore.QueryDocumentSnapshot[] = [];

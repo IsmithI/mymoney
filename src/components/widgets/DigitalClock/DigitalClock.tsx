@@ -6,7 +6,6 @@ import {
 	withStyles,
 	WithStyles,
 	Paper,
-	Grid,
 	Grow
 } from "@material-ui/core";
 import { PaperProps } from "@material-ui/core/Paper";
