@@ -6,11 +6,11 @@ import { StoresProvider } from "./providers";
 import { theme } from "./theme";
 
 export default () => (
-	<StoresProvider>
-		<MuiThemeProvider theme={theme}>
-			<AppContainer>
-				<AppRouter/>
-			</AppContainer>
-		</MuiThemeProvider>
-	</StoresProvider>
+  <StoresProvider>
+    <MuiThemeProvider theme={theme}>
+      <AppContainer>
+        <AppRouter/>
+      </AppContainer>
+    </MuiThemeProvider>
+  </StoresProvider>
 );

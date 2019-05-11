@@ -5,48 +5,50 @@ import { action, computed, observable } from "mobx";
 import { config } from "../config/firebase";
 
 export interface IFirebaseStore {
-	userIsLoggedIn: boolean;
-	loginWithGoogle: () => void;
-	userInfo: any;
+  userIsLoggedIn: boolean;
+  loginWithGoogle: () => void;
+  userInfo: any;
 }
 
 class FirebaseStore implements IFirebaseStore {
 
-	@observable public user: any;
+  @observable public user: any;
 
-	public auth: firebase.auth.Auth;
-	public authProvider: firebase.auth.GoogleAuthProvider;
+  public auth: firebase.auth.Auth;
+  public authProvider: firebase.auth.GoogleAuthProvider;
 
-	constructor() {
-		app.initializeApp(config);
+  constructor() {
+    app.initializeApp(config);
 
-		this.auth = app.auth();
+    this.auth = app.auth();
 
-		this.authProvider = new app.auth.GoogleAuthProvider();
-		this.auth.onAuthStateChanged((user) => {
-			this.saveUser(user);
-			if (!user) { this.loginWithGoogle(); }
-		});
-	}
+    this.authProvider = new app.auth.GoogleAuthProvider();
+    this.auth.onAuthStateChanged((user) => {
+      this.saveUser(user);
+      if (!user) {
+        this.loginWithGoogle();
+      }
+    });
+  }
 
-	public loginWithGoogle = () => {
-		this.auth.signInWithPopup(this.authProvider);
-	}
+  public loginWithGoogle = () => {
+    this.auth.signInWithPopup(this.authProvider);
+  }
 
-	@computed
-	get userInfo() {
-		return this.user;
-	}
+  @computed
+  get userInfo() {
+    return this.user;
+  }
 
-	@computed
-	get userIsLoggedIn() {
-		return !!this.user;
-	}
+  @computed
+  get userIsLoggedIn() {
+    return !!this.user;
+  }
 
-	@action
-	public saveUser = (user: any) => {
-		this.user = user;
-	}
+  @action
+  public saveUser = (user: any) => {
+    this.user = user;
+  }
 
 }
 

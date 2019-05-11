@@ -9,7 +9,7 @@
     "jsx-no-multiline-js": false,
     "indent": [
       true,
-      "tabs"
+      "spaces"
     ],
     "arrow-parens": false,
     "object-literal-sort-keys": false,

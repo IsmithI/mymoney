@@ -4,7 +4,7 @@ import { IHasChildren } from "../interfaces/IHasChildren";
 import { stores } from "../stores";
 
 export const StoresProvider = ({ children }: IHasChildren) => (
-	<Provider {...stores}>
-		{children}
-	</Provider>
+  <Provider {...stores}>
+    {children}
+  </Provider>
 );

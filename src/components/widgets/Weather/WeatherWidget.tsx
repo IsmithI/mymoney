@@ -7,27 +7,27 @@ import { ErrorContainer } from "./ErrorContainerProps";
 import { WeatherDetails } from "./WeatherDetails";
 
 export interface IWeatherProps extends CardProps {
-	weatherStore?: IWeatherStore;
+  weatherStore?: IWeatherStore;
 }
 
 @inject("weatherStore")
 @observer
 export class WeatherWidget extends React.Component<IWeatherProps> {
-	public componentDidMount() {
-		this.props.weatherStore.requestCurrentWeather();
-	}
+  public componentDidMount() {
+    this.props.weatherStore.requestCurrentWeather();
+  }
 
-	public render() {
-		const {
-			weatherStore: { error, loading, weatherData },
-		} = this.props;
+  public render() {
+    const {
+      weatherStore: { error, loading, weatherData },
+    } = this.props;
 
-		return loading ? (
-			<CircularProgress variant="indeterminate" />
-		) : error ? (
-			<ErrorContainer message={error} />
-		) : (
-			<WeatherDetails data={weatherData} />
-		);
-	}
+    return loading ? (
+      <CircularProgress variant="indeterminate"/>
+    ) : error ? (
+      <ErrorContainer message={error}/>
+    ) : (
+      <WeatherDetails data={weatherData}/>
+    );
+  }
 }

@@ -6,20 +6,20 @@ import { IFirebaseStore } from "../stores/firebaseStore";
 import { Home, Weather } from "../views";
 
 interface IProps {
-	firebaseStore?: IFirebaseStore;
+  firebaseStore?: IFirebaseStore;
 }
 
 export const AppRouter = inject("firebaseStore")(
-	observer(({ firebaseStore: { userIsLoggedIn } }: IProps) => (
-		<>
-			{userIsLoggedIn && (
-				<BrowserRouter>
-					<Switch>
-						<Route exact={true} path="/" component={Home} />
-						<Route exact={true} path="/weather" component={Weather} />
-					</Switch>
-				</BrowserRouter>
-			)}
-		</>
-	)),
+  observer(({ firebaseStore: { userIsLoggedIn } }: IProps) => (
+    <>
+      {userIsLoggedIn && (
+        <BrowserRouter>
+          <Switch>
+            <Route exact={true} path="/" component={Home}/>
+            <Route exact={true} path="/weather" component={Weather}/>
+          </Switch>
+        </BrowserRouter>
+      )}
+    </>
+  )),
 );

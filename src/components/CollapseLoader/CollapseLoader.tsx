@@ -3,18 +3,18 @@ import * as React from "react";
 import { IHasChildren } from "../../interfaces";
 
 interface IProps extends IHasChildren {
-	loading: boolean;
+  loading: boolean;
 }
 
 export const CollapseLoader = ({ loading, children }: IProps) => (
-	<>
-		<Collapse in={!loading}>{children}</Collapse>
-		{loading && (
-			<Grid container={true} justify="center" alignItems="center">
-				<Grid item={true}>
-					<CircularProgress />
-				</Grid>
-			</Grid>
-		)}
-	</>
+  <>
+    <Collapse in={!loading}>{children}</Collapse>
+    {loading && (
+      <Grid container={true} justify="center" alignItems="center">
+        <Grid item={true}>
+          <CircularProgress/>
+        </Grid>
+      </Grid>
+    )}
+  </>
 );

@@ -5,30 +5,30 @@ import { IWeatherData } from "../../../stores/weatherStore";
 import { WeatherIcon } from "../../WeatherIcon";
 
 interface IProps extends RouteChildrenProps {
-	data: IWeatherData;
+  data: IWeatherData;
 }
 
 export const WeatherDetails = withRouter(({ data, history }: IProps) => {
-	const { icon, isDay, condition, temperature } = data;
-	const nextPage = () => history.push("weather");
+  const { icon, isDay, condition, temperature } = data;
+  const nextPage = () => history.push("weather");
 
-	return (
-		<Grow in={true}>
-			<Card>
-				<CardContent onClick={nextPage}>
-					<Grid container={true} spacing={16} wrap="nowrap">
-						<Grid item={true}>
-							<Typography variant="h3">
-								<WeatherIcon value={icon} isDay={isDay}/>
-							</Typography>
-						</Grid>
-						<Grid item={true}>
-							<Typography variant="subtitle1">{condition}</Typography>
-							<Typography variant="title">{temperature}&deg;C</Typography>
-						</Grid>
-					</Grid>
-				</CardContent>
-			</Card>
-		</Grow>
-	);
+  return (
+    <Grow in={true}>
+      <Card>
+        <CardContent onClick={nextPage}>
+          <Grid container={true} spacing={16} wrap="nowrap">
+            <Grid item={true}>
+              <Typography variant="h3">
+                <WeatherIcon value={icon} isDay={isDay}/>
+              </Typography>
+            </Grid>
+            <Grid item={true}>
+              <Typography variant="subtitle1">{condition}</Typography>
+              <Typography variant="title">{temperature}&deg;C</Typography>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+    </Grow>
+  );
 });

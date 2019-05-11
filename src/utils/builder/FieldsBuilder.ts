@@ -3,20 +3,20 @@ import { DialogBuilder } from "./DialogBuilder";
 
 export class FieldsBuilder<R> {
 
-	private readonly parent: DialogBuilder<R>;
-	private dialogFields: IField[] = [];
+  private readonly parent: DialogBuilder<R>;
+  private dialogFields: IField[] = [];
 
-	constructor(parent: DialogBuilder<R>) {
-		this.parent = parent;
-	}
+  constructor(parent: DialogBuilder<R>) {
+    this.parent = parent;
+  }
 
-	public add = (f: IField) => {
-		this.dialogFields.push(f);
-		return this;
-	}
+  public add = (f: IField) => {
+    this.dialogFields.push(f);
+    return this;
+  }
 
-	public get = () => {
-		this.parent.setFields(this.dialogFields);
-		return this.parent;
-	}
+  public get = () => {
+    this.parent.setFields(this.dialogFields);
+    return this.parent;
+  }
 }
