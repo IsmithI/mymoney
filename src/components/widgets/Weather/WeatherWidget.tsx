@@ -1,16 +1,16 @@
-import { CircularProgress } from "@material-ui/core";
-import { CardProps } from "@material-ui/core/Card";
-import { inject, observer } from "mobx-react";
-import * as React from "react";
-import { IWeatherStore } from "../../../stores/weatherStore";
-import { ErrorContainer } from "./ErrorContainerProps";
-import { WeatherDetails } from "./WeatherDetails";
+import { CircularProgress } from '@material-ui/core';
+import { CardProps } from '@material-ui/core/Card';
+import { inject, observer } from 'mobx-react';
+import * as React from 'react';
+import { IWeatherStore } from 'stores/weatherStore';
+import { ErrorContainer } from './ErrorContainerProps';
+import { WeatherDetails } from './WeatherDetails';
 
 export interface IWeatherProps extends CardProps {
   weatherStore?: IWeatherStore;
 }
 
-@inject("weatherStore")
+@inject('weatherStore')
 @observer
 export class WeatherWidget extends React.Component<IWeatherProps> {
   public componentDidMount() {
@@ -19,15 +19,15 @@ export class WeatherWidget extends React.Component<IWeatherProps> {
 
   public render() {
     const {
-      weatherStore: { error, loading, weatherData },
+      weatherStore: { error, loading, weatherData }
     } = this.props;
 
     return loading ? (
-      <CircularProgress variant="indeterminate"/>
+      <CircularProgress variant='indeterminate' />
     ) : error ? (
-      <ErrorContainer message={error}/>
+      <ErrorContainer message={error} />
     ) : (
-      <WeatherDetails data={weatherData}/>
+      <WeatherDetails data={weatherData} />
     );
   }
 }

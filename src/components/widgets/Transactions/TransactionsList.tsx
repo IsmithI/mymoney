@@ -1,3 +1,3 @@
-import { transactionsListFactory } from "../../../utils/factory/TransactionsListFactory";
+import { transactionsListFactory } from 'utils/factory/TransactionsListFactory';
 
 export const TransactionsList = transactionsListFactory.createEntityList();

@@ -1,6 +1,6 @@
-import { action, computed, observable } from "mobx";
-import { IHasId } from "../interfaces/IHasId";
-import { db } from "../utils/firebaseDB";
+import { IHasId } from 'interfaces';
+import { action, computed, observable } from 'mobx';
+import { db } from 'utils';
 
 export interface IEntityStore<T extends IHasId> {
   load: () => Promise<firebase.firestore.QueryDocumentSnapshot[]>;
@@ -11,13 +11,12 @@ export interface IEntityStore<T extends IHasId> {
 }
 
 export class EntityStore<T extends IHasId> implements IEntityStore<T> {
-
   @computed
   public get entitiesData() {
-    return this.entities.map((e) => {
+    return this.entities.map(e => {
       return {
         id: e.id,
-        ...(e.data() as T),
+        ...(e.data() as T)
       };
     });
   }
@@ -38,7 +37,7 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
   @action
   public load = () =>
     this.entities.length > 0
-      ? new Promise((r) => r()).then(() => this.entities)
+      ? new Promise(r => r()).then(() => this.entities)
       : db.get(this.entity).then(this.saveEntities)
 
   @action
@@ -48,7 +47,7 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
   public add = (data: T) =>
     db
       .add(this.entity)(data)
-      .then((d) => d.get().then(this.addEntity))
+      .then(d => d.get().then(this.addEntity))
 
   @action
   public addEntity = (e: firebase.firestore.QueryDocumentSnapshot) => {

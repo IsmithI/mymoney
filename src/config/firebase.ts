@@ -7,5 +7,5 @@ export const config = {
   databaseURL: `https://${projectId}.firebaseio.com`,
   projectId,
   storageBucket: `${projectId}.appspot.com`,
-  messagingSenderId: "216970589519",
+  messagingSenderId: "216970589519"
 };

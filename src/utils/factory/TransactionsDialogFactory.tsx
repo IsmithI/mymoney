@@ -1,35 +1,31 @@
-import React from "react";
-import { CategoriesSelect } from "../../components/widgets/Transactions/CategoriesSelect";
-import { ITransaction } from "../../interfaces";
-import { IDialogFactory } from "../../interfaces/IDialogFactory";
-import { DialogBuilder } from "../builder/DialogBuilder";
+import { CategoriesSelect } from 'components/widgets/Transactions';
+import { ITransaction } from 'interfaces';
+import { IDialogFactory } from 'interfaces/IDialogFactory';
+import * as React from 'react';
+import { DialogBuilder } from 'utils/builder/DialogBuilder';
 
 class TransactionsDialogFactory implements IDialogFactory<ITransaction> {
-
   public createAddEntityDialog = () => {
     return new DialogBuilder()
-      .title("Add transaction")
+      .title('Add transaction')
       .withFields()
       .add({
-        key: "comment",
-        title: "Comments",
-        type: "text",
+        key: 'comment',
+        title: 'Comments',
+        type: 'text'
       })
       .add({
-        key: "amount",
-        title: "Spent",
-        type: "number",
+        key: 'amount',
+        title: 'Spent',
+        type: 'number'
       })
       .add({
-        key: "category",
-        title: "Category",
-        type: "entity",
+        key: 'category',
+        title: 'Category',
+        type: 'entity',
         render: ({ onChange, record }) => (
-          <CategoriesSelect
-            onChange={onChange("category")}
-            value={record ? record.category : ""}
-          />
-        ),
+          <CategoriesSelect onChange={onChange('category')} value={record ? record.category : ''} />
+        )
       })
       .get()
       .make();

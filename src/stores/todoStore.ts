@@ -1,6 +1,6 @@
-import { action, computed } from "mobx";
-import { ITodo } from "../interfaces/ITodo";
-import { EntityStore } from "./entityStore";
+import { ITodo } from 'interfaces';
+import { action, computed } from 'mobx';
+import { EntityStore } from './entityStore';
 
 export interface ITodoStore extends TodoStore {
   todos: ITodo[];
@@ -8,7 +8,7 @@ export interface ITodoStore extends TodoStore {
 
 class TodoStore extends EntityStore<ITodo> implements ITodoStore {
   constructor() {
-    super("todo");
+    super('todo');
   }
 
   @computed
@@ -20,10 +20,10 @@ class TodoStore extends EntityStore<ITodo> implements ITodoStore {
 
   @computed
   public get entitiesData() {
-    return this.entities.map((e) => ({
+    return this.entities.map(e => ({
       id: e.id,
       ...(e.data() as ITodo),
-      created: new Date(e.data().created.seconds * 1000),
+      created: new Date(e.data().created.seconds * 1000)
     }));
   }
 

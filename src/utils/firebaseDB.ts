@@ -1,6 +1,6 @@
-import firebase from "firebase/app";
-import "firebase/firestore";
-import { IHasId } from "./../interfaces/IHasId";
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import { IHasId } from 'interfaces';
 
 export class FirebaseDB<T extends IHasId> {
   public db: firebase.firestore.Firestore;
@@ -16,7 +16,7 @@ export class FirebaseDB<T extends IHasId> {
       .collection(collection)
       .doc(data.id)
       .set({
-        ...data,
+        ...data
       })
 
   public add = (collection: string) => (data: T) => this.db.collection(collection).add(data);

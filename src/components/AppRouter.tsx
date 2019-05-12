@@ -2,8 +2,8 @@ import { inject, observer } from "mobx-react";
 import React from "react";
 import { Route, Switch } from "react-router";
 import { BrowserRouter } from "react-router-dom";
-import { IFirebaseStore } from "../stores/firebaseStore";
-import { Home, Weather } from "../views";
+import { IFirebaseStore } from "stores/firebaseStore";
+import { Home, ProjectView, Weather } from "views";
 
 interface IProps {
   firebaseStore?: IFirebaseStore;
@@ -15,11 +15,12 @@ export const AppRouter = inject("firebaseStore")(
       {userIsLoggedIn && (
         <BrowserRouter>
           <Switch>
-            <Route exact={true} path="/" component={Home}/>
-            <Route exact={true} path="/weather" component={Weather}/>
+            <Route exact={true} path='/' component={Home} />
+            <Route exact={true} path='/weather' component={Weather} />
+            <Route exact={true} path='/projects' component={ProjectView} />
           </Switch>
         </BrowserRouter>
       )}
     </>
-  )),
+  ))
 );

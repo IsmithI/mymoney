@@ -1,9 +1,9 @@
-import { action, computed, observable } from "mobx";
-import { get } from "../utils/fetch";
+import { action, computed, observable } from 'mobx';
+import { get } from 'utils/fetch';
 
 const config = {
-  endpoint: "http://api.openweathermap.org/data/2.5",
-  appId: "2cb43e94eb9b9cc38519474b5504f7f0",
+  endpoint: 'http://api.openweathermap.org/data/2.5',
+  appId: '2cb43e94eb9b9cc38519474b5504f7f0'
 };
 
 export interface IWeatherData {
@@ -47,13 +47,13 @@ class WeatherStore implements IWeatherStore {
       this.error = "Your browser doesn't support geolocation";
     } else {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        position => {
           this.saveGeolocation(position);
         },
-        (error) => {
+        error => {
           this.saveError(error);
           this.doneLoading();
-        },
+        }
       );
     }
   }
@@ -80,7 +80,7 @@ class WeatherStore implements IWeatherStore {
 
   public requestCurrentWeather = () => {
     const {
-      coords: { latitude, longitude },
+      coords: { latitude, longitude }
     } = this.position;
 
     const url = `${config.endpoint}/weather?lat=${latitude}&lon=${longitude}&APPID=${config.appId}`;
@@ -92,12 +92,10 @@ class WeatherStore implements IWeatherStore {
 
   public requestWeatherForecast = () => {
     const {
-      coords: { latitude, longitude },
+      coords: { latitude, longitude }
     } = this.position;
 
-    const url = `${config.endpoint}/forecast?lat=${latitude}&lon=${longitude}&APPID=${
-      config.appId
-      }`;
+    const url = `${config.endpoint}/forecast?lat=${latitude}&lon=${longitude}&APPID=${config.appId}`;
 
     return get(url)
       .then(this.saveForecast)
@@ -111,15 +109,13 @@ class WeatherStore implements IWeatherStore {
 
   @computed
   get weatherData() {
-    const now = Math.round((new Date().getTime()) / 1000);
+    const now = Math.round(new Date().getTime() / 1000);
     return (
       this.data && {
         temperature: Math.round(10 * (this.data.main.temp - 273)) / 10,
         condition: this.data.weather[0].description,
         icon: this.data.weather[0].main,
-        isDay:
-          now > this.data.sys.sunrise &&
-          now < this.data.sys.sunset,
+        isDay: now > this.data.sys.sunrise && now < this.data.sys.sunset
       }
     );
   }
@@ -135,10 +131,10 @@ class WeatherStore implements IWeatherStore {
       this.forecast &&
       this.forecast.list
         .filter((item, i) => i % 8 === 0)
-        .map((item) => ({
+        .map(item => ({
           date: new Date(item.dt * 1000),
           data: item.weather[0],
-          temp: Math.round(10 * (item.main.temp - 273)) / 10,
+          temp: Math.round(10 * (item.main.temp - 273)) / 10
         }))
     );
   }

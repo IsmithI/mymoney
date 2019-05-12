@@ -1,19 +1,16 @@
 {
   "defaultSeverity": "error",
-  "extends": [
-    "tslint:recommended", "tslint-react"
-  ],
+  "extends": ["tslint:recommended", "tslint-react"],
   "jsRules": {},
   "rules": {
     "jsx-wrap-multiline": true,
     "jsx-no-multiline-js": false,
-    "indent": [
-      true,
-      "spaces"
-    ],
+    "indent": [true, "spaces"],
     "arrow-parens": false,
     "object-literal-sort-keys": false,
-    "eofline": false
+    "eofline": false,
+    "trailing-comma": false,
+    "quotemark": false
   },
   "rulesDirectory": [],
   "linterOptions": {

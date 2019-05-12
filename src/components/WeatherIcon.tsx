@@ -25,5 +25,5 @@ export const WeatherIcon = ({ value, isDay = true }: IWeatherIcon) => {
     default:
       icon = isDay ? "sun" : "moon";
   }
-  return <FaIcon icon={icon}/>;
+  return <FaIcon icon={icon} />;
 };

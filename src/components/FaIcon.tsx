@@ -6,5 +6,5 @@ export interface IFaIconProps {
 }
 
 export const FaIcon = ({ icon, group = "fas" }: IFaIconProps) => (
-  <i className={`${group} fa-${icon}`}/>
+  <i className={`${group} fa-${icon}`} />
 );

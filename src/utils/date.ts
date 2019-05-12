@@ -24,7 +24,7 @@ const monthNames = [
   "september",
   "october",
   "november",
-  "december",
+  "december"
 ];
 
 export const getDayOfWeek = (day: number) =>

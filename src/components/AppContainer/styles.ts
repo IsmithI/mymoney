@@ -7,13 +7,13 @@ export default (theme: Theme) =>
       padding: "1em",
       minHeight: "100vh",
       overflowX: "hidden",
-      boxSizing: "border-box",
+      boxSizing: "border-box"
     },
     container: {
       margin: "0 auto",
       [theme.breakpoints.up("md")]: {
         width: "80%",
-        minHeight: "100%",
-      },
-    },
+        minHeight: "100%"
+      }
+    }
   });

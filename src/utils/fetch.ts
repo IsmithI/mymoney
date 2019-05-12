@@ -20,8 +20,8 @@ export const get = <T>(url: string) => fetch<IPayload<T>>(url).then(checkJSON);
 export const put = (url: string, data: any) =>
   fetch(url, {
     method: "put",
-    body: JSON.stringify(data),
-  }).then((res) => res.json());
+    body: JSON.stringify(data)
+  }).then(res => res.json());
 
 const checkJSON = (res: Response) => {
   try {

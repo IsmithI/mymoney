@@ -1,4 +1,4 @@
-import { IHasId } from "./IHasId";
+import { IHasId } from 'interfaces';
 
 export interface ITodo extends IHasId {
   title: string;

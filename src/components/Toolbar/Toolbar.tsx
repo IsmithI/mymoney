@@ -1,22 +1,20 @@
-import * as React from "react";
-import { withRouter, RouteChildrenProps } from "react-router";
-import styles from "./Toolbar.scss";
-import { Grid, IconButton, Icon } from "@material-ui/core";
+import { Grid, Icon, IconButton } from '@material-ui/core';
+import * as React from 'react';
+import { RouteChildrenProps, withRouter } from 'react-router';
+import styles from './Toolbar.scss';
 
-interface Props extends RouteChildrenProps {}
-
-const ToolbarBase = ({  }: Props) => {
-	return (
-		<nav className={styles.toolbar}>
-			<Grid container>
-				<Grid item>
-					<IconButton>
-						<Icon>home</Icon>
-					</IconButton>
-				</Grid>
-			</Grid>
-		</nav>
-	);
+const ToolbarBase = ({  }: RouteChildrenProps) => {
+  return (
+    <nav className={styles.toolbar}>
+      <Grid container={true}>
+        <Grid item={true}>
+          <IconButton>
+            <Icon>home</Icon>
+          </IconButton>
+        </Grid>
+      </Grid>
+    </nav>
+  );
 };
 
 export const Toolbar = withRouter(ToolbarBase);

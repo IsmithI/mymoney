@@ -1,16 +1,15 @@
-import * as React from "react";
-import { ReactElement, ReactNode } from "react";
-import { Dialog, IDialogProps } from "../../components/Dialog";
-import { IField } from "../../interfaces/IField";
-import { FieldsBuilder } from "./FieldsBuilder";
+import { Dialog, IDialogProps } from 'components';
+import { IField } from 'interfaces';
+import * as React from 'react';
+import { ReactElement, ReactNode } from 'react';
+import { FieldsBuilder } from './FieldsBuilder';
 
 interface IDialogBuilder<R> {
   make: () => (props: IDialogProps<R>) => ReactElement<IDialogProps<R>>;
 }
 
 export class DialogBuilder<R> implements IDialogBuilder<R> {
-
-  private dialogTitle: string | ReactNode = "";
+  private dialogTitle: string | ReactNode = '';
   private dialogFields: IField[] = [];
   private dialogFooter: ReactNode;
   private fullScreen: boolean = false;

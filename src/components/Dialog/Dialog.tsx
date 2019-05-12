@@ -1,9 +1,15 @@
-import { Button, Dialog as MuiDialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
-import * as React from "react";
-import { createRef, ReactNode, RefObject } from "react";
-import { IDialog } from "../../interfaces/IDialog";
-import { IField } from "../../interfaces/IField";
-import { FieldsList } from "./FieldsList";
+import {
+  Button,
+  Dialog as MuiDialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle
+} from '@material-ui/core';
+import { IDialog } from 'interfaces/IDialog';
+import { IField } from 'interfaces/IField';
+import * as React from 'react';
+import { createRef, ReactNode, RefObject } from 'react';
+import { FieldsList } from './FieldsList';
 
 export interface IDialogProps<R> extends IDialog<R> {
   title?: string | ReactNode;
@@ -17,9 +23,8 @@ interface IDialogState<R> {
 }
 
 export class Dialog<R> extends React.Component<IDialogProps<R>, IDialogState<R>> {
-
   public state = {
-    record: null,
+    record: null
   };
 
   public form: RefObject<HTMLFormElement>;
@@ -35,18 +40,12 @@ export class Dialog<R> extends React.Component<IDialogProps<R>, IDialogState<R>>
     return (
       <MuiDialog open={isOpen} onClose={onCancel} fullScreen={fullScreen}>
         <form ref={this.form} onSubmit={this.handleFormSubmit}>
-          <DialogTitle>
-            {title}
-          </DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
           <DialogContent>
-            <FieldsList
-              fields={fields}
-              record={this.state.record}
-              onChange={this.updateRecord}
-            />
+            <FieldsList fields={fields} record={this.state.record} onChange={this.updateRecord} />
           </DialogContent>
           <DialogActions>
-            {footer || <DefaultFooter onClose={onCancel} onSubmit={this.handleSubmit}/>}
+            {footer || <DefaultFooter onClose={onCancel} onSubmit={this.handleSubmit} />}
           </DialogActions>
         </form>
       </MuiDialog>
@@ -76,8 +75,12 @@ interface IFooter {
 function DefaultFooter({ onClose, onSubmit }: IFooter) {
   return (
     <>
-      <Button color="primary" onClick={onClose}>close</Button>
-      <Button color="primary" onClick={onSubmit} variant="contained">OK</Button>
+      <Button color='primary' onClick={onClose}>
+        close
+      </Button>
+      <Button color='primary' onClick={onSubmit} variant='contained'>
+        OK
+      </Button>
     </>
   );
 }

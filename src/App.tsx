@@ -9,7 +9,7 @@ export default () => (
   <StoresProvider>
     <MuiThemeProvider theme={theme}>
       <AppContainer>
-        <AppRouter/>
+        <AppRouter />
       </AppContainer>
     </MuiThemeProvider>
   </StoresProvider>

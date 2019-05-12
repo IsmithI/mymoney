@@ -8,7 +8,7 @@ interface IErrorContainerProps {
 export const ErrorContainer = ({ message }: IErrorContainerProps) => (
   <Card>
     <CardContent>
-      <Typography variant="title">{message}</Typography>
+      <Typography variant='title'>{message}</Typography>
     </CardContent>
   </Card>
 );

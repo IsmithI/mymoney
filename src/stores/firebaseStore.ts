@@ -1,8 +1,8 @@
-import app from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
-import { action, computed, observable } from "mobx";
-import { config } from "../config/firebase";
+import { config } from 'config/firebase';
+import app from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+import { action, computed, observable } from 'mobx';
 
 export interface IFirebaseStore {
   userIsLoggedIn: boolean;
@@ -11,7 +11,6 @@ export interface IFirebaseStore {
 }
 
 class FirebaseStore implements IFirebaseStore {
-
   @observable public user: any;
 
   public auth: firebase.auth.Auth;
@@ -23,7 +22,7 @@ class FirebaseStore implements IFirebaseStore {
     this.auth = app.auth();
 
     this.authProvider = new app.auth.GoogleAuthProvider();
-    this.auth.onAuthStateChanged((user) => {
+    this.auth.onAuthStateChanged(user => {
       this.saveUser(user);
       if (!user) {
         this.loginWithGoogle();
@@ -49,7 +48,6 @@ class FirebaseStore implements IFirebaseStore {
   public saveUser = (user: any) => {
     this.user = user;
   }
-
 }
 
 export const firebaseStore = new FirebaseStore();

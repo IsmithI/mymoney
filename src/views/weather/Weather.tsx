@@ -20,45 +20,45 @@ export class Weather extends React.Component<IProps> {
 
   public render() {
     const {
-      weatherStore: { weatherData, forecastData },
+      weatherStore: { weatherData, forecastData }
     } = this.props;
 
     return (
       <Grow in={!!weatherData && !!forecastData}>
-        <div className="weather__container">
+        <div className='weather__container'>
           {weatherData && forecastData && (
             <>
-              <Grid container={true} alignItems="center">
+              <Grid container={true} alignItems='center'>
                 <Grid item={true} xs={4}>
-                  <Typography variant="h1">
-                    <WeatherIcon value={weatherData.icon} isDay={weatherData.isDay}/>
+                  <Typography variant='h1'>
+                    <WeatherIcon value={weatherData.icon} isDay={weatherData.isDay} />
                   </Typography>
                 </Grid>
                 <Grid item={true} xs={8}>
-                  <Typography variant="h2" align="right">
+                  <Typography variant='h2' align='right'>
                     {weatherData.temperature} &deg; C
                   </Typography>
                 </Grid>
               </Grid>
-              <p className="weather__heading">{weatherData.condition}</p>
+              <p className='weather__heading'>{weatherData.condition}</p>
               <Card>
                 <CardContent>
-                  <Grid container={true} spacing={16} justify="space-around">
+                  <Grid container={true} spacing={16} justify='space-around'>
                     {forecastData.map((item, i) => (
                       <Grid item={true} key={i}>
-                        <div className="weather__day">
+                        <div className='weather__day'>
                           <div>
-                            <Typography align="center" variant="subheading">
+                            <Typography align='center' variant='subheading'>
                               {getDayOfWeek(item.date.getDay())}
                             </Typography>
-                            <br/>
-                            <Typography variant="h4" align="center">
-                              <WeatherIcon value={item.data.main.toLowerCase()}/>
+                            <br />
+                            <Typography variant='h4' align='center'>
+                              <WeatherIcon value={item.data.main.toLowerCase()} />
                             </Typography>
-                            <Typography align="center">{item.data.description}</Typography>
+                            <Typography align='center'>{item.data.description}</Typography>
                           </div>
-                          <div className="weather__day_title">
-                            <Typography variant="title" align="center">
+                          <div className='weather__day_title'>
+                            <Typography variant='title' align='center'>
                               {item.temp} &deg; C
                             </Typography>
                           </div>

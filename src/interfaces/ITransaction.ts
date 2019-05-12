@@ -1,7 +1,6 @@
-import { IHasId } from "./IHasId";
+import { IHasId } from 'interfaces';
 
-export interface ITransaction extends ITransactionModel, IHasId {
-}
+export interface ITransaction extends ITransactionModel, IHasId {}
 
 export interface ITransactionModel {
   category: string;

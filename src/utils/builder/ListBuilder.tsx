@@ -1,10 +1,9 @@
-import * as React from "react";
-import { ReactNode } from "react";
-import { IListProps, List } from "../../components/List";
-import { IHasId } from "../../interfaces";
+import { IListProps, List } from 'components';
+import { IHasId } from 'interfaces';
+import * as React from 'react';
+import { ReactNode } from 'react';
 
 export class ListBuilder<R extends IHasId> {
-
   private listItem: (item: R) => ReactNode;
 
   public itemRenderer = (renderer: (item: R) => ReactNode) => {

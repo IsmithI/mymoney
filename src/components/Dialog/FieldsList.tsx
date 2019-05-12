@@ -1,7 +1,15 @@
-import { Checkbox, FormControl, FormControlLabel, FormGroup, Grid, Input, InputLabel } from "@material-ui/core";
-import * as React from "react";
-import { IField } from "../../interfaces/IField";
-import { Route, Switch } from "../switch";
+import {
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  Input,
+  InputLabel
+} from '@material-ui/core';
+import { Route, Switch } from 'components';
+import { IField } from 'interfaces/IField';
+import * as React from 'react';
 
 export interface IFieldsList<R> {
   record: R;
@@ -20,34 +28,36 @@ export function FieldsList<R>({ fields, record, onChange }: IFieldsList<R>) {
 
   return (
     <Grid container={true} spacing={8}>
-      {fields.map((field) => (
+      {fields.map(field => (
         <Grid item={true} xs={6} key={field.key}>
-          {field.render ? field.render({ fields, record, onChange }) : (
+          {field.render ? (
+            field.render({ fields, record, onChange })
+          ) : (
             <FormControl>
               <Switch value={field.type}>
-                <Route on="text">
+                <Route on='text'>
                   <InputLabel htmlFor={field.key}>{field.title}</InputLabel>
                   <Input
                     id={field.key}
-                    type="text"
-                    value={record && record.hasOwnProperty(field.key) ? record[field.key] : ""}
+                    type='text'
+                    value={record && record.hasOwnProperty(field.key) ? record[field.key] : ''}
                     onChange={handleInputChange(field.key)}
                     aria-describedby={field.key}
                   />
                 </Route>
-                <Route on={"number"}>
+                <Route on={'number'}>
                   <InputLabel htmlFor={field.key}>{field.title}</InputLabel>
                   <Input
                     id={field.key}
-                    type="number"
-                    value={record && record.hasOwnProperty(field.key) ? record[field.key] : ""}
+                    type='number'
+                    value={record && record.hasOwnProperty(field.key) ? record[field.key] : ''}
                     onChange={handleInputChange(field.key)}
                     aria-describedby={field.key}
                   />
                 </Route>
-                <Route on="boolean">
+                <Route on='boolean'>
                   <FormGroup>
-                    {field.title ?
+                    {field.title ? (
                       <FormControlLabel
                         label={field.title}
                         control={
@@ -58,12 +68,13 @@ export function FieldsList<R>({ fields, record, onChange }: IFieldsList<R>) {
                           />
                         }
                       />
-                      :
+                    ) : (
                       <Checkbox
                         value={field.key}
                         checked={record ? !!record[field.key] : false}
                         onChange={handleCheckboxChange(field.key)}
-                      />}
+                      />
+                    )}
                   </FormGroup>
                 </Route>
               </Switch>

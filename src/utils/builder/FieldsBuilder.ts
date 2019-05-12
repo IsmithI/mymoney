@@ -1,8 +1,7 @@
-import { IField } from "../../interfaces/IField";
-import { DialogBuilder } from "./DialogBuilder";
+import { IField } from 'interfaces';
+import { DialogBuilder } from './DialogBuilder';
 
 export class FieldsBuilder<R> {
-
   private readonly parent: DialogBuilder<R>;
   private dialogFields: IField[] = [];
 

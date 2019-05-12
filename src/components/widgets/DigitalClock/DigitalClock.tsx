@@ -1,14 +1,14 @@
-import { createStyles, Grow, Paper, Typography, withStyles, WithStyles } from "@material-ui/core";
-import { PaperProps } from "@material-ui/core/Paper";
-import * as React from "react";
-import { useEffect, useState } from "react";
-import { getDayOfWeek } from "../../../utils/date";
-import { startsWithZero } from "../../../utils/number";
+import { createStyles, Grow, Paper, Typography, withStyles, WithStyles } from '@material-ui/core';
+import { PaperProps } from '@material-ui/core/Paper';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { getDayOfWeek } from 'utils/date';
+import { startsWithZero } from 'utils/number';
 
 const styles = createStyles({
   content: {
-    padding: "0.8em",
-  },
+    padding: '0.8em'
+  }
 });
 
 interface IProps extends PaperProps, WithStyles<typeof styles> {
@@ -25,10 +25,10 @@ export const DigitalClock = withStyles(styles)(({ classes, ...props }: IProps) =
   return (
     <Grow in={true}>
       <Paper className={classes.content} {...props}>
-        <Typography variant="h4">
+        <Typography variant='h4'>
           {time.getHours()}:{startsWithZero(time.getMinutes())}:{startsWithZero(time.getSeconds())}
         </Typography>
-        <Typography variant="subtitle1">
+        <Typography variant='subtitle1'>
           {time.getDate()} {getDayOfWeek(time.getDay())}
         </Typography>
       </Paper>
