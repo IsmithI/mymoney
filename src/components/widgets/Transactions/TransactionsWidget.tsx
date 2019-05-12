@@ -36,7 +36,7 @@ export class TransactionsWidget extends React.Component {
 
   public render() {
     const {
-      transactionsStore: { entitiesData, hasEntities, load }
+      transactionsStore: { entities, hasEntities, load }
     } = this.injected;
 
     return (
@@ -53,7 +53,7 @@ export class TransactionsWidget extends React.Component {
                   </IconButton>
                 }
               />
-              <TransactionsList items={entitiesData} />
+              <TransactionsList items={entities} />
               <AddTransactionDialog
                 isOpen={this.state.showAddDialog}
                 onCancel={this.closeDialog}

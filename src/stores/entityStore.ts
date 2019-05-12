@@ -3,32 +3,23 @@ import { action, computed, observable } from 'mobx';
 import { db } from 'utils';
 
 export interface IEntityStore<T extends IHasId> {
-  load: () => Promise<firebase.firestore.QueryDocumentSnapshot[]>;
+  load: () => Promise<T[]>;
   save: (data: T) => Promise<any>;
   add: (data: T) => Promise<any>;
   get: (id: string) => Promise<T>;
-  entitiesData: T[];
+  entities: T[];
   hasEntities: boolean;
 }
 
 export class EntityStore<T extends IHasId> implements IEntityStore<T> {
-  @computed
-  public get entitiesData() {
-    return this.entities.map(e => {
-      return {
-        id: e.id,
-        ...(e.data() as T)
-      };
-    });
-  }
-
   @computed
   get hasEntities() {
     return this.entities.length > 0;
   }
 
   @observable
-  public entities: firebase.firestore.QueryDocumentSnapshot[] = [];
+  public entities: T[] = [];
+
   private readonly entity: string;
 
   constructor(entity: string) {
@@ -36,10 +27,7 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
   }
 
   @action
-  public load = () =>
-    this.entities.length > 0
-      ? new Promise(r => r()).then(() => this.entities)
-      : db.get(this.entity).then(this.saveEntities)
+  public load = () => db.get(this.entity).then(this.saveEntities)
 
   @action
   public save = (data: T) => db.set(this.entity)(data)
@@ -48,16 +36,27 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
   public add = (data: T) =>
     db
       .add(this.entity)(data)
-      .then(d => d.get().then(this.addEntity))
+      .then(d =>
+        d
+          .get()
+          .then(this.extractData)
+          .then(this.addEntity)
+      )
 
   @action
-  public addEntity = (e: firebase.firestore.QueryDocumentSnapshot) => {
+  public addEntity = (e: T) => {
     this.entities.push(e);
   }
 
   @action
   public saveEntities = (snapshot: firebase.firestore.QuerySnapshot) => {
-    this.entities = snapshot.docs;
+    this.entities = snapshot.docs.map(
+      d =>
+        ({
+          id: d.id,
+          ...d.data()
+        } as T)
+    );
     return this.entities;
   }
 
@@ -72,4 +71,13 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
             ...data.data()
           } as T)
       )
+
+  @action
+  public delete = (id: string) => db.delete(this.entity)(id)
+
+  public extractData = (d: firebase.firestore.QueryDocumentSnapshot) =>
+    ({
+      id: d.id,
+      ...d.data()
+    } as T)
 }

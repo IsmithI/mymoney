@@ -26,6 +26,12 @@ export class FirebaseDB<T extends IHasId> {
       .collection(collection)
       .doc(id)
       .get()
+
+  public delete = (collection: string) => (id: string) =>
+    this.db
+      .collection(collection)
+      .doc(id)
+      .delete()
 }
 
 export const db = new FirebaseDB();

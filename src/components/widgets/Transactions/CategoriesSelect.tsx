@@ -31,7 +31,7 @@ export const CategoriesSelect = inject('categoriesStore')(
                   <MenuItem value=''>
                     <em>None</em>
                   </MenuItem>
-                  {categoriesStore.entitiesData.map(c => (
+                  {categoriesStore.entities.map(c => (
                     <MenuItem key={c.id} value={c.id}>
                       {c.name}
                     </MenuItem>

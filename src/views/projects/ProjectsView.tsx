@@ -34,7 +34,7 @@ export class ProjectsView extends React.Component<IProjectsView> {
               </Grid>
             </Grid>
             <br />
-            <ProjectsList projects={projectsStore.entitiesData} />
+            <ProjectsList projects={projectsStore.entities} />
           </Grid>
         </Grow>
 

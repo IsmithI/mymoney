@@ -18,6 +18,7 @@ const Component = ({ projectsStore, classes, project }: IProps) => {
   const handleSubmit = (close: () => void) => (task: ITask) =>
     projectsStore
       .addTask(project)(task)
+      .then(projectsStore.load)
       .then(close);
 
   return (

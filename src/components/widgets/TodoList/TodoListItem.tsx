@@ -1,7 +1,7 @@
 import { Checkbox, Grid, ListItem, Typography, withStyles } from '@material-ui/core';
 import { ITodo } from 'interfaces';
 import * as React from 'react';
-import { extractDate } from 'utils/date';
+import { extractRawDate } from 'utils/date';
 
 const MuiListItem = withStyles({
   root: {
@@ -25,7 +25,7 @@ export class TodoListItem extends React.Component<ITodoListItem> {
           </Grid>
           <Grid item={true}>
             <Typography variant='subtitle1'>{record.title}</Typography>
-            <Typography variant='subtitle2'>{extractDate(record.created, true)}</Typography>
+            <Typography variant='subtitle2'>{extractRawDate(record.created, true)}</Typography>
           </Grid>
         </Grid>
       </MuiListItem>

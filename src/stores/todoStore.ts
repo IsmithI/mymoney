@@ -13,18 +13,9 @@ class TodoStore extends EntityStore<ITodo> implements ITodoStore {
 
   @computed
   get todos() {
-    return [...this.entitiesData].sort((a, b) => {
+    return [...this.entities].sort((a, b) => {
       return a.created < b.created ? 1 : a.created > b.created ? -1 : 0;
     });
-  }
-
-  @computed
-  public get entitiesData() {
-    return this.entities.map(e => ({
-      id: e.id,
-      ...(e.data() as ITodo),
-      created: new Date(e.data().created.seconds * 1000)
-    }));
   }
 
   @action

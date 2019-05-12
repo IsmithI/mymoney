@@ -1,7 +1,7 @@
 import { Grid, ListItem, Typography } from '@material-ui/core';
 import { ITransaction } from 'interfaces';
 import * as React from 'react';
-import { extractDate } from 'utils/date';
+import { extractRawDate } from 'utils/date';
 
 export interface ITransactionsListItem {
   item: ITransaction;
@@ -20,7 +20,7 @@ export class TransactionsListItem extends React.Component<ITransactionsListItem>
                 <Typography variant='subtitle1'>{item.category}</Typography>
               </Grid>
               <Grid item={true}>
-                <Typography variant='subtitle2'>{extractDate(item.date)}</Typography>
+                <Typography variant='subtitle2'>{extractRawDate(item.date)}</Typography>
               </Grid>
             </Grid>
           </Grid>
