@@ -18,7 +18,7 @@ const Component = ({ projectsStore, match, classes }: IProjectBoard) => {
 
   return (
     <Load instantly={true} on={handleLoad}>
-      {({ loaded, data }) => {
+      {({ data }) => {
         if (!data) {
           return <></>;
         }
@@ -28,16 +28,7 @@ const Component = ({ projectsStore, match, classes }: IProjectBoard) => {
           <>
             <Grid container={true} direction='column' spacing={16}>
               <Grid item={true}>
-                <Grow in={loaded}>
-                  <Grid container={true} spacing={16}>
-                    <Grid item={true}>
-                      <BackButton />
-                    </Grid>
-                    <Grid item={true}>
-                      <Typography variant='h3'>{data.title}</Typography>
-                    </Grid>
-                  </Grid>
-                </Grow>
+                <Header title={data.title} />
               </Grid>
               <Grid item={true}>
                 <Grow in={true}>
@@ -84,3 +75,20 @@ const Component = ({ projectsStore, match, classes }: IProjectBoard) => {
 };
 
 export const ProjectBoard = inject('projectsStore')(observer(withStyles(styles)(Component)));
+
+interface IHeader {
+  title: string;
+}
+
+const Header = ({ title }: IHeader) => (
+  <Grow in={true}>
+    <Grid container={true} spacing={16}>
+      <Grid item={true}>
+        <BackButton />
+      </Grid>
+      <Grid item={true}>
+        <Typography variant='h3'>{title}</Typography>
+      </Grid>
+    </Grid>
+  </Grow>
+);
