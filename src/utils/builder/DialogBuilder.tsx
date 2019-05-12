@@ -1,16 +1,16 @@
 import { Dialog, IDialogProps } from 'components';
-import { IField } from 'interfaces';
+import { DialogElement, IField } from 'interfaces';
 import * as React from 'react';
-import { ReactElement, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { FieldsBuilder } from './FieldsBuilder';
 
 interface IDialogBuilder<R> {
-  make: () => (props: IDialogProps<R>) => ReactElement<IDialogProps<R>>;
+  make: () => DialogElement<R>;
 }
 
 export class DialogBuilder<R> implements IDialogBuilder<R> {
   private dialogTitle: string | ReactNode = '';
-  private dialogFields: IField[] = [];
+  private dialogFields: Array<IField<R>> = [];
   private dialogFooter: ReactNode;
   private fullScreen: boolean = false;
 
@@ -19,8 +19,8 @@ export class DialogBuilder<R> implements IDialogBuilder<R> {
     return this;
   }
 
-  public withFields = () => {
-    return new FieldsBuilder(this);
+  public withFields = (): FieldsBuilder<R> => {
+    return new FieldsBuilder<R>(this);
   }
 
   public footer = (footer: ReactNode) => {
@@ -28,7 +28,7 @@ export class DialogBuilder<R> implements IDialogBuilder<R> {
     return this;
   }
 
-  public setFields = (fields: IField[]) => {
+  public setFields = (fields: Array<IField<R>>) => {
     this.dialogFields = fields;
   }
 

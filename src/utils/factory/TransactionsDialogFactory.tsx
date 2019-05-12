@@ -6,7 +6,7 @@ import { DialogBuilder } from 'utils/builder/DialogBuilder';
 
 class TransactionsDialogFactory implements IDialogFactory<ITransaction> {
   public createAddEntityDialog = () => {
-    return new DialogBuilder()
+    return new DialogBuilder<ITransaction>()
       .title('Add transaction')
       .withFields()
       .add({

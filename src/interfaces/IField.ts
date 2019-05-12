@@ -1,11 +1,11 @@
 import { IFieldsList } from 'components/Dialog/FieldsList';
 import { ReactNode } from 'react';
 
-type FieldType = 'text' | 'number' | 'date' | 'boolean' | 'entity';
+type FieldType = 'text' | 'longtext' | 'number' | 'date' | 'boolean' | 'entity';
 
-export interface IField {
+export interface IField<R = any> {
   title: string;
   key: string;
   type: FieldType;
-  render?: <R>(data: IFieldsList<R>) => ReactNode;
+  render?: (data: IFieldsList<R>) => ReactNode;
 }

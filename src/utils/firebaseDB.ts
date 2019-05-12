@@ -20,6 +20,12 @@ export class FirebaseDB<T extends IHasId> {
       })
 
   public add = (collection: string) => (data: T) => this.db.collection(collection).add(data);
+
+  public getById = (collection: string) => (id: string) =>
+    this.db
+      .collection(collection)
+      .doc(id)
+      .get()
 }
 
 export const db = new FirebaseDB();

@@ -6,6 +6,7 @@ export interface IEntityStore<T extends IHasId> {
   load: () => Promise<firebase.firestore.QueryDocumentSnapshot[]>;
   save: (data: T) => Promise<any>;
   add: (data: T) => Promise<any>;
+  get: (id: string) => Promise<T>;
   entitiesData: T[];
   hasEntities: boolean;
 }
@@ -59,4 +60,16 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
     this.entities = snapshot.docs;
     return this.entities;
   }
+
+  @action
+  public get = (id: string) =>
+    db
+      .getById(this.entity)(id)
+      .then(
+        data =>
+          ({
+            id: data.id,
+            ...data.data()
+          } as T)
+      )
 }

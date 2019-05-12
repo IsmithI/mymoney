@@ -45,6 +45,18 @@ export function FieldsList<R>({ fields, record, onChange }: IFieldsList<R>) {
                     aria-describedby={field.key}
                   />
                 </Route>
+                <Route on='longtext'>
+                  <InputLabel htmlFor={field.key}>{field.title}</InputLabel>
+                  <Input
+                    id={field.key}
+                    type='text'
+                    multiline={true}
+                    rowsMax={4}
+                    value={record && record.hasOwnProperty(field.key) ? record[field.key] : ''}
+                    onChange={handleInputChange(field.key)}
+                    aria-describedby={field.key}
+                  />
+                </Route>
                 <Route on={'number'}>
                   <InputLabel htmlFor={field.key}>{field.title}</InputLabel>
                   <Input
