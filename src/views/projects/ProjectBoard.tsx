@@ -16,10 +16,6 @@ interface IProjectBoard extends RouteChildrenProps<any>, WithStyles<typeof style
 @inject('projectsStore')
 @observer
 class Component extends React.Component<IProjectBoard> {
-  public state = {
-    project: null,
-    loaded: false
-  };
 
   public componentDidMount = () => {
     this.props.projectsStore.load();
@@ -30,7 +26,7 @@ class Component extends React.Component<IProjectBoard> {
   }
 
   public handleDelete = (task: ITask) => {
-    this.props.projectsStore.delete(task.id);
+    return this.props.projectsStore.delete(task.id);
   }
 
   public handleStatusUpgrade = (project: IProject) => (task: ITask) => {
@@ -38,7 +34,6 @@ class Component extends React.Component<IProjectBoard> {
   }
 
   public render() {
-    // const { project } = this.state;
     const { classes, projectsStore, match } = this.props;
     const project = projectsStore.entities.find(e => e.id === match.params.id);
     const find = this.findBy(project);

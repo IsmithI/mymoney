@@ -1,13 +1,14 @@
-import { Card, CardHeader, Grid, Grow } from '@material-ui/core';
+import { Card, CardHeader, Grid, Grow, WithStyles, withStyles } from '@material-ui/core'
 import { IProject } from 'interfaces';
 import * as React from 'react';
 import { RouteChildrenProps, withRouter } from 'react-router';
+import styles from './styles';
 
-interface IProps extends RouteChildrenProps {
+interface IProps extends RouteChildrenProps, WithStyles<typeof styles> {
   projects: IProject[];
 }
 
-export const ProjectsList = withRouter(({ projects, history }: IProps) => {
+export const ProjectsList = withStyles(styles)(withRouter(({ projects, history, classes }: IProps) => {
   const displayProject = (id: string) => () => history.push(`projects/${id}`);
 
   return (
@@ -15,7 +16,7 @@ export const ProjectsList = withRouter(({ projects, history }: IProps) => {
       {projects.map(project => (
         <Grid item={true} key={project.id}>
           <Grow in={true}>
-            <Card>
+            <Card className={classes.projectCard}>
               <CardHeader title={project.title} onClick={displayProject(project.id)} />
             </Card>
           </Grow>
@@ -23,4 +24,4 @@ export const ProjectsList = withRouter(({ projects, history }: IProps) => {
       ))}
     </Grid>
   );
-});
+}));

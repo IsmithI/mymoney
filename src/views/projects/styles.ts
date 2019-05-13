@@ -9,5 +9,8 @@ export default () =>
     },
     statusTitle: {
       color: '#fff'
+    },
+    projectCard: {
+      cursor: 'pointer'
     }
   });

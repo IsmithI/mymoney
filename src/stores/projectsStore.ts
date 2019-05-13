@@ -4,7 +4,6 @@ import { EntityStore } from './entityStore';
 
 export interface IProjectsStore extends EntityStore<IProject> {
   addTask: (project: IProject) => (task: ITask) => Promise<any>;
-  groupTasksOf: (project: IProject) => any;
   upgradeStatus: (task: ITask) => (project: IProject) => void;
 }
 
@@ -12,15 +11,7 @@ class ProjectsStore extends EntityStore<IProject> implements IProjectsStore {
   @action
   public addTask = (project: IProject) => (task: ITask) => {
     const tasks = project.tasks || [];
-    return this.save({ ...project, tasks: [...tasks, this.getTask(task)] });
-  }
-
-  public groupTasksOf = (project: IProject) => {
-    return project.tasks.reduce((group: any, task: ITask) => {
-      group[task.status] = group[task.status] || [];
-      group[task.status].push(task);
-      return group;
-    }, {});
+    return this.save({ ...project, tasks: [...tasks, fillDefaultParams(task)] });
   }
 
   @action
@@ -33,14 +24,14 @@ class ProjectsStore extends EntityStore<IProject> implements IProjectsStore {
 
     return this.save(project);
   }
+}
 
-  private getTask(task: ITask): ITask {
-    return {
-      ...task,
-      created: new Date(),
-      status: 'pending'
-    } as ITask;
-  }
+function fillDefaultParams(task: ITask): ITask {
+  return {
+    ...task,
+    created: new Date(),
+    status: 'pending'
+  } as ITask;
 }
 
 function nextStatus(status: string) {
