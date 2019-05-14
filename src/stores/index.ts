@@ -4,6 +4,7 @@ import { weatherStore } from './weatherStore';
 
 import { ICategory } from 'interfaces';
 import { EntityStore } from './entityStore';
+import { settingsStore } from "./settingsStore";
 import { todoStore } from './todoStore';
 import { transactionsStore } from './transactionsStore';
 
@@ -13,5 +14,6 @@ export const stores = {
   transactionsStore,
   todoStore,
   weatherStore,
-  projectsStore
+  projectsStore,
+  settingsStore
 };

@@ -3,7 +3,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import { IFirebaseStore } from 'stores/firebaseStore';
-import { Home, ProjectBoard, ProjectsView, Weather } from 'views';
+import { Home, ProjectBoard, ProjectsView, Settings, Weather } from 'views';
 
 interface IProps {
   firebaseStore?: IFirebaseStore;
@@ -19,6 +19,7 @@ export const AppRouter = inject('firebaseStore')(
             <Route exact={true} path='/weather' component={Weather} />
             <Route exact={true} path='/projects' component={ProjectsView} />
             <Route path='/projects/:id' component={ProjectBoard} />
+            <Route exact={true} path='/settings' component={Settings} />
           </Switch>
         </BrowserRouter>
       )}

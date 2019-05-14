@@ -35,3 +35,10 @@ export class FirebaseDB<T extends IHasId> {
 }
 
 export const db = new FirebaseDB();
+
+export function extractQueryData<T extends IHasId>(query: firebase.firestore.QuerySnapshot) {
+  return query.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  }) as T);
+}

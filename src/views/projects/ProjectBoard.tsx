@@ -1,5 +1,5 @@
 import { Grid, Grow, Typography, WithStyles, withStyles } from '@material-ui/core';
-import { BackButton } from 'components';
+import { PageHeader } from 'components';
 import { IProject, ITask } from 'interfaces';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
@@ -42,7 +42,7 @@ class Component extends React.Component<IProjectBoard> {
       <>
         <Grid container={true} direction='column' spacing={16}>
           <Grid item={true}>
-            <Header title={project.title} />
+            <PageHeader title={project.title} />
           </Grid>
           <Grid item={true}>
             <Grow in={true}>
@@ -105,20 +105,3 @@ class Component extends React.Component<IProjectBoard> {
 }
 
 export const ProjectBoard = withStyles(styles)(Component);
-
-interface IHeader {
-  title: string;
-}
-
-const Header = ({ title }: IHeader) => (
-  <Grow in={true}>
-    <Grid container={true} spacing={16}>
-      <Grid item={true}>
-        <BackButton />
-      </Grid>
-      <Grid item={true}>
-        <Typography variant='h3'>{title}</Typography>
-      </Grid>
-    </Grid>
-  </Grow>
-);

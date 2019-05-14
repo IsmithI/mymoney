@@ -7,6 +7,11 @@ const apps = [
     icon: 'library_books',
     title: 'Projects',
     path: 'projects'
+  },
+  {
+    icon: 'settings',
+    title: 'Settings',
+    path: 'settings'
   }
 ];
 
