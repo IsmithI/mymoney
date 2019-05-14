@@ -9,3 +9,4 @@ export * from './Switch';
 export * from './Toolbar';
 export * from './WeatherIcon';
 export * from './BackButton';
+export * from './Toolbar';
