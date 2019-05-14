@@ -14,7 +14,6 @@ export interface IWeatherData {
 }
 
 export interface IWeatherStore {
-  geolocation: Position | null;
   data: any;
   forecast: any;
   error: string | false;
@@ -27,8 +26,33 @@ export interface IWeatherStore {
 }
 
 class WeatherStore implements IWeatherStore {
-  @observable
-  public geolocation: Position | null = null;
+
+  @computed
+  get weatherData() {
+    const now = Math.round(new Date().getTime() / 1000);
+    return (
+      this.data && {
+        temperature: Math.round(10 * (this.data.main.temp - 273)) / 10,
+        condition: this.data.weather[0].description,
+        icon: this.data.weather[0].main,
+        isDay: now > this.data.sys.sunrise && now < this.data.sys.sunset
+      }
+    );
+  }
+
+  @computed
+  get forecastData() {
+    return (
+      this.forecast &&
+      this.forecast.list
+        .filter((item, i) => i % 8 === 0)
+        .map(item => ({
+          date: new Date(item.dt * 1000),
+          data: item.weather[0],
+          temp: Math.round(10 * (item.main.temp - 273)) / 10
+        }))
+    );
+  }
 
   @observable
   public data: any;
@@ -41,21 +65,14 @@ class WeatherStore implements IWeatherStore {
 
   @observable
   public loading = true;
+  @observable
+  protected geolocation: Position | null = null;
 
-  constructor() {
-    if (!navigator.geolocation) {
-      this.error = "Your browser doesn't support geolocation";
-    } else {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          this.saveGeolocation(position);
-        },
-        error => {
-          this.saveError(error);
-          this.doneLoading();
-        }
-      );
+  public async position(): Promise<Position> {
+    if (this.geolocation) {
+      return new Promise(r => r(this.geolocation));
     }
+    return this.getCurrentPosition();
   }
 
   @action
@@ -78,10 +95,10 @@ class WeatherStore implements IWeatherStore {
     this.loading = false;
   }
 
-  public requestCurrentWeather = () => {
+  public requestCurrentWeather = async () => {
     const {
       coords: { latitude, longitude }
-    } = this.position;
+    } = await this.position();
 
     const url = `${config.endpoint}/weather?lat=${latitude}&lon=${longitude}&APPID=${config.appId}`;
 
@@ -90,10 +107,10 @@ class WeatherStore implements IWeatherStore {
       .then(this.doneLoading);
   }
 
-  public requestWeatherForecast = () => {
+  public requestWeatherForecast = async () => {
     const {
       coords: { latitude, longitude }
-    } = this.position;
+    } = await this.position();
 
     const url = `${config.endpoint}/forecast?lat=${latitude}&lon=${longitude}&APPID=${config.appId}`;
 
@@ -107,36 +124,11 @@ class WeatherStore implements IWeatherStore {
     this.forecast = forecast;
   }
 
-  @computed
-  get weatherData() {
-    const now = Math.round(new Date().getTime() / 1000);
-    return (
-      this.data && {
-        temperature: Math.round(10 * (this.data.main.temp - 273)) / 10,
-        condition: this.data.weather[0].description,
-        icon: this.data.weather[0].main,
-        isDay: now > this.data.sys.sunrise && now < this.data.sys.sunset
-      }
-    );
-  }
-
-  @computed
-  get position() {
-    return this.geolocation;
-  }
-
-  @computed
-  get forecastData() {
-    return (
-      this.forecast &&
-      this.forecast.list
-        .filter((item, i) => i % 8 === 0)
-        .map(item => ({
-          date: new Date(item.dt * 1000),
-          data: item.weather[0],
-          temp: Math.round(10 * (item.main.temp - 273)) / 10
-        }))
-    );
+  private getCurrentPosition = (options = {}): Promise<Position> => {
+    this.loading = true;
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, options);
+    });
   }
 }
 
