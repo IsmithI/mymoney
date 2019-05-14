@@ -7,7 +7,7 @@ import { ListBuilder } from 'utils/builder/ListBuilder';
 class TransactionsListFactory implements IListFactory<ITransaction> {
   public createEntityList = () =>
     new ListBuilder<ITransaction>()
-      .itemRenderer(item => <TransactionsListItem key={item.id} item={item} />)
+      .itemRenderer(item => <TransactionsListItem {...item} />)
       .make()
 }
 

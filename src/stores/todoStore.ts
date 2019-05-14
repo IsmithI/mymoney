@@ -13,7 +13,7 @@ class TodoStore extends EntityStore<ITodo> implements ITodoStore {
 
   @computed
   get todos() {
-    return [...this.entities].sort((a, b) => {
+    return this.entities.sort((a, b) => {
       return a.created < b.created ? 1 : a.created > b.created ? -1 : 0;
     });
   }

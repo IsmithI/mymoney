@@ -6,7 +6,7 @@ import { ListBuilder } from 'utils/builder/ListBuilder';
 class TodoListFactory implements IListFactory<ITodo> {
   public createEntityList = () =>
     new ListBuilder<ITodo>()
-      .itemRenderer(item => <TodoListItem key={item.id} record={item} />)
+      .itemRenderer(item => <TodoListItem {...item} />)
       .make()
 }
 

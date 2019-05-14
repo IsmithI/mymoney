@@ -9,3 +9,4 @@ export * from "./IDialogFactory";
 export * from "./IField";
 export * from "./IListFactory";
 export * from "./ITodo";
+export * from './IListItem';

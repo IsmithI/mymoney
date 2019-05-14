@@ -73,7 +73,11 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
       )
 
   @action
-  public delete = (id: string) => db.delete(this.entity)(id)
+  public delete = (id: string) => {
+    const i = this.entities.findIndex(e => e.id === id);
+    this.entities.splice(i, 1);
+    return db.delete(this.entity)(id);
+  }
 
   public extractData = (d: firebase.firestore.QueryDocumentSnapshot) =>
     ({

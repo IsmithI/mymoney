@@ -1,7 +1,7 @@
 import { Load, Toggler } from '@ismithi/react-utils';
 import { Card, CardHeader, Grow, Icon, IconButton } from '@material-ui/core';
 import { ITodo } from 'interfaces/ITodo';
-import { inject, observer } from 'mobx-react';
+import { inject, observer } from "mobx-react";
 import * as React from 'react';
 import { ITodoStore } from 'stores/todoStore';
 import { todoListFactory } from 'utils/factory/TodoListFactory';
@@ -13,18 +13,33 @@ interface IProps {
 
 const CustomList = todoListFactory.createEntityList();
 
-export const TodoList = inject('todoStore')(
-  observer(({ todoStore }: IProps) => {
-    const handleItemSave = (close: () => void) => (item: ITodo) => {
-      return todoStore
-        .add({ ...item, created: new Date(), completed: !!item.completed })
-        .then(close);
-    };
+@inject('todoStore')
+@observer
+export class TodoList extends React.Component<IProps> {
+
+  public handleItemSave = (close: () => void) => (item: ITodo) => {
+    return this.props.todoStore
+      .add({ ...item, created: new Date(), completed: !!item.completed })
+      .then(close);
+  }
+
+  public handleChange = (item: ITodo) => {
+    const i = this.props.todoStore.entities.findIndex(e => e.id === item.id);
+    this.props.todoStore.entities[i] = item;
+    this.props.todoStore.save(item);
+  }
+
+  public handleDelete = (item: ITodo) => {
+    this.props.todoStore.delete(item.id);
+  }
+
+  public render() {
+    const { todoStore: { todos, load } } = this.props;
 
     return (
       <Toggler>
         {({ isOpen, close, open }) => (
-          <Load instantly={true} on={todoStore.load}>
+          <Load instantly={true} on={load}>
             {({ loaded }) => (
               <Grow in={loaded}>
                 <Card>
@@ -37,8 +52,8 @@ export const TodoList = inject('todoStore')(
                       </IconButton>
                     }
                   />
-                  <CustomList items={todoStore.todos} />
-                  <AddTodoItem isOpen={isOpen} onCancel={close} onSubmit={handleItemSave(close)} />
+                  <CustomList items={todos} onItemChange={this.handleChange} onItemDelete={this.handleDelete}/>
+                  <AddTodoItem isOpen={isOpen} onCancel={close} onSubmit={this.handleItemSave(close)}/>
                 </Card>
               </Grow>
             )}
@@ -46,5 +61,5 @@ export const TodoList = inject('todoStore')(
         )}
       </Toggler>
     );
-  })
-);
+  }
+}

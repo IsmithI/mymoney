@@ -1,4 +1,4 @@
-import { Card, CardHeader, Grid, Grow, WithStyles, withStyles } from '@material-ui/core'
+import { Card, CardHeader, Grid, Grow, WithStyles, withStyles } from '@material-ui/core';
 import { IProject } from 'interfaces';
 import * as React from 'react';
 import { RouteChildrenProps, withRouter } from 'react-router';
