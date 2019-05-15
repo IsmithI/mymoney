@@ -12,6 +12,11 @@ const apps = [
     icon: 'settings',
     title: 'Settings',
     path: 'settings'
+  },
+  {
+    icon: 'payment',
+    title: 'Payments',
+    path: 'payments'
   }
 ];
 

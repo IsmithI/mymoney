@@ -11,14 +11,14 @@ export const Home = () => {
           <TodoList/>
         </Grid>
         <Grid item xs={12} sm={4}>
-          <Grid container spacing={32} justify='center'>
+          <Grid container spacing={32} justify='center' alignItems='center'>
             <Grid item sm={12} lg={6}>
               <WeatherWidget/>
             </Grid>
-            <Grid item xs={8} sm={true} lg={6}>
+            <Grid item>
               <DigitalClock/>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item>
               <AppGroup/>
             </Grid>
           </Grid>
