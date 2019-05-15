@@ -1,12 +1,4 @@
-import {
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  Grid,
-  Input,
-  InputLabel
-} from '@material-ui/core';
+import { Checkbox, FormControlLabel, FormGroup, Grid, Input, InputLabel } from '@material-ui/core';
 import { Route, Switch } from 'components';
 import { IField } from 'interfaces/IField';
 import * as React from 'react';
@@ -26,6 +18,10 @@ export function FieldsList<R>({ fields, record, onChange }: IFieldsList<R>) {
     onChange(key)(e.target.checked);
   };
 
+  const handleNumericInputChange = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(key)(parseInt(e.target.value, 10));
+  };
+
   return (
     <Grid container spacing={8}>
       {fields.map(field => (
@@ -33,64 +29,65 @@ export function FieldsList<R>({ fields, record, onChange }: IFieldsList<R>) {
           {field.render ? (
             field.render({ fields, record, onChange })
           ) : (
-            <FormControl>
-              <Switch value={field.type}>
-                <Route on='text'>
-                  <InputLabel htmlFor={field.key}>{field.title}</InputLabel>
-                  <Input
-                    id={field.key}
-                    type='text'
-                    value={record && record.hasOwnProperty(field.key) ? record[field.key] : ''}
-                    onChange={handleInputChange(field.key)}
-                    aria-describedby={field.key}
-                  />
-                </Route>
-                <Route on='longtext'>
-                  <InputLabel htmlFor={field.key}>{field.title}</InputLabel>
-                  <Input
-                    id={field.key}
-                    type='text'
-                    multiline={true}
-                    rowsMax={4}
-                    value={record && record.hasOwnProperty(field.key) ? record[field.key] : ''}
-                    onChange={handleInputChange(field.key)}
-                    aria-describedby={field.key}
-                  />
-                </Route>
-                <Route on={'number'}>
-                  <InputLabel htmlFor={field.key}>{field.title}</InputLabel>
-                  <Input
-                    id={field.key}
-                    type='number'
-                    value={record && record.hasOwnProperty(field.key) ? record[field.key] : ''}
-                    onChange={handleInputChange(field.key)}
-                    aria-describedby={field.key}
-                  />
-                </Route>
-                <Route on='boolean'>
-                  <FormGroup>
-                    {field.title ? (
-                      <FormControlLabel
-                        label={field.title}
-                        control={
-                          <Checkbox
-                            value={field.key}
-                            checked={record ? !!record[field.key] : false}
-                            onChange={handleCheckboxChange(field.key)}
-                          />
-                        }
-                      />
-                    ) : (
-                      <Checkbox
-                        value={field.key}
-                        checked={record ? !!record[field.key] : false}
-                        onChange={handleCheckboxChange(field.key)}
-                      />
-                    )}
-                  </FormGroup>
-                </Route>
-              </Switch>
-            </FormControl>
+            <Switch value={field.type}>
+              <Route on='text'>
+                <InputLabel htmlFor={field.key}>{field.title}</InputLabel>
+                <Input
+                  id={field.key}
+                  type='text'
+                  fullWidth
+                  value={record && record.hasOwnProperty(field.key) ? record[field.key] : ''}
+                  onChange={handleInputChange(field.key)}
+                  aria-describedby={field.key}
+                />
+              </Route>
+              <Route on='longtext'>
+                <InputLabel htmlFor={field.key}>{field.title}</InputLabel>
+                <Input
+                  id={field.key}
+                  type='text'
+                  fullWidth
+                  multiline={true}
+                  rowsMax={4}
+                  value={record && record.hasOwnProperty(field.key) ? record[field.key] : ''}
+                  onChange={handleInputChange(field.key)}
+                  aria-describedby={field.key}
+                />
+              </Route>
+              <Route on={'number'}>
+                <InputLabel htmlFor={field.key}>{field.title}</InputLabel>
+                <Input
+                  id={field.key}
+                  type='number'
+                  fullWidth
+                  value={record && record.hasOwnProperty(field.key) ? record[field.key] : ''}
+                  onChange={handleNumericInputChange(field.key)}
+                  aria-describedby={field.key}
+                />
+              </Route>
+              <Route on='boolean'>
+                <FormGroup>
+                  {field.title ? (
+                    <FormControlLabel
+                      label={field.title}
+                      control={
+                        <Checkbox
+                          value={field.key}
+                          checked={record ? !!record[field.key] : false}
+                          onChange={handleCheckboxChange(field.key)}
+                        />
+                      }
+                    />
+                  ) : (
+                    <Checkbox
+                      value={field.key}
+                      checked={record ? !!record[field.key] : false}
+                      onChange={handleCheckboxChange(field.key)}
+                    />
+                  )}
+                </FormGroup>
+              </Route>
+            </Switch>
           )}
         </Grid>
       ))}
