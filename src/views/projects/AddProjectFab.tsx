@@ -24,7 +24,7 @@ const Component = ({ classes, projectsStore }: IProps) => {
         <>
           <Grow in={true}>
             <Fab onClick={open} className={classes.fab}>
-              <Icon>add_circle</Icon>
+              <Icon fontSize='large'>add</Icon>
             </Fab>
           </Grow>
           <AddProjectDialog isOpen={isOpen} onCancel={close} onSubmit={handleSubmit(close)} />

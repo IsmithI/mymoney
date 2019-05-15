@@ -27,7 +27,7 @@ const Component = ({ projectsStore, classes, project }: IProps) => {
       {({ isOpen, close, open }) => (
         <>
           <Fab className={classes.fab} onClick={open}>
-            <Icon>add_circle</Icon>
+            <Icon fontSize='large'>add</Icon>
           </Fab>
           <Dialog isOpen={isOpen} onCancel={close} onSubmit={handleSubmit(close)}/>
         </>

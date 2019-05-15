@@ -23,7 +23,7 @@ export const DigitalClock = withStyles(styles)(({ ...props }: PaperProps) => {
     <Paper {...props}>
       <Grid container justify='center'>
         <Grid item>
-          <Typography variant='h4' style={{ width: '5ch'}}>
+          <Typography variant='h4' style={{ width: '6ch'}}>
             {time.getHours()}:{startsWithZero(time.getMinutes())}:{startsWithZero(time.getSeconds())}
           </Typography>
           <Typography variant='subtitle1'>
