@@ -1,16 +1,16 @@
-import { createMuiTheme } from "@material-ui/core";
-import { PaletteOptions } from "@material-ui/core/styles/createPalette";
+import { createMuiTheme } from '@material-ui/core';
+import { PaletteOptions } from '@material-ui/core/styles/createPalette';
 
-const primary: PaletteOptions["primary"] = {
-  main: "#37474f",
-  light: "#62727b",
-  dark: "#102027"
+const primary: PaletteOptions['primary'] = {
+  main: '#37474f',
+  light: '#62727b',
+  dark: '#102027'
 };
 
-const secondary: PaletteOptions["secondary"] = {
-  main: "#ffab00",
-  light: "#ffdd4b",
-  dark: "#c67c00"
+const secondary: PaletteOptions['secondary'] = {
+  main: '#ffab00',
+  light: '#ffdd4b',
+  dark: '#c67c00'
 };
 
 export const theme = createMuiTheme({
@@ -25,21 +25,13 @@ export const theme = createMuiTheme({
     borderRadius: 24
   },
   typography: {
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: 'Roboto, sans-serif',
     title: {
-      fontWeight: "bold",
-      fontFamily: "Montserrat, sans-serif"
+      fontWeight: 'bold',
+      fontFamily: 'Montserrat, sans-serif'
     },
     h4: {
-      fontFamily: "Montserrat, sans-serif"
-    }
-  },
-  transitions: {
-    duration: {
-      enteringScreen: 800,
-      short: 300,
-      shorter: 400,
-      shortest: 500
+      fontFamily: 'Montserrat, sans-serif'
     }
   }
 });
