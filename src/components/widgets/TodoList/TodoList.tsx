@@ -1,5 +1,5 @@
 import { Load, Toggler } from '@ismithi/react-utils';
-import { Card, CardHeader, Grow, Icon, IconButton } from '@material-ui/core';
+import { Card, CardHeader, Collapse, Icon, IconButton } from '@material-ui/core';
 import { ITodo } from 'interfaces/ITodo';
 import { inject, observer } from "mobx-react";
 import * as React from 'react';
@@ -41,21 +41,23 @@ export class TodoList extends React.Component<IProps> {
         {({ isOpen, close, open }) => (
           <Load instantly={true} on={load}>
             {({ loaded }) => (
-              <Grow in={loaded}>
-                <Card>
-                  <CardHeader
-                    title='Todos'
-                    titleTypographyProps={{ variant: 'title' }}
-                    action={
-                      <IconButton onClick={open}>
-                        <Icon>add_circle</Icon>
-                      </IconButton>
-                    }
-                  />
-                  <CustomList items={todos} onItemChange={this.handleChange} onItemDelete={this.handleDelete}/>
-                  <AddTodoItem isOpen={isOpen} onCancel={close} onSubmit={this.handleItemSave(close)}/>
-                </Card>
-              </Grow>
+              <Card>
+                <CardHeader
+                  title='Todos'
+                  titleTypographyProps={{ variant: 'title' }}
+                  action={
+                    <IconButton onClick={open}>
+                      <Icon>add_circle</Icon>
+                    </IconButton>
+                  }
+                />
+                <Collapse in={loaded}>
+                  <div>
+                    <CustomList items={todos} onItemChange={this.handleChange} onItemDelete={this.handleDelete}/>
+                  </div>
+                </Collapse>
+                <AddTodoItem isOpen={isOpen} onCancel={close} onSubmit={this.handleItemSave(close)}/>
+              </Card>
             )}
           </Load>
         )}

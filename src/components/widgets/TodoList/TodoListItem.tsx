@@ -25,17 +25,17 @@ export class TodoListItem extends React.Component<IListItem<ITodo>> {
     const { item } = this.props;
     return (
       <MuiListItem divider={true}>
-        <Grid container={true} wrap='nowrap'>
-          <Grid item={true}>
+        <Grid container wrap='nowrap'>
+          <Grid item>
             <Checkbox checked={item.completed} onChange={this.toggleTodo}/>
           </Grid>
-          <Grid item={true}>
+          <Grid item>
             <Typography variant='subtitle1'>{item.title}</Typography>
             <Typography variant='subtitle2'>{extractRawDate(item.created, true)}</Typography>
           </Grid>
-          <Grid item={true} xs={true}>
-            <Grid container={true} justify='flex-end'>
-              <Grid item={true}>
+          <Grid item xs={true}>
+            <Grid container justify='flex-end'>
+              <Grid item>
                 <IconButton onClick={this.handleDelete}>
                   <Icon>delete</Icon>
                 </IconButton>

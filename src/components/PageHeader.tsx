@@ -8,12 +8,12 @@ interface IPageHeader {
 
 export const PageHeader = ({ title }: IPageHeader) => (
   <Grow in={true}>
-    <Grid container={true} spacing={16}>
-      <Grid item={true}>
+    <Grid container spacing={16} alignItems='center' wrap='nowrap'>
+      <Grid item>
         <BackButton/>
       </Grid>
-      <Grid item={true}>
-        <Typography variant='h3'>{title}</Typography>
+      <Grid item>
+        <Typography variant='h3' color='secondary'>{title}</Typography>
       </Grid>
     </Grid>
   </Grow>

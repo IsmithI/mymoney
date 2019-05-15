@@ -6,5 +6,5 @@ export default () =>
       position: 'fixed',
       bottom: 24,
       right: 24
-    },
+    }
   });

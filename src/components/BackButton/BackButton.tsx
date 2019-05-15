@@ -1,14 +1,19 @@
-import { Icon, IconButton } from '@material-ui/core';
+import { Icon, IconButton, WithStyles, withStyles } from '@material-ui/core';
 import * as React from 'react';
-import { withRouter } from 'react-router';
+import { RouteChildrenProps, withRouter } from 'react-router';
+import styles from './styles';
 
-export const BackButton = withRouter(({ history }) => {
+interface IProps extends WithStyles<typeof styles>, RouteChildrenProps {
+
+}
+
+export const BackButton = withStyles(styles)(withRouter(({ history, classes }: IProps) => {
   const goBack = () => history.goBack();
   return (
     <IconButton onClick={goBack}>
-      <Icon color='inherit' fontSize='large'>
+      <Icon fontSize='large' className={classes.icon}>
         arrow_back
       </Icon>
     </IconButton>
   );
-});
+}));

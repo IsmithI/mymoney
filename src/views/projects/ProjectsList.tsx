@@ -12,9 +12,9 @@ export const ProjectsList = withStyles(styles)(withRouter(({ projects, history, 
   const displayProject = (id: string) => () => history.push(`projects/${id}`);
 
   return (
-    <Grid container={true} spacing={16}>
+    <Grid container spacing={16}>
       {projects.map(project => (
-        <Grid item={true} key={project.id}>
+        <Grid item key={project.id}>
           <Grow in={true}>
             <Card className={classes.projectCard}>
               <CardHeader title={project.title} onClick={displayProject(project.id)} />

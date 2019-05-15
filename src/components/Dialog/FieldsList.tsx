@@ -27,9 +27,9 @@ export function FieldsList<R>({ fields, record, onChange }: IFieldsList<R>) {
   };
 
   return (
-    <Grid container={true} spacing={8}>
+    <Grid container spacing={8}>
       {fields.map(field => (
-        <Grid item={true} xs={6} key={field.key}>
+        <Grid item xs={12} sm={6} key={field.key}>
           {field.render ? (
             field.render({ fields, record, onChange })
           ) : (

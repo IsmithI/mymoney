@@ -1,5 +1,6 @@
 import { Toggler } from '@ismithi/react-utils';
-import { Fab, Icon, WithStyles, withStyles } from '@material-ui/core';
+import { Icon, WithStyles, withStyles } from '@material-ui/core';
+import { Fab } from "components/Fab";
 import { IProject, ITask } from 'interfaces';
 import { inject } from 'mobx-react';
 import * as React from 'react';
@@ -28,7 +29,7 @@ const Component = ({ projectsStore, classes, project }: IProps) => {
           <Fab className={classes.fab} onClick={open}>
             <Icon>add_circle</Icon>
           </Fab>
-          <Dialog isOpen={isOpen} onCancel={close} onSubmit={handleSubmit(close)} />
+          <Dialog isOpen={isOpen} onCancel={close} onSubmit={handleSubmit(close)}/>
         </>
       )}
     </Toggler>

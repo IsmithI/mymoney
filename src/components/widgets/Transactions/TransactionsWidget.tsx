@@ -1,5 +1,5 @@
 import { Load } from '@ismithi/react-utils';
-import { Card, CardHeader, Grow, Icon, IconButton } from '@material-ui/core';
+import { Card, CardHeader, Collapse, Icon, IconButton } from '@material-ui/core';
 import { ITransaction } from 'interfaces';
 import { inject, observer } from 'mobx-react';
 import React from 'react';
@@ -36,31 +36,33 @@ export class TransactionsWidget extends React.Component {
 
   public render() {
     const {
-      transactionsStore: { entities, hasEntities, load }
+      transactionsStore: { entities, load }
     } = this.injected;
 
     return (
       <Load instantly={true} on={load}>
         {({ loaded }) => (
-          <Grow in={loaded && hasEntities}>
-            <Card>
-              <CardHeader
-                title='Recent transactions'
-                titleTypographyProps={{ variant: 'title' }}
-                action={
-                  <IconButton onClick={this.openDialog}>
-                    <Icon>add_circle</Icon>
-                  </IconButton>
-                }
-              />
-              <TransactionsList items={entities} />
-              <AddTransactionDialog
-                isOpen={this.state.showAddDialog}
-                onCancel={this.closeDialog}
-                onSubmit={this.createTransaction}
-              />
-            </Card>
-          </Grow>
+          <Card>
+            <CardHeader
+              title='Recent transactions'
+              titleTypographyProps={{ variant: 'title' }}
+              action={
+                <IconButton onClick={this.openDialog}>
+                  <Icon>add_circle</Icon>
+                </IconButton>
+              }
+            />
+            <Collapse in={loaded}>
+              <div>
+                <TransactionsList items={entities}/>
+              </div>
+            </Collapse>
+            <AddTransactionDialog
+              isOpen={this.state.showAddDialog}
+              onCancel={this.closeDialog}
+              onSubmit={this.createTransaction}
+            />
+          </Card>
         )}
       </Load>
     );

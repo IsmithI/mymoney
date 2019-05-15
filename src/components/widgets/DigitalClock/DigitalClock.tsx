@@ -1,4 +1,4 @@
-import { createStyles, Grow, Paper, Typography, withStyles, WithStyles } from '@material-ui/core';
+import { createStyles, Paper, Typography, withStyles, WithStyles } from '@material-ui/core';
 import { PaperProps } from '@material-ui/core/Paper';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -23,15 +23,13 @@ export const DigitalClock = withStyles(styles)(({ classes, ...props }: IProps) =
   });
 
   return (
-    <Grow in={true}>
-      <Paper className={classes.content} {...props}>
-        <Typography variant='h4'>
-          {time.getHours()}:{startsWithZero(time.getMinutes())}:{startsWithZero(time.getSeconds())}
-        </Typography>
-        <Typography variant='subtitle1'>
-          {time.getDate()} {getDayOfWeek(time.getDay())}
-        </Typography>
-      </Paper>
-    </Grow>
+    <Paper className={classes.content} {...props}>
+      <Typography variant='h4'>
+        {time.getHours()}:{startsWithZero(time.getMinutes())}:{startsWithZero(time.getSeconds())}
+      </Typography>
+      <Typography variant='subtitle1'>
+        {time.getDate()} {getDayOfWeek(time.getDay())}
+      </Typography>
+    </Paper>
   );
 });

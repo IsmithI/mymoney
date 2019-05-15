@@ -13,18 +13,18 @@ export class TransactionsListItem extends React.Component<ITransactionsListItem>
 
     return (
       <ListItem divider={true}>
-        <Grid container={true} wrap='nowrap' justify='space-between' alignItems='center'>
-          <Grid item={true}>
-            <Grid container={true} direction='column'>
-              <Grid item={true}>
+        <Grid container wrap='nowrap' justify='space-between' alignItems='center'>
+          <Grid item>
+            <Grid container direction='column'>
+              <Grid item>
                 <Typography variant='subtitle1'>{item.category}</Typography>
               </Grid>
-              <Grid item={true}>
+              <Grid item>
                 <Typography variant='subtitle2'>{extractRawDate(item.date)}</Typography>
               </Grid>
             </Grid>
           </Grid>
-          <Grid item={true}>
+          <Grid item>
             <Typography variant='title'>{item.amount} &#8372;</Typography>
           </Grid>
         </Grid>

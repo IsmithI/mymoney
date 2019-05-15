@@ -30,9 +30,9 @@ const Component = ({ tasks, onDelete, onStatusUpgrade }: IProps) => {
   const handleNextStatus = (task: ITask) => () => onStatusUpgrade(task);
 
   return (
-    <Grid container={true} direction='column' spacing={16}>
+    <Grid container direction='column' spacing={16}>
       {sortedTasks.map(task => (
-        <Grid item={true} key={task.title}>
+        <Grid item key={task.title}>
           <Card>
             <CardHeader
               title={task.title}

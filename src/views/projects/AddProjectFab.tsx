@@ -1,5 +1,6 @@
 import { Toggler } from '@ismithi/react-utils';
-import { Fab, Grow, Icon, withStyles, WithStyles } from '@material-ui/core';
+import { Grow, Icon, withStyles, WithStyles } from '@material-ui/core';
+import { Fab } from "components/Fab";
 import { IProject } from 'interfaces';
 import { inject } from 'mobx-react';
 import * as React from 'react';

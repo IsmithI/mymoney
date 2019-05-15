@@ -8,10 +8,13 @@ export interface IFirebaseStore {
   userIsLoggedIn: boolean;
   loginWithGoogle: () => void;
   userInfo: any;
+  error: app.auth.Error;
 }
 
 class FirebaseStore implements IFirebaseStore {
   @observable public user: any;
+
+  @observable public error: app.auth.Error;
 
   public auth: firebase.auth.Auth;
   public authProvider: firebase.auth.GoogleAuthProvider;
@@ -25,13 +28,19 @@ class FirebaseStore implements IFirebaseStore {
     this.auth.onAuthStateChanged(user => {
       this.saveUser(user);
       if (!user) {
-        this.loginWithGoogle();
+        return this.loginWithGoogle();
       }
-    });
+    }, this.saveError);
   }
 
   public loginWithGoogle = () => {
-    this.auth.signInWithPopup(this.authProvider);
+    return this.auth.signInWithPopup(this.authProvider);
+  }
+
+  @action
+  public saveError = (err: app.auth.Error) => {
+    this.error = err;
+    return err;
   }
 
   @computed

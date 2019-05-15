@@ -10,8 +10,8 @@ export const CollapseLoader = ({ loading, children }: IProps) => (
   <>
     <Collapse in={!loading}>{children}</Collapse>
     {loading && (
-      <Grid container={true} justify='center' alignItems='center'>
-        <Grid item={true}>
+      <Grid container justify='center' alignItems='center'>
+        <Grid item>
           <CircularProgress />
         </Grid>
       </Grid>

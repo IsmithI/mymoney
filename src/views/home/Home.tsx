@@ -6,27 +6,27 @@ import * as React from "react";
 export const Home = () => {
   return (
     <>
-        <Grid container={true} spacing={32}>
-          <Grid item={true} xs={12} sm={8} lg={4}>
-            <TodoList/>
-          </Grid>
-          <Grid item={true} xs={12} sm={4}>
-            <Grid container={true} spacing={32} justify='center'>
-              <Grid item={true} sm={12} lg={6}>
-                <WeatherWidget/>
-              </Grid>
-              <Grid item={true} xs={8} sm={true} lg={6}>
-                <DigitalClock/>
-              </Grid>
-              <Grid item={true} xs={12}>
-                <AppGroup/>
-              </Grid>
+      <Grid container spacing={32}>
+        <Grid item xs={12} sm={8} lg={4}>
+          <TodoList/>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Grid container spacing={32} justify='center'>
+            <Grid item sm={12} lg={6}>
+              <WeatherWidget/>
+            </Grid>
+            <Grid item xs={8} sm={true} lg={6}>
+              <DigitalClock/>
+            </Grid>
+            <Grid item xs={12}>
+              <AppGroup/>
             </Grid>
           </Grid>
-          <Grid item={true} xs={12} sm={8} lg={4}>
-            <TransactionsWidget/>
-          </Grid>
         </Grid>
+        <Grid item xs={12} sm={8} lg={4}>
+          <TransactionsWidget/>
+        </Grid>
+      </Grid>
       <Toolbar/>
     </>
   );

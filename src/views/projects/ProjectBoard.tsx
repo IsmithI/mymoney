@@ -40,14 +40,14 @@ class Component extends React.Component<IProjectBoard> {
 
     return project ? (
       <>
-        <Grid container={true} direction='column' spacing={16}>
-          <Grid item={true}>
+        <Grid container direction='column' spacing={16}>
+          <Grid item>
             <PageHeader title={project.title} />
           </Grid>
-          <Grid item={true}>
+          <Grid item>
             <Grow in={true}>
-              <Grid container={true} justify='space-around' spacing={16}>
-                <Grid item={true} xs={12} sm={3}>
+              <Grid container justify='space-around' spacing={16}>
+                <Grid item xs={12} sm={3}>
                   <Typography align='center' className={classes.statusTitle} variant='title'>
                     Pending
                   </Typography>
@@ -58,7 +58,7 @@ class Component extends React.Component<IProjectBoard> {
                     onStatusUpgrade={this.handleStatusUpgrade(project)}
                   />
                 </Grid>
-                <Grid item={true} xs={12} sm={3}>
+                <Grid item xs={12} sm={3}>
                   <Typography align='center' className={classes.statusTitle} variant='title'>
                     In progress
                   </Typography>
@@ -69,7 +69,7 @@ class Component extends React.Component<IProjectBoard> {
                     onStatusUpgrade={this.handleStatusUpgrade(project)}
                   />
                 </Grid>
-                <Grid item={true} xs={12} sm={3}>
+                <Grid item xs={12} sm={3}>
                   <Typography align='center' className={classes.statusTitle} variant='title'>
                     Testing
                   </Typography>
@@ -80,7 +80,7 @@ class Component extends React.Component<IProjectBoard> {
                     onStatusUpgrade={this.handleStatusUpgrade(project)}
                   />
                 </Grid>
-                <Grid item={true} xs={12} sm={3}>
+                <Grid item xs={12} sm={3}>
                   <Typography align='center' className={classes.statusTitle} variant='title'>
                     Done
                   </Typography>

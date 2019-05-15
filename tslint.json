@@ -10,7 +10,9 @@
     "object-literal-sort-keys": false,
     "eofline": false,
     "trailing-comma": false,
-    "quotemark": false
+    "quotemark": false,
+    "member-access": false,
+    "jsx-boolean-value": false
   },
   "rulesDirectory": [],
   "linterOptions": {

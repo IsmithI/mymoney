@@ -14,9 +14,9 @@ const ToolbarBase = ({ history, settingsStore: { data } }: IProps) => {
   const nextPage = (path: string) => () => history.push(path);
   return data && data.toolbarEnabled ? (
     <nav className={styles.toolbar}>
-        <Grid container={true} spacing={8}>
+        <Grid container spacing={8}>
           {items.map(item => (
-            <Grid item={true} key={item.id}>
+            <Grid item key={item.id}>
               <IconButton onClick={nextPage(item.path)}>
                 <Icon fontSize='large' color='primary'>{item.icon}</Icon>
               </IconButton>

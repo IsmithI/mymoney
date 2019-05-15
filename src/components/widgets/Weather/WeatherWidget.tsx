@@ -1,4 +1,4 @@
-import { CircularProgress } from '@material-ui/core';
+import { Grow } from "@material-ui/core";
 import { CardProps } from '@material-ui/core/Card';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
@@ -19,15 +19,15 @@ export class WeatherWidget extends React.Component<IWeatherProps> {
 
   public render() {
     const {
-      weatherStore: { error, loading, weatherData }
+      weatherStore: { error, weatherData }
     } = this.props;
 
-    return loading ? (
-      <CircularProgress variant='indeterminate' />
-    ) : error ? (
-      <ErrorContainer message={error} />
+    return error ? (
+      <ErrorContainer message={error}/>
     ) : (
-      <WeatherDetails data={weatherData} />
+      <Grow in={true}>
+        <WeatherDetails data={weatherData}/>
+      </Grow>
     );
   }
 }

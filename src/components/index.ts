@@ -12,3 +12,4 @@ export * from './BackButton';
 export * from './Toolbar';
 export * from './PageHeader';
 export * from './Fab';
+export * from './HeadlineLoader';

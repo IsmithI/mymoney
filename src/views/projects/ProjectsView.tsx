@@ -1,5 +1,5 @@
-import { Grid, Grow, Typography } from '@material-ui/core';
-import { BackButton } from 'components';
+import { Grid, Grow } from '@material-ui/core';
+import { PageHeader } from 'components';
 import { IProject } from 'interfaces';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
@@ -25,14 +25,7 @@ export class ProjectsView extends React.Component<IProjectsView> {
       <>
         <Grow in={true}>
           <Grid>
-            <Grid container={true} spacing={16}>
-              <Grid item={true}>
-                <BackButton />
-              </Grid>
-              <Grid item={true}>
-                <Typography variant='h2'>My projects</Typography>
-              </Grid>
-            </Grid>
+            <PageHeader title='My projects'/>
             <br />
             <ProjectsList projects={projectsStore.entities} />
           </Grid>

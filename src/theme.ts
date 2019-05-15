@@ -33,5 +33,13 @@ export const theme = createMuiTheme({
     h4: {
       fontFamily: "Montserrat, sans-serif"
     }
+  },
+  transitions: {
+    duration: {
+      enteringScreen: 800,
+      short: 300,
+      shorter: 400,
+      shortest: 500
+    }
   }
 });

@@ -1,4 +1,4 @@
-import { Card, CardContent, Grid, Grow, Typography } from '@material-ui/core';
+import { Card, CardContent, Collapse, Grid, Typography } from '@material-ui/core';
 import { WeatherIcon } from 'components';
 import React from 'react';
 import { RouteChildrenProps, withRouter } from 'react-router';
@@ -9,26 +9,27 @@ interface IProps extends RouteChildrenProps {
 }
 
 export const WeatherDetails = withRouter(({ data, history }: IProps) => {
-  const { icon, isDay, condition, temperature } = data;
   const nextPage = () => history.push('weather');
 
   return (
-    <Grow in={true}>
-      <Card>
-        <CardContent onClick={nextPage}>
-          <Grid container={true} spacing={16} wrap='nowrap'>
-            <Grid item={true}>
-              <Typography variant='h3'>
-                <WeatherIcon value={icon} isDay={isDay} />
-              </Typography>
+    <Card>
+      <CardContent onClick={nextPage}>
+        <Collapse in={!!data}>
+          {data && (
+            <Grid container spacing={16} wrap='nowrap'>
+              <Grid item>
+                <Typography variant='h3'>
+                  <WeatherIcon value={data.icon} isDay={data.isDay}/>
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant='subtitle1'>{data.condition}</Typography>
+                <Typography variant='title'>{data.temperature}&deg;C</Typography>
+              </Grid>
             </Grid>
-            <Grid item={true}>
-              <Typography variant='subtitle1'>{condition}</Typography>
-              <Typography variant='title'>{temperature}&deg;C</Typography>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-    </Grow>
+          )}
+        </Collapse>
+      </CardContent>
+    </Card>
   );
 });

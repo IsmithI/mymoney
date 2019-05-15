@@ -22,6 +22,7 @@ class Component extends React.Component<ISettings> {
     return (
       <>
         <PageHeader title='Settings'/>
+        <br/>
         <Grow in={true}>
             <Card>
               <CardContent>

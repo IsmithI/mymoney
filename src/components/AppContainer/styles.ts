@@ -4,7 +4,7 @@ export default (theme: Theme) =>
   createStyles({
     root: {
       background: theme.palette.background.default,
-      padding: '2em 1em 6em 1em',
+      padding: '1em 1em 6em 1em',
       minHeight: '100vh',
       overflowX: 'hidden',
       boxSizing: 'border-box'

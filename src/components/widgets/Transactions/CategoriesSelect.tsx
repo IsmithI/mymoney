@@ -1,5 +1,5 @@
 import { Load } from '@ismithi/react-utils';
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { FormControl, Grow, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { ICategory } from 'interfaces';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
@@ -20,24 +20,26 @@ export const CategoriesSelect = inject('categoriesStore')(
         {({ loaded }) => (
           <>
             {loaded && (
-              <FormControl fullWidth={true}>
-                <InputLabel htmlFor='category'>Choose category</InputLabel>
-                <Select
-                  style={{ minWidth: 100 }}
-                  value={value || ''}
-                  onChange={handleValueChange}
-                  inputProps={{ name: 'name', id: 'category' }}
-                >
-                  <MenuItem value=''>
-                    <em>None</em>
-                  </MenuItem>
-                  {categoriesStore.entities.map(c => (
-                    <MenuItem key={c.id} value={c.id}>
-                      {c.name}
+              <Grow in={loaded}>
+                <FormControl fullWidth={true}>
+                  <InputLabel htmlFor='category'>Choose category</InputLabel>
+                  <Select
+                    style={{ minWidth: 100 }}
+                    value={value || ''}
+                    onChange={handleValueChange}
+                    inputProps={{ name: 'name', id: 'category' }}
+                  >
+                    <MenuItem value=''>
+                      <em>None</em>
                     </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                    {categoriesStore.entities.map(c => (
+                      <MenuItem key={c.id} value={c.id}>
+                        {c.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grow>
             )}
           </>
         )}
