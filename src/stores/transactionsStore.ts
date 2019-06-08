@@ -6,9 +6,9 @@ export interface ITransactionsStore extends TransactionsStore {
   lastTransactions: ITransaction[];
   chartData: any[];
   highestExpenses: {
-    transaction: number,
+    transaction: number
     category: {
-      title: string,
+      title: string
       amount: number
     }
   };
@@ -21,7 +21,8 @@ class TransactionsStore extends EntityStore<ITransaction> {
 
   @computed
   get lastTransactions() {
-    return [...this.entities]
+    return this.entities
+      .slice()
       .sort((a, b) => (a.date && b.date ? (a.date > b.date ? 1 : 0) : 0))
       .slice(0, 4);
   }
@@ -38,7 +39,7 @@ class TransactionsStore extends EntityStore<ITransaction> {
   get groupedByCategory() {
     return this.entities.reduce((group, t) => {
       (group[t.category] = group[t.category] || []).push(t);
-      return group;
+       return group;
     }, {});
   }
 
@@ -50,7 +51,7 @@ class TransactionsStore extends EntityStore<ITransaction> {
         return [
           key,
           values.reduce((sum, t) => {
-            return sum + (parseInt(t.amount.toString(), 10));
+            return sum + parseInt(t.amount.toString(), 10);
           }, 0)
         ];
       })
@@ -59,18 +60,23 @@ class TransactionsStore extends EntityStore<ITransaction> {
 
   @computed
   get highestExpenses() {
-    const categoryAmount = Object.entries<any>(this.groupedByCategory).reduce((c, [category, transactions]) => {
-      const amount = transactions.reduce((sum, t) => {
-        return sum + parseInt(t.amount, 10);
-      }, 0);
-      return amount > c.amount ? {
-        title: category,
-        amount
-      } : c;
-    }, {
-      title: '',
-      amount: 0
-    });
+    const categoryAmount = Object.entries<any>(this.groupedByCategory).reduce(
+      (c, [category, transactions]) => {
+        const amount = transactions.reduce((sum, t) => {
+          return sum + parseInt(t.amount, 10);
+        }, 0);
+        return amount > c.amount
+          ? {
+              title: category,
+              amount
+            }
+          : c;
+      },
+      {
+        title: '',
+        amount: 0
+      }
+    );
 
     return {
       transaction: this.entities.reduce((expense, t) => {

@@ -16,13 +16,12 @@ interface IProjectBoard extends RouteChildrenProps<any>, WithStyles<typeof style
 @inject('projectsStore')
 @observer
 class Component extends React.Component<IProjectBoard> {
-
   public componentDidMount = () => {
     this.props.projectsStore.load();
   }
 
   public findBy = (project: IProject) => (status: string) => {
-    return project.tasks.filter(task => task.status === status);
+    return (project.tasks || []).filter(task => task.status === status);
   }
 
   public handleDelete = (task: ITask) => {

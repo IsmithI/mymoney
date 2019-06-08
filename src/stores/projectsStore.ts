@@ -8,10 +8,31 @@ export interface IProjectsStore extends EntityStore<IProject> {
 }
 
 class ProjectsStore extends EntityStore<IProject> implements IProjectsStore {
+  constructor() {
+    super('projects');
+  }
+
+  @action
+  public add(project: IProject) {
+    if (!project.tasks) {
+      project.tasks = [];
+    }
+
+    return super.add(project);
+  }
+
+  @action
+  public load() {
+    return super.load().then(() => {
+      this.entities.forEach(e => (e.tasks = e.tasks || []));
+      return this.entities;
+    });
+  }
+
   @action
   public addTask = (project: IProject) => (task: ITask) => {
-    const tasks = project.tasks || [];
-    return this.save({ ...project, tasks: [...tasks, fillDefaultParams(task)] });
+    project.tasks.push(fillDefaultParams(task));
+    return this.save(project);
   }
 
   @action
@@ -39,4 +60,4 @@ function nextStatus(status: string) {
   return (statusesArray[i + 1] || statusesArray[statusesArray.length - 1]) as TaskStatus;
 }
 
-export const projectsStore = new ProjectsStore('projects');
+export const projectsStore = new ProjectsStore();

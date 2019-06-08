@@ -13,15 +13,15 @@ class TodoStore extends EntityStore<ITodo> implements ITodoStore {
 
   @computed
   get todos() {
-    return this.entities.sort((a, b) => {
+    return this.entities.slice().sort((a, b) => {
       return a.created < b.created ? 1 : a.created > b.created ? -1 : 0;
     });
   }
 
   @action
   public toggleTodo = (todo: ITodo) => (completed: boolean) => {
-    const data = { ...todo, completed };
-    return this.save(data).then(this.load);
+    todo.completed = completed;
+    return this.save(todo).then(this.load);
   }
 }
 

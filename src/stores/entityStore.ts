@@ -24,24 +24,30 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
 
   constructor(entity: string) {
     this.entity = entity;
+
+    this.load = this.load.bind(this);
+    this.add = this.add.bind(this);
   }
 
   @action
-  public load = () => db.get(this.entity).then(this.saveEntities)
+  public load() {
+    return db.get(this.entity).then(this.saveEntities);
+  }
 
   @action
   public save = (data: T) => db.set(this.entity)(data)
 
   @action
-  public add = (data: T) =>
-    db
+  public add(data: T) {
+    return db
       .add(this.entity)(data)
       .then(d =>
         d
           .get()
           .then(this.extractData)
           .then(this.addEntity)
-      )
+      );
+  }
 
   @action
   public addEntity = (e: T) => {

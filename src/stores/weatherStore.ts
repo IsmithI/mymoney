@@ -26,7 +26,6 @@ export interface IWeatherStore {
 }
 
 class WeatherStore implements IWeatherStore {
-
   @computed
   get weatherData() {
     const now = Math.round(new Date().getTime() / 1000);
@@ -45,8 +44,8 @@ class WeatherStore implements IWeatherStore {
     return (
       this.forecast &&
       this.forecast.list
-        .filter((item, i) => i % 8 === 0)
-        .map(item => ({
+        .filter(({  }: any, i: number) => i % 8 === 0)
+        .map((item: any) => ({
           date: new Date(item.dt * 1000),
           data: item.weather[0],
           temp: Math.round(10 * (item.main.temp - 273)) / 10

@@ -1,33 +1,39 @@
-import { Grid } from "@material-ui/core";
-import { Toolbar } from "components";
-import { AppGroup, DigitalClock, TodoList, TransactionsWidget, WeatherWidget } from "components/widgets";
-import * as React from "react";
+import { Grid } from '@material-ui/core';
+import { Toolbar } from 'components';
+import {
+  AppGroup,
+  DigitalClock,
+  TodoList,
+  TransactionsWidget,
+  WeatherWidget
+} from 'components/widgets';
+import * as React from 'react';
 
 export const Home = () => {
   return (
     <>
-      <Grid container spacing={16}>
+      <Grid container spacing={16} alignItems='center'>
         <Grid item xs={12} sm={8} lg={4}>
-          <TodoList/>
+          <TodoList />
         </Grid>
         <Grid item xs={12} sm={4}>
           <Grid container spacing={16} justify='center' alignItems='center'>
             <Grid item sm={12} lg>
-              <WeatherWidget/>
+              <WeatherWidget />
             </Grid>
             <Grid item>
-              <DigitalClock/>
+              <DigitalClock />
             </Grid>
             <Grid item>
-              <AppGroup/>
+              <AppGroup />
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs={12} sm={8} lg={4}>
-          <TransactionsWidget/>
+          <TransactionsWidget />
         </Grid>
       </Grid>
-      <Toolbar/>
+      <Toolbar />
     </>
   );
 };
