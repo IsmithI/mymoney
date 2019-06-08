@@ -16,17 +16,7 @@
     "noEmit": true,
     "jsx": "preserve",
     "noUnusedLocals": true,
-    "baseUrl": "./src",
-    "paths": {
-      "@app/components": ["components"],
-      "@app/config": ["config"],
-      "@app/interfaces": ["interfaces"],
-      "@app/utils": ["utils"],
-      "@app/strores": ["stores"],
-      "@app/views": ["views"],
-      "@app/widgets": ["components/widgets"],
-      "@app/providers": ["providers"]
-    }
+    "baseUrl": "./src"
   },
   "include": ["src"]
 }

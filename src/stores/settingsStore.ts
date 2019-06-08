@@ -1,6 +1,6 @@
-import { db } from '@app/utils';
 import * as firebase from 'firebase';
 import { action, observable } from 'mobx';
+import { db } from 'utils';
 
 export interface ISettingsStore {
   data: any;

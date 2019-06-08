@@ -1,7 +1,7 @@
-import { Home, Payments, ProjectBoard, ProjectsView, Settings, Weather } from '@app/views';
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import { HashRouter as Router } from 'react-router-dom';
+import { Home, Payments, ProjectBoard, ProjectsView, Settings, Weather } from 'views';
 import { AuthenticationManager } from './AuthenticationManager';
 
 export const AppRouter = () => (
