@@ -53,21 +53,17 @@ class WeatherStore implements IWeatherStore {
     );
   }
 
-  @observable
-  public data: any;
+  @observable data: any;
 
-  @observable
-  public forecast: any;
+  @observable forecast: any;
 
-  @observable
-  public error: string | false = false;
+  @observable error: string | false = false;
 
-  @observable
-  public loading = true;
-  @observable
-  protected geolocation: Position | null = null;
+  @observable loading = true;
 
-  public async position(): Promise<Position> {
+  @observable geolocation: Position | null = null;
+
+  async position(): Promise<Position> {
     if (this.geolocation) {
       return new Promise(r => r(this.geolocation));
     }
@@ -75,26 +71,26 @@ class WeatherStore implements IWeatherStore {
   }
 
   @action
-  public saveGeolocation = (geolocation: Position) => {
+  saveGeolocation = (geolocation: Position) => {
     this.geolocation = geolocation;
   }
 
   @action
-  public saveError = (error: PositionError) => {
+  saveError = (error: PositionError) => {
     this.error = error.message;
   }
 
   @action
-  public saveWeatherData = (data: any) => {
+  saveWeatherData = (data: any) => {
     this.data = data;
   }
 
   @action
-  public doneLoading = () => {
+  doneLoading = () => {
     this.loading = false;
   }
 
-  public requestCurrentWeather = async () => {
+  requestCurrentWeather = async () => {
     const {
       coords: { latitude, longitude }
     } = await this.position();
@@ -106,7 +102,7 @@ class WeatherStore implements IWeatherStore {
       .then(this.doneLoading);
   }
 
-  public requestWeatherForecast = async () => {
+  requestWeatherForecast = async () => {
     const {
       coords: { latitude, longitude }
     } = await this.position();
@@ -119,11 +115,11 @@ class WeatherStore implements IWeatherStore {
   }
 
   @action
-  public saveForecast = (forecast: any) => {
+  saveForecast = (forecast: any) => {
     this.forecast = forecast;
   }
 
-  private getCurrentPosition = (options = {}): Promise<Position> => {
+  getCurrentPosition = (options = {}): Promise<Position> => {
     this.loading = true;
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject, options);

@@ -12,3 +12,7 @@ Currently supported widgets:
 - Weather
 - Digital Clock
 - Last expenses
+- App group, contains:
+  - Projects
+  - Settings
+  - Detailed payments

@@ -17,10 +17,9 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
     return this.entities.length > 0;
   }
 
-  @observable
-  public entities: T[] = [];
+  @observable entities: T[] = [];
 
-  private readonly entity: string;
+  readonly entity: string;
 
   constructor(entity: string) {
     this.entity = entity;
@@ -30,15 +29,15 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
   }
 
   @action
-  public load() {
+  load() {
     return db.get(this.entity).then(this.saveEntities);
   }
 
   @action
-  public save = (data: T) => db.set(this.entity)(data)
+  save = (data: T) => db.set(this.entity)(data)
 
   @action
-  public add(data: T) {
+  add(data: T) {
     return db
       .add(this.entity)(data)
       .then(d =>
@@ -50,12 +49,12 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
   }
 
   @action
-  public addEntity = (e: T) => {
+  addEntity = (e: T) => {
     this.entities.push(e);
   }
 
   @action
-  public saveEntities = (snapshot: firebase.firestore.QuerySnapshot) => {
+  saveEntities = (snapshot: firebase.firestore.QuerySnapshot) => {
     this.entities = snapshot.docs.map(
       d =>
         ({
@@ -67,7 +66,7 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
   }
 
   @action
-  public get = (id: string) =>
+  get = (id: string) =>
     db
       .getById(this.entity)(id)
       .then(
@@ -79,13 +78,13 @@ export class EntityStore<T extends IHasId> implements IEntityStore<T> {
       )
 
   @action
-  public delete = (id: string) => {
+  delete = (id: string) => {
     const i = this.entities.findIndex(e => e.id === id);
     this.entities.splice(i, 1);
     return db.delete(this.entity)(id);
   }
 
-  public extractData = (d: firebase.firestore.QueryDocumentSnapshot) =>
+  extractData = (d: firebase.firestore.QueryDocumentSnapshot) =>
     ({
       id: d.id,
       ...d.data()

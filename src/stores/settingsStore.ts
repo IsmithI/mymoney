@@ -1,6 +1,6 @@
-import * as firebase from "firebase";
-import { action, observable } from "mobx";
-import { db } from "../utils";
+import { db } from '@app/utils';
+import * as firebase from 'firebase';
+import { action, observable } from 'mobx';
 
 export interface ISettingsStore {
   data: any;
@@ -11,26 +11,24 @@ export interface ISettingsStore {
 }
 
 class SettingsStore implements ISettingsStore {
+  @observable loaded = false;
 
-  @observable
-  public loaded = false;
-
-  @observable
-  public data;
+  @observable data;
 
   constructor() {
     this.load();
   }
 
   @action
-  public toggleToolbar = () => {
+  toggleToolbar = () => {
     this.data.toolbarEnabled = !this.data.toolbarEnabled;
   }
 
   @action
-  public load = () => {
+  load = () => {
     this.loaded = false;
-    return db.getById('settings')('common')
+    return db
+      .getById('settings')('common')
       .then(this.saveLoadedData)
       .then(d => {
         this.loaded = true;
@@ -39,15 +37,15 @@ class SettingsStore implements ISettingsStore {
   }
 
   @action
-  public saveLoadedData = (doc: firebase.firestore.QueryDocumentSnapshot) => {
-    this.data = ({
+  saveLoadedData = (doc: firebase.firestore.QueryDocumentSnapshot) => {
+    this.data = {
       ...doc.data()
-    });
+    };
     return this.data;
   }
 
   @action
-  public saveSettings = () => {
+  saveSettings = () => {
     return db.set('settings')({ id: 'common', ...this.data });
   }
 }

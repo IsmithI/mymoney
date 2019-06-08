@@ -19,7 +19,7 @@ class TodoStore extends EntityStore<ITodo> implements ITodoStore {
   }
 
   @action
-  public toggleTodo = (todo: ITodo) => (completed: boolean) => {
+  toggleTodo = (todo: ITodo) => (completed: boolean) => {
     todo.completed = completed;
     return this.save(todo).then(this.load);
   }

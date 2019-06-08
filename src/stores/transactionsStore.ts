@@ -39,7 +39,7 @@ class TransactionsStore extends EntityStore<ITransaction> {
   get groupedByCategory() {
     return this.entities.reduce((group, t) => {
       (group[t.category] = group[t.category] || []).push(t);
-       return group;
+      return group;
     }, {});
   }
 

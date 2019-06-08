@@ -13,7 +13,7 @@ class ProjectsStore extends EntityStore<IProject> implements IProjectsStore {
   }
 
   @action
-  public add(project: IProject) {
+  add(project: IProject) {
     if (!project.tasks) {
       project.tasks = [];
     }
@@ -22,7 +22,7 @@ class ProjectsStore extends EntityStore<IProject> implements IProjectsStore {
   }
 
   @action
-  public load() {
+  load() {
     return super.load().then(() => {
       this.entities.forEach(e => (e.tasks = e.tasks || []));
       return this.entities;
@@ -30,13 +30,13 @@ class ProjectsStore extends EntityStore<IProject> implements IProjectsStore {
   }
 
   @action
-  public addTask = (project: IProject) => (task: ITask) => {
+  addTask = (project: IProject) => (task: ITask) => {
     project.tasks.push(fillDefaultParams(task));
     return this.save(project);
   }
 
   @action
-  public upgradeStatus = (task: ITask) => (project: IProject) => {
+  upgradeStatus = (task: ITask) => (project: IProject) => {
     const newTask = this.entities
       .find(e => e.id === project.id)
       .tasks.find(t => t.created.nanoseconds === task.created.nanoseconds);

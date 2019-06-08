@@ -12,12 +12,12 @@ export interface IFirebaseStore {
 }
 
 class FirebaseStore implements IFirebaseStore {
-  @observable public user: any;
+  @observable user: any;
 
-  @observable public error: app.auth.Error;
+  @observable error: app.auth.Error;
 
-  public auth: firebase.auth.Auth;
-  public authProvider: firebase.auth.GoogleAuthProvider;
+  auth: firebase.auth.Auth;
+  authProvider: firebase.auth.GoogleAuthProvider;
 
   constructor() {
     app.initializeApp(config);
@@ -33,12 +33,12 @@ class FirebaseStore implements IFirebaseStore {
     }, this.saveError);
   }
 
-  public loginWithGoogle = () => {
+  loginWithGoogle = () => {
     return this.auth.signInWithPopup(this.authProvider);
   }
 
   @action
-  public saveError = (err: app.auth.Error) => {
+  saveError = (err: app.auth.Error) => {
     this.error = err;
     return err;
   }
@@ -54,7 +54,7 @@ class FirebaseStore implements IFirebaseStore {
   }
 
   @action
-  public saveUser = (user: any) => {
+  saveUser = (user: any) => {
     this.user = user;
   }
 }
